@@ -56,21 +56,21 @@ class HotmInformation {
     }
 
     private fun loadDataFromInventory() {
-        val profileSpecific = NotEnoughUpdates.INSTANCE.config.profileSpecific ?: return
-        val currentScreen = Minecraft.getMinecraft().currentScreen
-        if (currentScreen !is GuiChest) {
-            return
-        }
-        val container = currentScreen.inventorySlots as ContainerChest
-        for (i in 0 until container.lowerChestInventory.sizeInventory) {
-            val stack = container.lowerChestInventory.getStackInSlot(i) ?: continue
-            val displayName = ItemUtils.getDisplayName(stack) ?: continue
-            val lore = ItemUtils.getLore(stack)
-            if (!lore.any { it.contains("Right-click to") }) continue
-
-            val perkName = StringUtils.cleanColour(displayName)
-            profileSpecific.hotmTree[perkName] = getLevel(lore[0])
-        }
+        return
+//        val currentScreen = Minecraft.getMinecraft().currentScreen
+//        if (currentScreen !is GuiChest) {
+//            return
+//        }
+//        val container = currentScreen.inventorySlots as ContainerChest
+//        for (i in 0 until container.lowerChestInventory.sizeInventory) {
+//            val stack = container.lowerChestInventory.getStackInSlot(i) ?: continue
+//            val displayName = ItemUtils.getDisplayName(stack) ?: continue
+//            val lore = ItemUtils.getLore(stack)
+//            if (!lore.any { it.contains("Right-click to") }) continue
+//
+//            val perkName = StringUtils.cleanColour(displayName)
+//            profileSpecific.hotmTree[perkName] = getLevel(lore[0])
+//        }
     }
 
     private fun getLevel(string: String): Int {

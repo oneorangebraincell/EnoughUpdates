@@ -22,14 +22,14 @@ package io.github.moulberry.notenoughupdates.miscfeatures.profileviewer
 import com.google.gson.JsonObject
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.core.util.StringUtils
-import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay
+//import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay
 import io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewer
 import io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewerPage
 import io.github.moulberry.notenoughupdates.profileviewer.SkyblockProfiles
 import io.github.moulberry.notenoughupdates.profileviewer.data.APIDataJson
 import io.github.moulberry.notenoughupdates.util.Constants
 import io.github.moulberry.notenoughupdates.util.MC
-import io.github.moulberry.notenoughupdates.util.PetLeveling
+//import io.github.moulberry.notenoughupdates.util.PetLeveling
 import io.github.moulberry.notenoughupdates.util.Utils
 import io.github.moulberry.notenoughupdates.util.roundToDecimals
 import io.github.moulberry.notenoughupdates.util.toRoman
@@ -559,17 +559,17 @@ class HoppityPage(pvInstance: GuiProfileViewer) : GuiProfileViewerPage(pvInstanc
             baseMultiplier = 1.25
         }
         val activePetInfo = selectedProfile?.petsInfo?.get("active_pet")
-        if (activePetInfo != null && !activePetInfo.isJsonNull) {
-            activePetInfo.asJsonObject?.let { pet ->
-                if (pet.get("type").asString == "RABBIT" && pet.get("tier").asString == "MYTHIC") {
-                    val petLevel = PetLeveling.getPetLevelingForPet("RABBIT", PetInfoOverlay.Rarity.MYTHIC)
-                        .getPetLevel(pet.get("exp").asDouble).currentLevel
-
-                    //calculation is 0.01 + 0.0004 per pet level
-                    baseMultiplier += 0.01 + (petLevel * 0.0004)
-                }
-            }
-        }
+//        if (activePetInfo != null && !activePetInfo.isJsonNull) {
+//            activePetInfo.asJsonObject?.let { pet ->
+//                if (pet.get("type").asString == "RABBIT" && pet.get("tier").asString == "MYTHIC") {
+//                    val petLevel = PetLeveling.getPetLevelingForPet("RABBIT", PetInfoOverlay.Rarity.MYTHIC)
+//                        .getPetLevel(pet.get("exp").asDouble).currentLevel
+//
+//                    //calculation is 0.01 + 0.0004 per pet level
+//                    baseMultiplier += 0.01 + (petLevel * 0.0004)
+//                }
+//            }
+//        }
 
         rabbitToRarity.clear()
         RabbitCollectionRarity.resetData()

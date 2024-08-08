@@ -20,14 +20,14 @@
 package io.github.moulberry.notenoughupdates.mixins;
 
 import io.github.moulberry.notenoughupdates.events.SpawnParticleEvent;
-import io.github.moulberry.notenoughupdates.miscfeatures.AntiCoopAdd;
-import io.github.moulberry.notenoughupdates.miscfeatures.CustomItemEffects;
-import io.github.moulberry.notenoughupdates.miscfeatures.EnchantingSolvers;
-import io.github.moulberry.notenoughupdates.miscfeatures.ItemCooldowns;
-import io.github.moulberry.notenoughupdates.miscfeatures.MiningStuff;
+//import io.github.moulberry.notenoughupdates.miscfeatures.AntiCoopAdd;
+//import io.github.moulberry.notenoughupdates.miscfeatures.CustomItemEffects;
+//import io.github.moulberry.notenoughupdates.miscfeatures.EnchantingSolvers;
+//import io.github.moulberry.notenoughupdates.miscfeatures.ItemCooldowns;
+//import io.github.moulberry.notenoughupdates.miscfeatures.MiningStuff;
 import io.github.moulberry.notenoughupdates.miscfeatures.StorageManager;
-import io.github.moulberry.notenoughupdates.miscfeatures.WarpDessert;
-import io.github.moulberry.notenoughupdates.miscfeatures.world.CrystalHollowChestHighlighter;
+//import io.github.moulberry.notenoughupdates.miscfeatures.WarpDessert;
+//import io.github.moulberry.notenoughupdates.miscfeatures.world.CrystalHollowChestHighlighter;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -63,12 +63,12 @@ public class MixinNetHandlerPlayClient {
 		float yaw,
 		float pitch
 	) {
-		if (CustomItemEffects.INSTANCE.aoteTeleportationCurr != null) {
-			CustomItemEffects.INSTANCE.aoteTeleportationMillis += Math.max(
-				0,
-				Math.min(300, CustomItemEffects.INSTANCE.tpTime)
-			);
-		}
+//		if (CustomItemEffects.INSTANCE.aoteTeleportationCurr != null) {
+//			CustomItemEffects.INSTANCE.aoteTeleportationMillis += Math.max(
+//				0,
+//				Math.min(300, CustomItemEffects.INSTANCE.tpTime)
+//			);
+//		}
 		player.setPositionAndRotation(x, y, z, yaw, pitch);
 	}
 
@@ -97,11 +97,11 @@ public class MixinNetHandlerPlayClient {
 		}
 	}
 
-	@Inject(method = "handleSetSlot", at = @At("RETURN"))
-	public void handleSetSlot(S2FPacketSetSlot packetIn, CallbackInfo ci) {
-		EnchantingSolvers.processInventoryContents(false);
-		StorageManager.getInstance().setSlotPacket(packetIn);
-	}
+//	@Inject(method = "handleSetSlot", at = @At("RETURN"))
+//	public void handleSetSlot(S2FPacketSetSlot packetIn, CallbackInfo ci) {
+//		EnchantingSolvers.processInventoryContents(false);
+//		StorageManager.getInstance().setSlotPacket(packetIn);
+//	}
 
 	@Inject(method = "handleOpenWindow", at = @At("RETURN"))
 	public void handleOpenWindow(S2DPacketOpenWindow packetIn, CallbackInfo ci) {
@@ -118,31 +118,31 @@ public class MixinNetHandlerPlayClient {
 		StorageManager.getInstance().setItemsPacket(packetIn);
 	}
 
-	@Inject(method = "handleBlockChange", at = @At("HEAD"))
-	public void handleBlockChange(S23PacketBlockChange packetIn, CallbackInfo ci) {
-		MiningStuff.processBlockChangePacket(packetIn);
-		ItemCooldowns.processBlockChangePacket(packetIn);
-		CrystalHollowChestHighlighter.processBlockChangePacket(packetIn);
-	}
+//	@Inject(method = "handleBlockChange", at = @At("HEAD"))
+//	public void handleBlockChange(S23PacketBlockChange packetIn, CallbackInfo ci) {
+//		MiningStuff.processBlockChangePacket(packetIn);
+//		ItemCooldowns.processBlockChangePacket(packetIn);
+//		CrystalHollowChestHighlighter.processBlockChangePacket(packetIn);
+//	}
 
-	@Inject(method = "handleMultiBlockChange", at = @At("HEAD"))
-	public void handleMultiBlockChange(S22PacketMultiBlockChange packetIn, CallbackInfo ci) {
-		 CrystalHollowChestHighlighter.processMultiBlockChangePacket(packetIn);
-	}
+//	@Inject(method = "handleMultiBlockChange", at = @At("HEAD"))
+//	public void handleMultiBlockChange(S22PacketMultiBlockChange packetIn, CallbackInfo ci) {
+//		 CrystalHollowChestHighlighter.processMultiBlockChangePacket(packetIn);
+//	}
 
 	@Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
 	public void addToSendQueue(Packet packet, CallbackInfo ci) {
 		if (packet instanceof C0EPacketClickWindow) {
 			StorageManager.getInstance().clientSendWindowClick((C0EPacketClickWindow) packet);
 		}
-		if (packet instanceof C01PacketChatMessage) {
-			if (AntiCoopAdd.getInstance().onPacketChatMessage((C01PacketChatMessage) packet)) {
-				ci.cancel();
-			}
-			if (WarpDessert.onPacketChatMessage((C01PacketChatMessage) packet)) {
-				ci.cancel();
-			}
-		}
+//		if (packet instanceof C01PacketChatMessage) {
+////			if (AntiCoopAdd.getInstance().onPacketChatMessage((C01PacketChatMessage) packet)) {
+////				ci.cancel();
+////			}
+////			if (WarpDessert.onPacketChatMessage((C01PacketChatMessage) packet)) {
+////				ci.cancel();
+////			}
+//		}
 	}
 
 	@Inject(method = "handlePlayerListHeaderFooter", at = @At("HEAD"))

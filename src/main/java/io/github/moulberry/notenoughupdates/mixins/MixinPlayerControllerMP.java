@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.mixins;
 
 import io.github.moulberry.notenoughupdates.events.OnBlockBreakSoundEffect;
-import io.github.moulberry.notenoughupdates.miscfeatures.ItemCooldowns;
+//import io.github.moulberry.notenoughupdates.miscfeatures.ItemCooldowns;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundHandler;
@@ -35,14 +35,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerControllerMP.class)
 public class MixinPlayerControllerMP {
-	@Inject(method = "clickBlock", at = @At("HEAD"), cancellable = true)
-	public void clickBlock(BlockPos loc, EnumFacing face, CallbackInfoReturnable<Boolean> cir) {
-		ItemCooldowns.blockClicked(loc);
-        /*if(MiningStuff.blockClicked(loc)) {
-            cir.setReturnValue(false);
-            ((PlayerControllerMP)(Object)this).resetBlockRemoving();
-        }*/
-	}
+//	@Inject(method = "clickBlock", at = @At("HEAD"), cancellable = true)
+//	public void clickBlock(BlockPos loc, EnumFacing face, CallbackInfoReturnable<Boolean> cir) {
+////		ItemCooldowns.blockClicked(loc);
+//        /*if(MiningStuff.blockClicked(loc)) {
+//            cir.setReturnValue(false);
+//            ((PlayerControllerMP)(Object)this).resetBlockRemoving();
+//        }*/
+//	}
 
 	@Redirect(method = "onPlayerDamageBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/audio/SoundHandler;playSound(Lnet/minecraft/client/audio/ISound;)V"))
 	public void onPlayerDamageBlock(

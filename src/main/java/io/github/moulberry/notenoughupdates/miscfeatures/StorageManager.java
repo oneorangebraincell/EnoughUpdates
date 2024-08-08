@@ -32,7 +32,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.config.ConfigUtil;
-import io.github.moulberry.notenoughupdates.miscgui.StorageOverlay;
+//import io.github.moulberry.notenoughupdates.miscgui.StorageOverlay;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
@@ -329,10 +329,10 @@ public class StorageManager {
 
 	public boolean shouldRenderStorageOverlay(String containerName) {
 		isStorageOpen = false;
-		if (!NotEnoughUpdates.INSTANCE.config.storageGUI.enableStorageGUI3) {
-			shouldRenderStorageOverlayCached = false;
-			return false;
-		}
+//		if (!NotEnoughUpdates.INSTANCE.config.storageGUI.enableStorageGUI3) {
+//			shouldRenderStorageOverlayCached = false;
+//			return false;
+//		}
 
 		if (!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) {
 			shouldRenderStorageOverlayCached = false;
@@ -471,7 +471,7 @@ public class StorageManager {
 				currentStoragePage = page - 1 + MAX_ENDER_CHEST_PAGES;
 
 				int displayId = getDisplayIdForStorageId(currentStoragePage);
-				if (displayId >= 0) StorageOverlay.getInstance().scrollToStorage(displayId, false);
+//				if (displayId >= 0) StorageOverlay.getInstance().scrollToStorage(displayId, false);
 
 				StoragePage spage = getCurrentPage();
 				if (spage != null) {
@@ -485,7 +485,7 @@ public class StorageManager {
 				currentStoragePage = page - 1;
 
 				int displayId = getDisplayIdForStorageId(currentStoragePage);
-				if (displayId >= 0) StorageOverlay.getInstance().scrollToStorage(displayId, false);
+//				if (displayId >= 0) StorageOverlay.getInstance().scrollToStorage(displayId, false);
 
 				StoragePage spage = getCurrentPage();
 				if (spage != null) {
@@ -493,10 +493,9 @@ public class StorageManager {
 				}
 			}
 		} else {
-			StorageOverlay.getInstance().clearSearch();
-			return;
+//			StorageOverlay.getInstance().clearSearch();
 		}
-		StorageOverlay.getInstance().fastRenderCheck();
+//		StorageOverlay.getInstance().fastRenderCheck();
 
 	}
 

@@ -46,7 +46,7 @@ public class ItemTooltipEssenceShopListener {
 		if (!neu.isOnSkyblock()) return;
 		if (event.toolTip == null) return;
 		if (!Utils.getOpenChestName().endsWith(" Essence Shop")) return;
-		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.essencePriceInEssenceShop) return;
+//		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.essencePriceInEssenceShop) return;
 
 		List<String> newToolTip = new ArrayList<>();
 		boolean next = false;

@@ -29,7 +29,7 @@ import com.google.gson.JsonPrimitive;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.TooltipTextScrolling;
 import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay;
-import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
+//import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
 import io.github.moulberry.notenoughupdates.profileviewer.GuiProfileViewer;
 import lombok.var;
 import net.minecraft.block.Block;
@@ -336,9 +336,9 @@ public class Utils {
 		long currentTimeMillis = System.currentTimeMillis();
 		if (startTime == 0) startTime = currentTimeMillis;
 
-		int chromaSpeed = NotEnoughUpdates.INSTANCE.config.misc.chromaSpeed;
-		if (chromaSpeed < 10) chromaSpeed = 10;
-		if (chromaSpeed > 5000) chromaSpeed = 5000;
+		int chromaSpeed = 10;
+//		if (chromaSpeed < 10) chromaSpeed = 10;
+//		if (chromaSpeed > 5000) chromaSpeed = 5000;
 
 		StringBuilder rainbowText = new StringBuilder();
 		int len = 0;
@@ -579,9 +579,9 @@ public class Utils {
 
 	public static Slot getSlotUnderMouse(GuiContainer container) {
 		Slot slot = (Slot) getField(GuiContainer.class, container, "theSlot", "field_147006_u");
-		if (slot == null) {
-			slot = SlotLocking.getInstance().getRealSlot();
-		}
+//		if (slot == null) {
+//			slot = SlotLocking.getInstance().getRealSlot();
+//		}
 		return slot;
 	}
 
@@ -831,9 +831,7 @@ public class Utils {
 	}
 
 	public static void playSound(ResourceLocation sound, boolean gui) {
-		if (NotEnoughUpdates.INSTANCE.config.misc.guiButtonClicks || !gui) {
 			Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(sound, 1.0F));
-		}
 	}
 
 	public static String cleanDuplicateColourCodes(String line) {
@@ -1733,25 +1731,25 @@ public class Utils {
 	) {
 		if (!textLines.isEmpty()) {
 			int borderColorStart = 0x505000FF;
-			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.tooltipBorderColours) {
-				if (!textLines.isEmpty()) {
-					String first = textLines.get(0);
-					borderColorStart = getPrimaryColour(first).getRGB() & 0x00FFFFFF |
-						((NotEnoughUpdates.INSTANCE.config.tooltipTweaks.tooltipBorderOpacity) << 24);
-				}
-			}
+//			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.tooltipBorderColours) {
+//				if (!textLines.isEmpty()) {
+//					String first = textLines.get(0);
+//					borderColorStart = getPrimaryColour(first).getRGB() & 0x00FFFFFF |
+//						((NotEnoughUpdates.INSTANCE.config.tooltipTweaks.tooltipBorderOpacity) << 24);
+//				}
+//			}
 			textLines = TooltipTextScrolling.handleTextLineRendering(textLines);
-			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale != 0) {
-				ScaledResolution scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale);
-				mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-
-				mouseY = scaledResolution.getScaledHeight() -
-					Mouse.getY() * scaledResolution.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
-
-				screenWidth = scaledResolution.getScaledWidth();
-
-				screenHeight = scaledResolution.getScaledHeight();
-			}
+//			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale != 0) {
+//				ScaledResolution scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale);
+//				mouseX = Mouse.getX() * scaledResolution.getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+//
+//				mouseY = scaledResolution.getScaledHeight() -
+//					Mouse.getY() * scaledResolution.getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+//
+//				screenWidth = scaledResolution.getScaledWidth();
+//
+//				screenHeight = scaledResolution.getScaledHeight();
+//			}
 
 			GlStateManager.disableRescaleNormal();
 			RenderHelper.disableStandardItemLighting();
@@ -1828,21 +1826,21 @@ public class Utils {
 			}
 
 			//Scrollable tooltips
-			if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.scrollableTooltips) {
-				if (tooltipHeight + 6 > screenHeight) {
-					if (scrollY.getTarget() < 0) {
-						scrollY.setTarget(0);
-						scrollY.resetTimer();
-					} else if (screenHeight - tooltipHeight - 12 + (int) scrollY.getTarget() > 0) {
-						scrollY.setTarget(-screenHeight + tooltipHeight + 12);
-						scrollY.resetTimer();
-					}
-				} else {
-					scrollY.setValue(0);
-					scrollY.resetTimer();
-				}
-				scrollY.tick();
-			}
+//			if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.scrollableTooltips) {
+//				if (tooltipHeight + 6 > screenHeight) {
+//					if (scrollY.getTarget() < 0) {
+//						scrollY.setTarget(0);
+//						scrollY.resetTimer();
+//					} else if (screenHeight - tooltipHeight - 12 + (int) scrollY.getTarget() > 0) {
+//						scrollY.setTarget(-screenHeight + tooltipHeight + 12);
+//						scrollY.resetTimer();
+//					}
+//				} else {
+//					scrollY.setValue(0);
+//					scrollY.resetTimer();
+//				}
+//				scrollY.tick();
+//			}
 
 			if (tooltipY + tooltipHeight + 6 > screenHeight) {
 				tooltipY = screenHeight - tooltipHeight - 6 + (int) scrollY.getValue();
@@ -1949,7 +1947,7 @@ public class Utils {
 			GlStateManager.enableDepth();
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableRescaleNormal();
-			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale != 0) Utils.pushGuiScale(0);
+//			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale != 0) Utils.pushGuiScale(0);
 		}
 		GlStateManager.disableLighting();
 	}
@@ -2284,24 +2282,24 @@ public class Utils {
 	public static void showOutdatedRepoNotification(String missingFile) { showOutdatedRepoNotification(missingFile, null); }
 
 	public static void showOutdatedRepoNotification(String missingFile, Throwable exception) {
-		if (NotEnoughUpdates.INSTANCE.config.notifications.outdatedRepo) {
-			NotificationHandler.displayNotification(Lists.newArrayList(
-					EnumChatFormatting.RED + EnumChatFormatting.BOLD.toString() + "Missing repo data",
-					EnumChatFormatting.RED +
-						"Data used for many NEU features is not up to date, this should normally not be the case.",
-					EnumChatFormatting.RED +
-						"Please make sure you are on the latest version of NEU.",
-					EnumChatFormatting.RED + "You can try " + EnumChatFormatting.BOLD + "/neuresetrepo" + EnumChatFormatting.RESET +
-						EnumChatFormatting.RED + " and restart your game" +
-						" to see if that fixes the issue.",
-					EnumChatFormatting.RED + "If the problem persists please join " + EnumChatFormatting.BOLD +
-						"discord.gg/moulberry" +
-						EnumChatFormatting.RESET + EnumChatFormatting.RED + " and message in " + EnumChatFormatting.BOLD +
-						"#neu-support" + EnumChatFormatting.RESET + EnumChatFormatting.RED + " to get support"
-				),
-				false, true
-			);
-		}
+//		if (NotEnoughUpdates.INSTANCE.config.notifications.outdatedRepo) {
+//			NotificationHandler.displayNotification(Lists.newArrayList(
+//					EnumChatFormatting.RED + EnumChatFormatting.BOLD.toString() + "Missing repo data",
+//					EnumChatFormatting.RED +
+//						"Data used for many NEU features is not up to date, this should normally not be the case.",
+//					EnumChatFormatting.RED +
+//						"Please make sure you are on the latest version of NEU.",
+//					EnumChatFormatting.RED + "You can try " + EnumChatFormatting.BOLD + "/neuresetrepo" + EnumChatFormatting.RESET +
+//						EnumChatFormatting.RED + " and restart your game" +
+//						" to see if that fixes the issue.",
+//					EnumChatFormatting.RED + "If the problem persists please join " + EnumChatFormatting.BOLD +
+//						"discord.gg/moulberry" +
+//						EnumChatFormatting.RESET + EnumChatFormatting.RED + " and message in " + EnumChatFormatting.BOLD +
+//						"#neu-support" + EnumChatFormatting.RESET + EnumChatFormatting.RED + " to get support"
+//				),
+//				false, true
+//			);
+//		}
 		if (System.currentTimeMillis() - lastError > 1000) {
 			NotEnoughUpdates.LOGGER.error("Repo issue: " + missingFile, exception);
 			lastError = System.currentTimeMillis();
@@ -2396,7 +2394,7 @@ public class Utils {
 				runtime.exec("xdg-open " + url);
 				return true;
 			} catch (IOException e) {
-				playSound(new ResourceLocation("game.player.hurt"), true);
+//				playSound(new ResourceLocation("game.player.hurt"), true);
 				return false;
 			}
 		}

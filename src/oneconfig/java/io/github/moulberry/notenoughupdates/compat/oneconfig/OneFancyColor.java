@@ -62,8 +62,8 @@ public class OneFancyColor extends ConfigColorElement {
 		return new OneColor(r, g, b, a);
 	}
 
-	private static MethodHandle hsbaAccessor;
-	private static MethodHandle databitAccessor;
+	private static final MethodHandle hsbaAccessor;
+	private static final MethodHandle databitAccessor;
 
 	static {
 		try {

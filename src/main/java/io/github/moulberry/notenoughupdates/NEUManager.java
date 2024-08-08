@@ -28,14 +28,14 @@ import com.google.gson.JsonPrimitive;
 import io.github.moulberry.notenoughupdates.auction.APIManager;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.events.RepositoryReloadEvent;
-import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
-import io.github.moulberry.notenoughupdates.miscgui.KatSitterOverlay;
+//import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
+//import io.github.moulberry.notenoughupdates.miscgui.KatSitterOverlay;
 import io.github.moulberry.notenoughupdates.options.customtypes.NEUDebugFlag;
-import io.github.moulberry.notenoughupdates.recipes.CraftingOverlay;
-import io.github.moulberry.notenoughupdates.recipes.CraftingRecipe;
-import io.github.moulberry.notenoughupdates.recipes.Ingredient;
-import io.github.moulberry.notenoughupdates.recipes.NeuRecipe;
-import io.github.moulberry.notenoughupdates.recipes.RecipeHistory;
+//import io.github.moulberry.notenoughupdates.recipes.CraftingOverlay;
+//import io.github.moulberry.notenoughupdates.recipes.CraftingRecipe;
+//import io.github.moulberry.notenoughupdates.recipes.Ingredient;
+//import io.github.moulberry.notenoughupdates.recipes.NeuRecipe;
+//import io.github.moulberry.notenoughupdates.recipes.RecipeHistory;
 import io.github.moulberry.notenoughupdates.util.ApiUtil;
 import io.github.moulberry.notenoughupdates.util.Constants;
 import io.github.moulberry.notenoughupdates.util.ItemResolutionQuery;
@@ -108,25 +108,25 @@ public class NEUManager {
 	public final TreeMap<String, HashMap<String, List<Integer>>> titleWordMap = new TreeMap<>();
 	private final TreeMap<String, HashMap<String, List<Integer>>> loreWordMap = new TreeMap<>();
 
-	public final KeyBinding keybindGive =
-		new KeyBinding("Add item to inventory (Creative-only)", Keyboard.KEY_L, "NotEnoughUpdates");
-	public final KeyBinding keybindFavourite =
-		new KeyBinding("Set item as favourite", Keyboard.KEY_F, "NotEnoughUpdates");
-	public final KeyBinding keybindViewUsages =
-		new KeyBinding("Show usages for item", Keyboard.KEY_U, "NotEnoughUpdates");
-	public final KeyBinding keybindViewRecipe =
-		new KeyBinding("Show recipe for item", Keyboard.KEY_R, "NotEnoughUpdates");
-	public final KeyBinding keybindPreviousRecipe =
-		new KeyBinding("Show previous recipe", Keyboard.KEY_LBRACKET, "NotEnoughUpdates");
-	public final KeyBinding keybindNextRecipe =
-		new KeyBinding("Show next recipe", Keyboard.KEY_RBRACKET, "NotEnoughUpdates");
-	public final KeyBinding keybindToggleDisplay = new KeyBinding("Toggle NEU overlay", 0, "NotEnoughUpdates");
-	public final KeyBinding keybindClosePanes = new KeyBinding("Close NEU panes", 0, "NotEnoughUpdates");
-	public final KeyBinding keybindItemSelect = new KeyBinding("Select Item", -98 /*middle*/, "NotEnoughUpdates");
-	public final KeyBinding[] keybinds = new KeyBinding[]{
-		keybindGive, keybindFavourite, keybindViewUsages, keybindViewRecipe, keybindPreviousRecipe,
-		keybindNextRecipe, keybindToggleDisplay, keybindClosePanes, keybindItemSelect
-	};
+//	public final KeyBinding keybindGive =
+//		new KeyBinding("Add item to inventory (Creative-only)", Keyboard.KEY_L, "NotEnoughUpdates");
+//	public final KeyBinding keybindFavourite =
+//		new KeyBinding("Set item as favourite", Keyboard.KEY_F, "NotEnoughUpdates");
+//	public final KeyBinding keybindViewUsages =
+//		new KeyBinding("Show usages for item", Keyboard.KEY_U, "NotEnoughUpdates");
+//	public final KeyBinding keybindViewRecipe =
+//		new KeyBinding("Show recipe for item", Keyboard.KEY_R, "NotEnoughUpdates");
+//	public final KeyBinding keybindPreviousRecipe =
+//		new KeyBinding("Show previous recipe", Keyboard.KEY_LBRACKET, "NotEnoughUpdates");
+//	public final KeyBinding keybindNextRecipe =
+//		new KeyBinding("Show next recipe", Keyboard.KEY_RBRACKET, "NotEnoughUpdates");
+//	public final KeyBinding keybindToggleDisplay = new KeyBinding("Toggle NEU overlay", 0, "NotEnoughUpdates");
+//	public final KeyBinding keybindClosePanes = new KeyBinding("Close NEU panes", 0, "NotEnoughUpdates");
+//	public final KeyBinding keybindItemSelect = new KeyBinding("Select Item", -98 /*middle*/, "NotEnoughUpdates");
+//	public final KeyBinding[] keybinds = new KeyBinding[]{
+//		keybindGive, keybindFavourite, keybindViewUsages, keybindViewRecipe, keybindPreviousRecipe,
+//		keybindNextRecipe, keybindToggleDisplay, keybindClosePanes, keybindItemSelect
+//	};
 
 	public String viewItemAttemptID = null;
 	public long viewItemAttemptTime = 0;
@@ -136,9 +136,9 @@ public class NEUManager {
 
 	private final Map<String, ItemStack> itemstackCache = new HashMap<>();
 
-	private final Set<NeuRecipe> recipes = new HashSet<>();
-	private final HashMap<String, Set<NeuRecipe>> recipesMap = new HashMap<>();
-	private final HashMap<String, Set<NeuRecipe>> usagesMap = new HashMap<>();
+//	private final Set<NeuRecipe> recipes = new HashSet<>();
+//	private final HashMap<String, Set<NeuRecipe>> recipesMap = new HashMap<>();
+//	private final HashMap<String, Set<NeuRecipe>> usagesMap = new HashMap<>();
 
 	private final Map<String, String> displayNameCache = new HashMap<>();
 
@@ -147,9 +147,9 @@ public class NEUManager {
 	public File configLocation;
 	public File repoLocation;
 
-	public KatSitterOverlay katSitterOverlay;
+//	public KatSitterOverlay katSitterOverlay;
 
-	public CraftingOverlay craftingOverlay;
+//	public CraftingOverlay craftingOverlay;
 
 	private static boolean repoDownloadFailed = false;
 	public boolean onBackupRepo = false;
@@ -158,8 +158,8 @@ public class NEUManager {
 		this.neu = neu;
 		this.configLocation = configLocation;
 		this.auctionManager = new APIManager(this);
-		this.craftingOverlay = new CraftingOverlay(this);
-		this.katSitterOverlay = new KatSitterOverlay();
+//		this.craftingOverlay = new CraftingOverlay(this);
+//		this.katSitterOverlay = new KatSitterOverlay();
 
 		gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -330,20 +330,20 @@ public class NEUManager {
 
 			itemMap.put(internalName, json);
 
-			if (json.has("recipe")) {
-				JsonObject recipe = json.getAsJsonObject("recipe");
-				NeuRecipe neuRecipe = NeuRecipe.parseRecipe(this, recipe, json);
-				if (neuRecipe != null)
-					registerNeuRecipe(neuRecipe);
-			}
-			if (json.has("recipes")) {
-				for (JsonElement element : json.getAsJsonArray("recipes")) {
-					JsonObject recipe = element.getAsJsonObject();
-					NeuRecipe neuRecipe = NeuRecipe.parseRecipe(this, recipe, json);
-					if (neuRecipe != null)
-						registerNeuRecipe(neuRecipe);
-				}
-			}
+//			if (json.has("recipe")) {
+//				JsonObject recipe = json.getAsJsonObject("recipe");
+//				NeuRecipe neuRecipe = NeuRecipe.parseRecipe(this, recipe, json);
+//				if (neuRecipe != null)
+//					registerNeuRecipe(neuRecipe);
+//			}
+//			if (json.has("recipes")) {
+//				for (JsonElement element : json.getAsJsonArray("recipes")) {
+//					JsonObject recipe = element.getAsJsonObject();
+//					NeuRecipe neuRecipe = NeuRecipe.parseRecipe(this, recipe, json);
+//					if (neuRecipe != null)
+//						registerNeuRecipe(neuRecipe);
+//				}
+//			}
 
 			if (json.has("displayname")) {
 				synchronized (titleWordMap) {
@@ -386,40 +386,40 @@ public class NEUManager {
 		}
 	}
 
-	public void registerNeuRecipe(NeuRecipe recipe) {
-		recipes.add(recipe);
-		for (Ingredient output : recipe.getOutputs()) {
-			recipesMap.computeIfAbsent(output.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
-		}
-		for (Ingredient input : recipe.getIngredients()) {
-			usagesMap.computeIfAbsent(input.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
-		}
-		for (Ingredient catalystItem : recipe.getCatalystItems()) {
-			recipesMap.computeIfAbsent(catalystItem.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
-			usagesMap.computeIfAbsent(catalystItem.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
-		}
-	}
+//	public void registerNeuRecipe(NeuRecipe recipe) {
+//		recipes.add(recipe);
+//		for (Ingredient output : recipe.getOutputs()) {
+//			recipesMap.computeIfAbsent(output.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
+//		}
+//		for (Ingredient input : recipe.getIngredients()) {
+//			usagesMap.computeIfAbsent(input.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
+//		}
+//		for (Ingredient catalystItem : recipe.getCatalystItems()) {
+//			recipesMap.computeIfAbsent(catalystItem.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
+//			usagesMap.computeIfAbsent(catalystItem.getInternalItemId(), ignored -> new HashSet<>()).add(recipe);
+//		}
+//	}
 
-	public Set<NeuRecipe> getRecipesFor(String internalName) {
-		return recipesMap.getOrDefault(internalName, Collections.emptySet());
-	}
+//	public Set<NeuRecipe> getRecipesFor(String internalName) {
+//		return recipesMap.getOrDefault(internalName, Collections.emptySet());
+//	}
 
-	public List<NeuRecipe> getAvailableRecipesFor(String internalname) {
-		return getRecipesFor(internalname).stream().filter(NeuRecipe::isAvailable).collect(Collectors.toList());
-	}
+//	public List<NeuRecipe> getAvailableRecipesFor(String internalname) {
+//		return getRecipesFor(internalname).stream().filter(NeuRecipe::isAvailable).collect(Collectors.toList());
+//	}
 
-	public HashMap<String, Set<NeuRecipe>> getAllRecipes() {
-		return recipesMap;
-
-	}
-
-	public Set<NeuRecipe> getUsagesFor(String internalName) {
-		return usagesMap.getOrDefault(internalName, Collections.emptySet());
-	}
-
-	public List<NeuRecipe> getAvailableUsagesFor(String internalname) {
-		return getUsagesFor(internalname).stream().filter(NeuRecipe::isAvailable).collect(Collectors.toList());
-	}
+//	public HashMap<String, Set<NeuRecipe>> getAllRecipes() {
+//		return recipesMap;
+//
+//	}
+//
+//	public Set<NeuRecipe> getUsagesFor(String internalName) {
+//		return usagesMap.getOrDefault(internalName, Collections.emptySet());
+//	}
+//
+//	public List<NeuRecipe> getAvailableUsagesFor(String internalname) {
+//		return getUsagesFor(internalname).stream().filter(NeuRecipe::isAvailable).collect(Collectors.toList());
+//	}
 
 	private static class DebugMatch {
 		int index;
@@ -874,40 +874,40 @@ public class NEUManager {
 		return str.replaceAll("(\u00a7.)|[^#0-9a-zA-Z ]", "").toLowerCase(Locale.ROOT).trim();
 	}
 
-	public void showRecipe(JsonObject item) {
-		ContainerChest container = null;
-		if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest)
-			container = (ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer;
-		String internalName = item.get("internalname").getAsString();
-		Set<NeuRecipe> recipesFor = getRecipesFor(internalName);
-		if (container != null &&
-			container.getLowerChestInventory().getDisplayName().getUnformattedText().equals("Craft Item")) {
-			Optional<NeuRecipe> recipe = recipesFor.stream().filter(it -> it instanceof CraftingRecipe).findAny();
-			if (recipe.isPresent()) {
-				craftingOverlay.setShownRecipe((CraftingRecipe) recipe.get());
-				return;
-			}
-		}
-		if (!item.has("clickcommand")) return;
-		String clickcommand = item.get("clickcommand").getAsString();
-		switch (clickcommand.intern()) {
-			case "viewrecipe":
-				displayGuiItemRecipe(internalName);
-				break;
-			case "viewpotion":
-				String potionName = internalName.split(";")[0];
-				potionName = potionName.replace("POTION_", "");
-				neu.sendChatMessage("/viewpotion " + potionName.toLowerCase(Locale.ROOT));
-				break;
-			default:
-				displayGuiItemRecipe(internalName);
-		}
+//	public void showRecipe(JsonObject item) {
+//		ContainerChest container = null;
+//		if (Minecraft.getMinecraft().thePlayer.openContainer instanceof ContainerChest)
+//			container = (ContainerChest) Minecraft.getMinecraft().thePlayer.openContainer;
+//		String internalName = item.get("internalname").getAsString();
+//		Set<NeuRecipe> recipesFor = getRecipesFor(internalName);
+//		if (container != null &&
+//			container.getLowerChestInventory().getDisplayName().getUnformattedText().equals("Craft Item")) {
+//			Optional<NeuRecipe> recipe = recipesFor.stream().filter(it -> it instanceof CraftingRecipe).findAny();
+//			if (recipe.isPresent()) {
+//				craftingOverlay.setShownRecipe((CraftingRecipe) recipe.get());
+//				return;
+//			}
+//		}
+//		if (!item.has("clickcommand")) return;
+//		String clickcommand = item.get("clickcommand").getAsString();
+//		switch (clickcommand.intern()) {
+//			case "viewrecipe":
+//				displayGuiItemRecipe(internalName);
+//				break;
+//			case "viewpotion":
+//				String potionName = internalName.split(";")[0];
+//				potionName = potionName.replace("POTION_", "");
+//				neu.sendChatMessage("/viewpotion " + potionName.toLowerCase(Locale.ROOT));
+//				break;
+//			default:
+//				displayGuiItemRecipe(internalName);
+//		}
+//
+//	}
 
-	}
-
-	public void showRecipe(String internalName) {
-		showRecipe(getItemInformation().get(internalName));
-	}
+//	public void showRecipe(String internalName) {
+//		showRecipe(getItemInformation().get(internalName));
+//	}
 
 	/**
 	 * Takes an item stack and produces a JsonObject.
@@ -1007,52 +1007,52 @@ public class NEUManager {
 
 	long lastKeybind = -1;
 
-	public boolean displayGuiItemUsagesKeybind(String internalName) {
-		if (System.currentTimeMillis() - lastKeybind < 500) {
-			return false;
-		}
-		lastKeybind = System.currentTimeMillis();
-		return displayGuiItemUsages(internalName);
-	}
+//	public boolean displayGuiItemUsagesKeybind(String internalName) {
+//		if (System.currentTimeMillis() - lastKeybind < 500) {
+//			return false;
+//		}
+//		lastKeybind = System.currentTimeMillis();
+//		return displayGuiItemUsages(internalName);
+//	}
 
-	public boolean displayGuiItemUsages(String internalName) {
-		if (!usagesMap.containsKey(internalName)) return false;
-		List<NeuRecipe> usages = getAvailableUsagesFor(internalName);
-		if (usages.isEmpty()) return false;
-		NotEnoughUpdates.INSTANCE.openGui = (new GuiItemRecipe(usages, this));
-		RecipeHistory.add(NotEnoughUpdates.INSTANCE.openGui);
-		return true;
-	}
+//	public boolean displayGuiItemUsages(String internalName) {
+//		if (!usagesMap.containsKey(internalName)) return false;
+//		List<NeuRecipe> usages = getAvailableUsagesFor(internalName);
+//		if (usages.isEmpty()) return false;
+//		NotEnoughUpdates.INSTANCE.openGui = (new GuiItemRecipe(usages, this));
+//		RecipeHistory.add(NotEnoughUpdates.INSTANCE.openGui);
+//		return true;
+//	}
 
-	public boolean displayGuiItemRecipeKeybind(String internalName) {
-		if (System.currentTimeMillis() - lastKeybind < 500) {
-			return false;
-		}
-		lastKeybind = System.currentTimeMillis();
-		return displayGuiItemRecipe(internalName);
-	}
-
-	public boolean displayGuiItemRecipe(String internalName) {
-		if (!recipesMap.containsKey(internalName)) return false;
-		List<NeuRecipe> recipes = getAvailableRecipesFor(internalName);
-		if (recipes.isEmpty()) return false;
-		NotEnoughUpdates.INSTANCE.openGui = (new GuiItemRecipe(recipes, this));
-		RecipeHistory.add(NotEnoughUpdates.INSTANCE.openGui);
-		return true;
-	}
+//	public boolean displayGuiItemRecipeKeybind(String internalName) {
+//		if (System.currentTimeMillis() - lastKeybind < 500) {
+//			return false;
+//		}
+//		lastKeybind = System.currentTimeMillis();
+//		return displayGuiItemRecipe(internalName);
+//	}
+//
+//	public boolean displayGuiItemRecipe(String internalName) {
+//		if (!recipesMap.containsKey(internalName)) return false;
+//		List<NeuRecipe> recipes = getAvailableRecipesFor(internalName);
+//		if (recipes.isEmpty()) return false;
+//		NotEnoughUpdates.INSTANCE.openGui = (new GuiItemRecipe(recipes, this));
+//		RecipeHistory.add(NotEnoughUpdates.INSTANCE.openGui);
+//		return true;
+//	}
 
 	/**
 	 * Will display guiItemRecipe if a player attempted to view the recipe to an item but they didn't have the recipe
 	 * unlocked. See NotEnoughUpdates#onGuiChat for where this method is called.
 	 */
-	public boolean failViewItem(String text) {
-		if (viewItemAttemptID != null && !viewItemAttemptID.isEmpty()) {
-			if (System.currentTimeMillis() - viewItemAttemptTime < 500) {
-				return displayGuiItemRecipe(viewItemAttemptID);
-			}
-		}
-		return false;
-	}
+//	public boolean failViewItem(String text) {
+//		if (viewItemAttemptID != null && !viewItemAttemptID.isEmpty()) {
+//			if (System.currentTimeMillis() - viewItemAttemptTime < 500) {
+//				return displayGuiItemRecipe(viewItemAttemptID);
+//			}
+//		}
+//		return false;
+//	}
 
 	/**
 	 * Downloads a web file, appending some HTML attributes that makes wikia give us the raw wiki syntax.
@@ -1629,9 +1629,9 @@ public class NEUManager {
 			try {
 				File items = new File(repoLocation, "items");
 				if (items.exists()) {
-					recipes.clear();
-					recipesMap.clear();
-					usagesMap.clear();
+//					recipes.clear();
+//					recipesMap.clear();
+//					usagesMap.clear();
 					itemMap.clear();
 
 					File[] itemFiles = new File(repoLocation, "items").listFiles();

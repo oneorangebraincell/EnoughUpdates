@@ -32,8 +32,8 @@ import com.google.gson.JsonSerializer;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.events.RepositoryReloadEvent;
-import io.github.moulberry.notenoughupdates.recipes.EssenceUpgrades;
-import io.github.moulberry.notenoughupdates.recipes.NeuRecipe;
+//import io.github.moulberry.notenoughupdates.recipes.EssenceUpgrades;
+//import io.github.moulberry.notenoughupdates.recipes.NeuRecipe;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.lang.reflect.Type;
@@ -122,7 +122,7 @@ public class Constants {
 			GEMSTONES = Utils.getConstant("gemstones", gson);
 			GARDEN = Utils.getConstant("garden", gson);
 
-			parseEssenceCosts();
+//			parseEssenceCosts();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -130,14 +130,14 @@ public class Constants {
 		}
 	}
 
-	public void parseEssenceCosts() {
-		for (Map.Entry<String, JsonElement> entry : ESSENCECOSTS.entrySet()) {
-			NeuRecipe parsed = EssenceUpgrades.parseFromEssenceCostEntry(entry);
-			if (parsed != null) {
-				NotEnoughUpdates.INSTANCE.manager.registerNeuRecipe(parsed);
-			} else {
-				System.out.println("NULL for: " + entry);
-			}
-		}
-	}
+//	public void parseEssenceCosts() {
+//		for (Map.Entry<String, JsonElement> entry : ESSENCECOSTS.entrySet()) {
+//			NeuRecipe parsed = EssenceUpgrades.parseFromEssenceCostEntry(entry);
+//			if (parsed != null) {
+//				NotEnoughUpdates.INSTANCE.manager.registerNeuRecipe(parsed);
+//			} else {
+//				System.out.println("NULL for: " + entry);
+//			}
+//		}
+//	}
 }

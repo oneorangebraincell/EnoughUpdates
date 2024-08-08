@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.listener;
 
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
-import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
+//import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -32,10 +32,10 @@ public class WorldListener {
 		this.neu = neu;
 	}
 
-	@SubscribeEvent
-	public void onWorldLoad(WorldEvent.Load e) {
-		if (neu.config.mining.powderGrindingTrackerResetMode == 0)
-			OverlayManager.powderGrindingOverlay.reset();
-	}
+//	@SubscribeEvent
+//	public void onWorldLoad(WorldEvent.Load e) {
+//		if (neu.config.mining.powderGrindingTrackerResetMode == 0)
+//			OverlayManager.powderGrindingOverlay.reset();
+//	}
 
 }

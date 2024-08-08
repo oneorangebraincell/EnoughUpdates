@@ -72,7 +72,7 @@ public class XPInformation {
 		return skillInfoMap;
 	}
 
-	private Set<String> failedSkills = new HashSet<>();
+	private final Set<String> failedSkills = new HashSet<>();
 
 	public @Nullable SkillInfo getSkillInfo(String skillName) {
 		return getSkillInfo(skillName, false);
@@ -192,7 +192,7 @@ public class XPInformation {
 		}
 	}
 
-	private Pattern tablistSkillPattern =
+	private final Pattern tablistSkillPattern =
 		Pattern.compile(
 			" (?<type>[^ ]+) (?<level>\\d+): (?:(?<percentage>\\d+(\\.\\d+)?)%|(?<amount>[0-9,]+(\\.\\d+)?)/.*|(?<max>MAX))");
 

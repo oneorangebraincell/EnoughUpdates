@@ -23,8 +23,8 @@ import com.mojang.brigadier.arguments.BoolArgumentType.bool
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
-import io.github.moulberry.notenoughupdates.miscfeatures.CrystalMetalDetectorSolver
-import io.github.moulberry.notenoughupdates.miscfeatures.CrystalWishingCompassSolver
+//import io.github.moulberry.notenoughupdates.miscfeatures.CrystalMetalDetectorSolver
+//import io.github.moulberry.notenoughupdates.miscfeatures.CrystalWishingCompassSolver
 import io.github.moulberry.notenoughupdates.options.customtypes.NEUDebugFlag
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import io.github.moulberry.notenoughupdates.util.brigadier.EnumArgumentType.Companion.enum
@@ -36,22 +36,22 @@ class DiagCommand {
     @SubscribeEvent
     fun onCommands(event: RegisterBrigadierCommandEvent) {
         event.command("neudiag") {
-            thenLiteral("metal") {
-                thenLiteral("center") {
-                    thenArgumentExecute("usecenter", bool()) { useCenter ->
-                        CrystalMetalDetectorSolver.setDebugDoNotUseCenter(this[useCenter])
-                        reply("Center coordinates-based solutions ${if (this[useCenter]) "enabled" else "disabled"}")
-                    }.withHelp("Toggle coordinate based solutions")
-                }
-                thenExecute {
-                    CrystalMetalDetectorSolver.logDiagnosticData(true)
-                    reply("Enabled metal detector diagnostic logging.")
-                }
-            }.withHelp("Enable metal detector diagnostics")
-            thenLiteralExecute("wishing") {
-                CrystalWishingCompassSolver.getInstance().logDiagnosticData(true)
-                reply("Enabled wishing compass diagnostic logging")
-            }.withHelp("Enable wishing compass diagnostic logging")
+//            thenLiteral("metal") {
+////                thenLiteral("center") {
+////                    thenArgumentExecute("usecenter", bool()) { useCenter ->
+////                        CrystalMetalDetectorSolver.setDebugDoNotUseCenter(this[useCenter])
+////                        reply("Center coordinates-based solutions ${if (this[useCenter]) "enabled" else "disabled"}")
+////                    }.withHelp("Toggle coordinate based solutions")
+////                }
+//                thenExecute {
+//                    CrystalMetalDetectorSolver.logDiagnosticData(true)
+//                    reply("Enabled metal detector diagnostic logging.")
+//                }
+//            }.withHelp("Enable metal detector diagnostics")
+//            thenLiteralExecute("wishing") {
+//                CrystalWishingCompassSolver.getInstance().logDiagnosticData(true)
+//                reply("Enabled wishing compass diagnostic logging")
+//            }.withHelp("Enable wishing compass diagnostic logging")
             thenLiteral("debug") {
                 thenLiteralExecute("list") {
                     reply("Here are all flags:\n${NEUDebugFlag.getFlagList()}")

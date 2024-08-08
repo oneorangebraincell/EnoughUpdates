@@ -48,7 +48,7 @@ object HoppityLeaderboardRank {
     fun openWebsite() {
         if (currentRankStatus == HoppityLeaderboardRankStatus.LOADING) return
         Utils.openUrl("https://elitebot.dev/leaderboard/chocolate")
-        Utils.playPressSound()
+//        Utils.playPressSound()
     }
 
     fun loadData(uuid: String?, profileId: String?) {

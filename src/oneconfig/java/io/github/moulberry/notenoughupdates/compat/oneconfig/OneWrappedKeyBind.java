@@ -24,6 +24,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class OneWrappedKeyBind extends OneKeyBind {
 
@@ -53,6 +54,6 @@ public class OneWrappedKeyBind extends OneKeyBind {
 
 	@Override
 	public ArrayList<Integer> getKeyBinds() {
-		return value == Keyboard.KEY_NONE ? new ArrayList<>() : new ArrayList<>(Arrays.asList(value));
+		return value == Keyboard.KEY_NONE ? new ArrayList<>() : new ArrayList<>(Collections.singletonList(value));
 	}
 }

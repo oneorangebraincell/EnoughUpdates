@@ -60,10 +60,10 @@ object TablistTutorial {
         val textScale = 2f
 
         fun drawBigRedArrow(x: Int, y: Int, label: String) {
-            val imgX = x - Arrow.tipXOffset
-            val imgY = y - Arrow.tipYOffset
-            val textX = imgX + Arrow.labelXOffset
-            val textY = imgY + Arrow.labelYOffset
+            val imgX = x - tipXOffset
+            val imgY = y - tipYOffset
+            val textX = imgX + labelXOffset
+            val textY = imgY + labelYOffset
 
             GlStateManager.pushMatrix()
             GlStateManager.translate(0f, 0f, 300f)

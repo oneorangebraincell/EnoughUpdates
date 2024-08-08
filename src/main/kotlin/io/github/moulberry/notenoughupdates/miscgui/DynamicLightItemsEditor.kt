@@ -35,7 +35,7 @@ import java.awt.Color
 import java.io.File
 import kotlin.math.ceil
 
-class DynamicLightItemsEditor() : GuiScreen() {
+class DynamicLightItemsEditor : GuiScreen() {
 
     val isOfLightsEnabled = run {
         val ofDynamicLights = File("optionsof.txt").takeIf { it.exists() }?.readLines()

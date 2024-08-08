@@ -20,14 +20,14 @@
 package io.github.moulberry.notenoughupdates.listener;
 
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
-import io.github.moulberry.notenoughupdates.dungeons.DungeonWin;
-import io.github.moulberry.notenoughupdates.miscfeatures.CookieWarning;
-import io.github.moulberry.notenoughupdates.miscfeatures.CrystalMetalDetectorSolver;
-import io.github.moulberry.notenoughupdates.miscfeatures.EnderNodes;
-import io.github.moulberry.notenoughupdates.miscfeatures.StreamerMode;
-import io.github.moulberry.notenoughupdates.miscfeatures.world.EnderNodeHighlighter;
-import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
-import io.github.moulberry.notenoughupdates.overlays.SlayerOverlay;
+//import io.github.moulberry.notenoughupdates.dungeons.DungeonWin;
+//import io.github.moulberry.notenoughupdates.miscfeatures.CookieWarning;
+//import io.github.moulberry.notenoughupdates.miscfeatures.CrystalMetalDetectorSolver;
+//import io.github.moulberry.notenoughupdates.miscfeatures.EnderNodes;
+//import io.github.moulberry.notenoughupdates.miscfeatures.StreamerMode;
+//import io.github.moulberry.notenoughupdates.miscfeatures.world.EnderNodeHighlighter;
+//import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
+//import io.github.moulberry.notenoughupdates.overlays.SlayerOverlay;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
@@ -48,10 +48,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.RNGMeter;
-import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.slayerXp;
-import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.timeSinceLastBoss;
-import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.timeSinceLastBoss2;
+//import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.RNGMeter;
+//import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.slayerXp;
+//import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.timeSinceLastBoss;
+//import static io.github.moulberry.notenoughupdates.overlays.SlayerOverlay.timeSinceLastBoss2;
 
 public class ChatListener {
 
@@ -62,7 +62,7 @@ public class ChatListener {
 	private static final Pattern SKY_BLOCK_LEVEL_PATTERN = Pattern.compile("\\[(\\d{1,4})\\] .*");
 	private final Pattern PARTY_FINDER_PATTERN = Pattern.compile("§dParty Finder §r§f> (.*)§ejoined the (dungeon )?group!");
 
-	private AtomicBoolean missingRecipe = new AtomicBoolean(false);
+	private final AtomicBoolean missingRecipe = new AtomicBoolean(false);
 
 	public ChatListener(NotEnoughUpdates neu) {
 		this.neu = neu;
@@ -75,7 +75,7 @@ public class ChatListener {
 			return text;
 
 		if (Minecraft.getMinecraft().thePlayer == null) return text;
-		if (!NotEnoughUpdates.INSTANCE.config.mining.drillFuelBar) return text;
+//		if (!NotEnoughUpdates.INSTANCE.config.mining.drillFuelBar) return text;
 
 		return Utils.trimIgnoreColour(text.replaceAll(EnumChatFormatting.DARK_GREEN + "\\S+ Drill Fuel", ""));
 	}
@@ -149,7 +149,7 @@ public class ChatListener {
 			ChatStyle ahClickStyle = Utils.createClickStyle(
 				ClickEvent.Action.RUN_COMMAND,
 				"/ah " + username,
-				"" + EnumChatFormatting.YELLOW + "Click to open " + EnumChatFormatting.AQUA + EnumChatFormatting.BOLD +
+				EnumChatFormatting.YELLOW + "Click to open " + EnumChatFormatting.AQUA + EnumChatFormatting.BOLD +
 					username + EnumChatFormatting.RESET + EnumChatFormatting.YELLOW + "'s /ah page"
 			);
 
@@ -174,7 +174,7 @@ public class ChatListener {
 		return Utils.createClickStyle(
 			ClickEvent.Action.RUN_COMMAND,
 			"/pv " + username,
-			"" + EnumChatFormatting.YELLOW + "Click to open " + EnumChatFormatting.AQUA + EnumChatFormatting.BOLD +
+			EnumChatFormatting.YELLOW + "Click to open " + EnumChatFormatting.AQUA + EnumChatFormatting.BOLD +
 				username + EnumChatFormatting.RESET + EnumChatFormatting.YELLOW + "'s profile in " +
 				EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.BOLD + "NEU's" + EnumChatFormatting.RESET +
 				EnumChatFormatting.YELLOW + " profile viewer."
@@ -189,7 +189,7 @@ public class ChatListener {
 	@SubscribeEvent(priority = EventPriority.LOW, receiveCanceled = true)
 	public void onGuiChat(ClientChatReceivedEvent e) {
 		if (e.type == 2) {
-			CrystalMetalDetectorSolver.process(e.message);
+//			CrystalMetalDetectorSolver.process(e.message);
 			e.message = processChatComponent(e.message);
 			return;
 		} else if (e.type == 0) {
@@ -199,7 +199,7 @@ public class ChatListener {
 			}
 		}
 
-		DungeonWin.onChatMessage(e);
+//		DungeonWin.onChatMessage(e);
 
 		String r = null;
 		String unformatted = Utils.cleanColour(e.message.getUnformattedText());
@@ -214,89 +214,89 @@ public class ChatListener {
 				.split(" ")[0].trim());
 		}
 
-		if (e.message.getFormattedText().equals(
-			EnumChatFormatting.RESET.toString() + EnumChatFormatting.RED + "You haven't unlocked this recipe!" +
-				EnumChatFormatting.RESET)) {
-			r = EnumChatFormatting.RED + "You haven't unlocked this recipe!";
-		} else if (e.message.getFormattedText().startsWith(
-			EnumChatFormatting.RESET.toString() + EnumChatFormatting.RED + "Invalid recipe ")) {
-			r = "";
-		} else if (unformatted.equals("  SLAYER QUEST FAILED!")) {
-			SlayerOverlay.isSlain = false;
-			timeSinceLastBoss = 0;
-		} else if (unformatted.equals("  NICE! SLAYER BOSS SLAIN!")) {
-			SlayerOverlay.isSlain = true;
-		} else if (unformatted.equals("  SLAYER QUEST STARTED!")) {
-			SlayerOverlay.isSlain = false;
-			if (timeSinceLastBoss != 0) {
-				timeSinceLastBoss2 = timeSinceLastBoss;
-			}
-			timeSinceLastBoss = System.currentTimeMillis();
-		} else if (unformatted.startsWith("   RNG Meter")) {
-			RNGMeter = unformatted.substring("   RNG Meter - ".length());
-		} else if (matcher.matches()) {
-			SlayerOverlay.slayerLVL = matcher.group(2);
-			if (!SlayerOverlay.slayerLVL.equals("9")) {
-				SlayerOverlay.slayerXp = matcher.group(3);
-			} else {
-				slayerXp = "maxed";
-			}
-		} else if (unformatted.startsWith("Sending to server") || (unformatted.startsWith(
-			"Your Slayer Quest has been cancelled!"))) {
-			SlayerOverlay.slayerQuest = false;
-			SlayerOverlay.unloadOverlayTimer = System.currentTimeMillis();
-		} else if (unformatted.startsWith("You consumed a Booster Cookie!")) {
-			CookieWarning.resetNotification();
-		} else if (unformatted.startsWith("QUICK MATHS! Solve:") && NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) {
-			if (Math.random() < 0.2) {
-				if (NotEnoughUpdates.INSTANCE.config.misc.calculationMode == 2) {
-					ClientCommandHandler.instance.executeCommand(
-						Minecraft.getMinecraft().thePlayer,
-						"/neucalc " + unformatted.substring("QUICK MATHS! Solve: ".length())
-					);
-				}
-			}
-		}
-		if (r != null) {
-			if (neu.manager.failViewItem(r)) {
-				e.setCanceled(true);
-			}
-			missingRecipe.set(true);
-		}
-		if (unformatted.startsWith("Sending to server") &&
-			NotEnoughUpdates.INSTANCE.config.misc.streamerMode && e.message instanceof ChatComponentText) {
-			String m = e.message.getFormattedText();
-			String m2 = StreamerMode.filterChat(e.message.getFormattedText());
-			if (!m.equals(m2)) {
-				e.message = new ChatComponentText(m2);
-			}
-		}
-		if (unformatted.startsWith("You found ") && SBInfo.getInstance().getLocation() != null &&
-			SBInfo.getInstance().getLocation().equals("crystal_hollows")) {
-			CrystalMetalDetectorSolver.resetSolution(true);
-		}
-		if (unformatted.startsWith("[NPC] Keeper of ") | unformatted.startsWith("[NPC] Professor Robot: ") ||
-			unformatted.startsWith("  ") || unformatted.startsWith("✦") || unformatted.equals(
-			"  You've earned a Crystal Loot Bundle!"))
-			OverlayManager.crystalHollowOverlay.message(unformatted);
+//		if (e.message.getFormattedText().equals(
+//			EnumChatFormatting.RESET.toString() + EnumChatFormatting.RED + "You haven't unlocked this recipe!" +
+//				EnumChatFormatting.RESET)) {
+//			r = EnumChatFormatting.RED + "You haven't unlocked this recipe!";
+//		} else if (e.message.getFormattedText().startsWith(
+//			EnumChatFormatting.RESET.toString() + EnumChatFormatting.RED + "Invalid recipe ")) {
+//			r = "";
+//		} else if (unformatted.equals("  SLAYER QUEST FAILED!")) {
+//			SlayerOverlay.isSlain = false;
+//			timeSinceLastBoss = 0;
+//		} else if (unformatted.equals("  NICE! SLAYER BOSS SLAIN!")) {
+//			SlayerOverlay.isSlain = true;
+//		} else if (unformatted.equals("  SLAYER QUEST STARTED!")) {
+//			SlayerOverlay.isSlain = false;
+//			if (timeSinceLastBoss != 0) {
+//				timeSinceLastBoss2 = timeSinceLastBoss;
+//			}
+//			timeSinceLastBoss = System.currentTimeMillis();
+//		} else if (unformatted.startsWith("   RNG Meter")) {
+//			RNGMeter = unformatted.substring("   RNG Meter - ".length());
+//		} else if (matcher.matches()) {
+//			SlayerOverlay.slayerLVL = matcher.group(2);
+//			if (!SlayerOverlay.slayerLVL.equals("9")) {
+//				SlayerOverlay.slayerXp = matcher.group(3);
+//			} else {
+//				slayerXp = "maxed";
+//			}
+//		} else if (unformatted.startsWith("Sending to server") || (unformatted.startsWith(
+//			"Your Slayer Quest has been cancelled!"))) {
+//			SlayerOverlay.slayerQuest = false;
+//			SlayerOverlay.unloadOverlayTimer = System.currentTimeMillis();
+//		} else if (unformatted.startsWith("You consumed a Booster Cookie!")) {
+//			CookieWarning.resetNotification();
+//		} else if (unformatted.startsWith("QUICK MATHS! Solve:") && NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) {
+//			if (Math.random() < 0.2) {
+//				if (NotEnoughUpdates.INSTANCE.config.misc.calculationMode == 2) {
+//					ClientCommandHandler.instance.executeCommand(
+//						Minecraft.getMinecraft().thePlayer,
+//						"/neucalc " + unformatted.substring("QUICK MATHS! Solve: ".length())
+//					);
+//				}
+//			}
+//		}
+//		if (r != null) {
+////			if (neu.manager.failViewItem(r)) {
+////				e.setCanceled(true);
+////			}
+//			missingRecipe.set(true);
+//		}
+//		if (unformatted.startsWith("Sending to server") &&
+//			NotEnoughUpdates.INSTANCE.config.misc.streamerMode && e.message instanceof ChatComponentText) {
+//			String m = e.message.getFormattedText();
+//////			String m2 = StreamerMode.filterChat(e.message.getFormattedText());
+////			if (!m.equals(m2)) {
+////				e.message = new ChatComponentText(m2);
+////			}
+//		}
+//		if (unformatted.startsWith("You found ") && SBInfo.getInstance().getLocation() != null &&
+//			SBInfo.getInstance().getLocation().equals("crystal_hollows")) {
+////			CrystalMetalDetectorSolver.resetSolution(true);
+//		}
+//		if (unformatted.startsWith("[NPC] Keeper of ") | unformatted.startsWith("[NPC] Professor Robot: ") ||
+//			unformatted.startsWith("  ") || unformatted.startsWith("✦") || unformatted.equals(
+//			"  You've earned a Crystal Loot Bundle!"))
+//			OverlayManager.crystalHollowOverlay.message(unformatted);
 
-		Matcher LvlMatcher = SKY_BLOCK_LEVEL_PATTERN.matcher(unformatted);
-		if (LvlMatcher.matches()) {
-			if (Integer.parseInt(LvlMatcher.group(1)) < NotEnoughUpdates.INSTANCE.config.misc.filterChatLevel &&
-				NotEnoughUpdates.INSTANCE.config.misc.filterChatLevel != 0) {
-				if (!unformatted.contains(Minecraft.getMinecraft().thePlayer.getName())) {
-					e.setCanceled(true);
-				}
-			}
-		}
+//		Matcher LvlMatcher = SKY_BLOCK_LEVEL_PATTERN.matcher(unformatted);
+//		if (LvlMatcher.matches()) {
+//			if (Integer.parseInt(LvlMatcher.group(1)) < NotEnoughUpdates.INSTANCE.config.misc.filterChatLevel &&
+//				NotEnoughUpdates.INSTANCE.config.misc.filterChatLevel != 0) {
+//				if (!unformatted.contains(Minecraft.getMinecraft().thePlayer.getName())) {
+//					e.setCanceled(true);
+//				}
+//			}
+//		}
 
-		OverlayManager.powderGrindingOverlay.onMessage(unformatted);
+//		OverlayManager.powderGrindingOverlay.onMessage(unformatted);
 
-		if (unformatted.startsWith("ENDER NODE!"))
-			EnderNodeHighlighter.getInstance().highlightedBlocks.clear();
-
-		if (unformatted.equals("ENDER NODE! You found Endermite Nest!"))
-			EnderNodes.displayEndermiteNotif();
+//		if (unformatted.startsWith("ENDER NODE!"))
+//			EnderNodeHighlighter.getInstance().highlightedBlocks.clear();
+//
+//		if (unformatted.equals("ENDER NODE! You found Endermite Nest!"))
+//			EnderNodes.displayEndermiteNotif();
 	}
 
 	private IChatComponent dungeonPartyJoinPV(IChatComponent message) {

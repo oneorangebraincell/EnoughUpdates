@@ -19,6 +19,4 @@
 
 package io.github.moulberry.notenoughupdates.recipes.generators
 
-class RepoExportingInterruptedException : Error() {
-
-}
+class RepoExportingInterruptedException : Error()

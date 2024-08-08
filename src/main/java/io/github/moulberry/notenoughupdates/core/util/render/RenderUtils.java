@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.core.util.render;
 
 import io.github.moulberry.notenoughupdates.core.BackgroundBlur;
-import io.github.moulberry.notenoughupdates.miscfeatures.CustomItemEffects;
+//import io.github.moulberry.notenoughupdates.miscfeatures.CustomItemEffects;
 import io.github.moulberry.notenoughupdates.util.SpecialColour;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -47,6 +47,7 @@ import org.lwjgl.util.vector.Vector3f;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class RenderUtils {
@@ -260,22 +261,22 @@ public class RenderUtils {
 		double d14 = -1.0D + d1;
 		double d15 = (double) (height) * 2.5D + d14;
 		worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-		worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+		worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(1.0D, d15).color(r, g, b, alphaMult).endVertex();
 		worldrenderer.pos(x + d4, y + bottomOffset, z + d5).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
 		worldrenderer.pos(x + d6, y + bottomOffset, z + d7).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-		worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
-		worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+		worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(0.0D, d15).color(r, g, b, alphaMult).endVertex();
+		worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(1.0D, d15).color(r, g, b, alphaMult).endVertex();
 		worldrenderer.pos(x + d10, y + bottomOffset, z + d11).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
 		worldrenderer.pos(x + d8, y + bottomOffset, z + d9).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-		worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
-		worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+		worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(0.0D, d15).color(r, g, b, alphaMult).endVertex();
+		worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(1.0D, d15).color(r, g, b, alphaMult).endVertex();
 		worldrenderer.pos(x + d6, y + bottomOffset, z + d7).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
 		worldrenderer.pos(x + d10, y + bottomOffset, z + d11).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-		worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
-		worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(1.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+		worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(0.0D, d15).color(r, g, b, alphaMult).endVertex();
+		worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(1.0D, d15).color(r, g, b, alphaMult).endVertex();
 		worldrenderer.pos(x + d8, y + bottomOffset, z + d9).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
 		worldrenderer.pos(x + d4, y + bottomOffset, z + d5).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
-		worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(0.0D, d15).color(r, g, b, 1.0F * alphaMult).endVertex();
+		worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(0.0D, d15).color(r, g, b, alphaMult).endVertex();
 		tessellator.draw();
 
 		GlStateManager.disableCull();
@@ -330,7 +331,7 @@ public class RenderUtils {
 		if (disableDepth) GlStateManager.disableDepth();
 		GlStateManager.disableCull();
 		GlStateManager.disableTexture2D();
-		CustomItemEffects.drawFilledBoundingBox(bb, 1f, SpecialColour.special(0, (rgb >> 24) & 0xFF, rgb));
+//		CustomItemEffects.drawFilledBoundingBox(bb, 1f, SpecialColour.special(0, (rgb >> 24) & 0xFF, rgb));
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableCull();
 		if (disableDepth) GlStateManager.enableDepth();
@@ -341,17 +342,11 @@ public class RenderUtils {
 		double viewerY;
 		double viewerZ;
 
-		Vector3f aoteInterpPos = CustomItemEffects.INSTANCE.getCurrentPosition();
-		if (aoteInterpPos != null) {
-			viewerX = aoteInterpPos.x;
-			viewerY = aoteInterpPos.y;
-			viewerZ = aoteInterpPos.z;
-		} else {
-			Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
-			viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
-			viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
-			viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
-		}
+//		Vector3f aoteInterpPos = CustomItemEffects.INSTANCE.getCurrentPosition();
+		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
+		viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
+		viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
 
 		double x = block.getX() - viewerX;
 		double y = block.getY() - viewerY;
@@ -364,25 +359,25 @@ public class RenderUtils {
 
 	public static Vector3f getInterpolatedPlayerPosition(float partialTicks) {
 
-		Vector3f aoteInterpPos = CustomItemEffects.INSTANCE.getCurrentPosition();
-		if (aoteInterpPos != null) {
-			return new Vector3f(aoteInterpPos);
-		} else {
-			Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
-			Vector3f lastPos = new Vector3f(
-				(float) viewer.lastTickPosX,
-				(float) viewer.lastTickPosY,
-				(float) viewer.lastTickPosZ
-			);
-			Vector3f currentPos = new Vector3f(
-				(float) viewer.posX,
-				(float) viewer.posY,
-				(float) viewer.posZ
-			);
-			Vector3f movement = Vector3f.sub(currentPos, lastPos, currentPos);
-			movement.scale(partialTicks);
-			return Vector3f.add(lastPos, movement, lastPos);
-		}
+//		Vector3f aoteInterpPos = CustomItemEffects.INSTANCE.getCurrentPosition();
+//		if (aoteInterpPos != null) {
+//			return new Vector3f(aoteInterpPos);
+//		} else {
+		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		Vector3f lastPos = new Vector3f(
+			(float) viewer.lastTickPosX,
+			(float) viewer.lastTickPosY,
+			(float) viewer.lastTickPosZ
+		);
+		Vector3f currentPos = new Vector3f(
+			(float) viewer.posX,
+			(float) viewer.posY,
+			(float) viewer.posZ
+		);
+		Vector3f movement = Vector3f.sub(currentPos, lastPos, currentPos);
+		movement.scale(partialTicks);
+		return Vector3f.add(lastPos, movement, lastPos);
+//		}
 	}
 
 	public static void renderBeaconBeamOrBoundingBox(BlockPos block, int rgb, float alphaMult, float partialTicks) {
@@ -410,11 +405,11 @@ public class RenderUtils {
 	}
 
 	public static void renderWayPoint(String str, Vector3f loc, float partialTicks) {
-		renderWayPoint(Arrays.asList(str), loc, partialTicks, false);
+		renderWayPoint(Collections.singletonList(str), loc, partialTicks, false);
 	}
 
 	public static void renderWayPoint(Vec3i loc, float partialTicks) {
-		renderWayPoint(Arrays.asList(""), new Vector3f(loc.getX(), loc.getY(), loc.getZ()), partialTicks, true);
+		renderWayPoint(Collections.singletonList(""), new Vector3f(loc.getX(), loc.getY(), loc.getZ()), partialTicks, true);
 	}
 
 	public static void drawFilledQuadWithTexture(
@@ -483,7 +478,7 @@ public class RenderUtils {
 	}
 
 	public static void renderNametag(String str) {
-		renderNametag(Arrays.asList(str));
+		renderNametag(Collections.singletonList(str));
 	}
 
 	public static void renderNametag(List<String> lines) {

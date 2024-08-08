@@ -130,8 +130,8 @@ public abstract class TextOverlay {
 	protected Vector2f getPosition(int overlayWidth, int overlayHeight, boolean scaled) {
 		GlStateManager.pushMatrix();
 		ScaledResolution scaledResolution;
-		if (!scaled) scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-		else scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
+		scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+//		else scaledResolution = Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
 
 		int x = position.getAbsX(scaledResolution, overlayWidth);
 		int y = position.getAbsY(scaledResolution, overlayHeight);

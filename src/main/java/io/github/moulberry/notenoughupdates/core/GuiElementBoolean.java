@@ -33,7 +33,7 @@ import java.util.function.Supplier;
 public class GuiElementBoolean extends GuiElement {
 	public int x;
 	public int y;
-	private Supplier<Boolean> value;
+	private final Supplier<Boolean> value;
 	private final int clickRadius;
 	private final Consumer<Boolean> toggleCallback;
 

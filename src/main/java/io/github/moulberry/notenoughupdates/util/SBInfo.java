@@ -25,12 +25,12 @@ import com.google.gson.JsonSyntaxException;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
 import io.github.moulberry.notenoughupdates.events.SidebarChangeEvent;
-import io.github.moulberry.notenoughupdates.miscfeatures.CookieWarning;
-import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.LocationChangeEvent;
+//import io.github.moulberry.notenoughupdates.miscfeatures.CookieWarning;
+//import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.LocationChangeEvent;
 import io.github.moulberry.notenoughupdates.miscfeatures.tablisttutorial.TablistAPI;
-import io.github.moulberry.notenoughupdates.miscgui.minionhelper.MinionHelperManager;
-import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
-import io.github.moulberry.notenoughupdates.overlays.SlayerOverlay;
+//import io.github.moulberry.notenoughupdates.miscgui.minionhelper.MinionHelperManager;
+//import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
+//import io.github.moulberry.notenoughupdates.overlays.SlayerOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
@@ -284,9 +284,9 @@ public class SBInfo {
 
 	public void setLocation(String location) {
 		location = location == null ? location : location.intern();
-		if (!Objects.equals(mode, location)) {
-			MinecraftForge.EVENT_BUS.post(new LocationChangeEvent(location, mode));
-		}
+//		if (!Objects.equals(mode, location)) {
+//			MinecraftForge.EVENT_BUS.post(new LocationChangeEvent(location, mode));
+//		}
 		mode = location;
 	}
 
@@ -395,27 +395,27 @@ public class SBInfo {
 				} else if (line.contains("Inferno Demonlord")) {
 					slayer = "Blaze";
 				}
-				if (line.contains("Slayer Quest") && SlayerOverlay.unloadOverlayTimer == -1 ||
-					line.contains("Slayer Quest") && System.currentTimeMillis() - SlayerOverlay.unloadOverlayTimer > 500) {
-					SlayerOverlay.slayerQuest = true;
-				}
-				if (SlayerOverlay.slayerQuest) {
-					if (line.contains(" I")) {
-						SlayerOverlay.slayerTier = 1;
-					}
-					if (line.contains(" II")) {
-						SlayerOverlay.slayerTier = 2;
-					}
-					if (line.contains(" III")) {
-						SlayerOverlay.slayerTier = 3;
-					}
-					if (line.contains(" IV")) {
-						SlayerOverlay.slayerTier = 4;
-					}
-					if (line.contains(" V")) {
-						SlayerOverlay.slayerTier = 5;
-					}
-				}
+//				if (line.contains("Slayer Quest") && SlayerOverlay.unloadOverlayTimer == -1 ||
+//					line.contains("Slayer Quest") && System.currentTimeMillis() - SlayerOverlay.unloadOverlayTimer > 500) {
+//					SlayerOverlay.slayerQuest = true;
+//				}
+//				if (SlayerOverlay.slayerQuest) {
+//					if (line.contains(" I")) {
+//						SlayerOverlay.slayerTier = 1;
+//					}
+//					if (line.contains(" II")) {
+//						SlayerOverlay.slayerTier = 2;
+//					}
+//					if (line.contains(" III")) {
+//						SlayerOverlay.slayerTier = 3;
+//					}
+//					if (line.contains(" IV")) {
+//						SlayerOverlay.slayerTier = 4;
+//					}
+//					if (line.contains(" V")) {
+//						SlayerOverlay.slayerTier = 5;
+//					}
+//				}
 				if (line.contains("Stranded")) containsStranded = true;
 				if (line.contains("Bingo")) containsBingo = true;
 			}
@@ -476,11 +476,11 @@ public class SBInfo {
 	public void setCurrentProfile(String newProfile) {
 		if (!newProfile.equals(currentProfile)) {
 			currentProfile = newProfile;
-			MinionHelperManager.getInstance().onProfileSwitch();
-			CookieWarning.onProfileSwitch();
-			if (NotEnoughUpdates.INSTANCE.config != null)
-				if (NotEnoughUpdates.INSTANCE.config.mining.powderGrindingTrackerResetMode == 2)
-					OverlayManager.powderGrindingOverlay.load();
+//			MinionHelperManager.getInstance().onProfileSwitch();
+//			CookieWarning.onProfileSwitch();
+//			if (NotEnoughUpdates.INSTANCE.config != null)
+//				if (NotEnoughUpdates.INSTANCE.config.mining.powderGrindingTrackerResetMode == 2)
+//					OverlayManager.powderGrindingOverlay.load();
 		}
 	}
 }

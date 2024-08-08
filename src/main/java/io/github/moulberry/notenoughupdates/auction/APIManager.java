@@ -24,9 +24,9 @@ import com.google.gson.JsonObject;
 import io.github.moulberry.notenoughupdates.ItemPriceInformation;
 import io.github.moulberry.notenoughupdates.NEUManager;
 import io.github.moulberry.notenoughupdates.miscgui.pricegraph.LocalGraphDataProvider;
-import io.github.moulberry.notenoughupdates.recipes.Ingredient;
-import io.github.moulberry.notenoughupdates.recipes.ItemShopRecipe;
-import io.github.moulberry.notenoughupdates.recipes.NeuRecipe;
+//import io.github.moulberry.notenoughupdates.recipes.Ingredient;
+//import io.github.moulberry.notenoughupdates.recipes.ItemShopRecipe;
+//import io.github.moulberry.notenoughupdates.recipes.NeuRecipe;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -51,7 +51,7 @@ public class APIManager {
 
 	private JsonObject bazaarJson = null;
 	private JsonObject auctionPricesJson = null;
-	private final HashMap<String, CraftInfo> craftCost = new HashMap<>();
+//	private final HashMap<String, CraftInfo> craftCost = new HashMap<>();
 
 	private boolean didFirstUpdate = false;
 	private long lastAuctionAvgUpdate = 0;
@@ -141,7 +141,7 @@ public class APIManager {
 			.thenAcceptAsync(jsonObject -> {
 				if (!jsonObject.get("success").getAsBoolean()) return;
 
-				craftCost.clear();
+//				craftCost.clear();
 				bazaarJson = new JsonObject();
 				JsonObject products = jsonObject.get("products").getAsJsonObject();
 				for (Map.Entry<String, JsonElement> entry : products.entrySet()) {
@@ -204,7 +204,7 @@ public class APIManager {
 		manager.apiUtils
 			.newMoulberryRequest("auction_averages/3day.json.gz")
 			.gunzip().requestJson().thenAcceptAsync((jsonObject) -> {
-						 craftCost.clear();
+//						 craftCost.clear();
 						 auctionPricesJson = jsonObject;
 						 lastAuctionAvgUpdate = System.currentTimeMillis();
 					 });
@@ -289,88 +289,88 @@ public class APIManager {
 		return Item.itemRegistry.getObject(new ResourceLocation(vanillaName)) != null;
 	}
 
-	public static class CraftInfo {
-		public boolean fromRecipe = false;
-		public boolean vanillaItem = false;
-		public double craftCost = -1;
-	}
+//	public static class CraftInfo {
+//		public boolean fromRecipe = false;
+//		public boolean vanillaItem = false;
+//		public double craftCost = -1;
+//	}
 
-	public CraftInfo getCraftCost(String internalName) {
-		return getCraftCost(internalName, new HashSet<>());
-	}
+//	public CraftInfo getCraftCost(String internalName) {
+//		return getCraftCost(internalName, new HashSet<>());
+//	}
 
 	/**
 	 * Recursively calculates the cost of crafting an item from raw materials.
 	 */
-	private CraftInfo getCraftCost(String internalName, Set<String> visited) {
-		if (craftCost.containsKey(internalName)) return craftCost.get(internalName);
-		if (visited.contains(internalName)) return null;
-		visited.add(internalName);
-
-		boolean vanillaItem = isVanillaItem(internalName);
-		double craftCost = Double.POSITIVE_INFINITY;
-
-		JsonObject auctionInfo = getItemAuctionInfo(internalName);
-		double lowestBin = getLowestBin(internalName);
-		JsonObject bazaarInfo = getBazaarInfo(internalName);
-
-		if (bazaarInfo != null && bazaarInfo.get("curr_buy") != null) {
-			craftCost = bazaarInfo.get("curr_buy").getAsFloat();
-		}
-		//Don't use auction prices for vanilla items cuz people like to transfer money, messing up the cost of vanilla items.
-		if (!vanillaItem) {
-			if (lowestBin > 0) {
-				craftCost = Math.min(lowestBin, craftCost);
-			} else if (auctionInfo != null) {
-				float auctionPrice = auctionInfo.get("price").getAsFloat() / auctionInfo.get("count").getAsInt();
-				craftCost = Math.min(auctionPrice, craftCost);
-			}
-		}
-
-		Set<NeuRecipe> recipes = manager.getRecipesFor(internalName);
-		boolean fromRecipe = false;
-		if (recipes != null)
-			RECIPE_ITER:
-				for (NeuRecipe recipe : recipes) {
-					if (recipe instanceof ItemShopRecipe) {
-						if (vanillaItem) {
-							continue;
-						}
-					}
-					if (recipe.hasVariableCost() || !recipe.shouldUseForCraftCost()) continue;
-					float craftPrice = 0;
-					for (Ingredient i : recipe.getIngredients()) {
-						if (i.isCoins()) {
-							craftPrice += i.getCount();
-							continue;
-						}
-						CraftInfo ingredientCraftCost = getCraftCost(i.getInternalItemId(), visited);
-						if (ingredientCraftCost == null)
-							continue RECIPE_ITER; // Skip recipes with items further up the chain
-						craftPrice += ingredientCraftCost.craftCost * i.getCount();
-					}
-					int resultCount = 0;
-					for (Ingredient item : recipe.getOutputs())
-						if (item.getInternalItemId().equals(internalName))
-							resultCount += item.getCount();
-
-					if (resultCount == 0)
-						continue;
-					float craftPricePer = craftPrice / resultCount;
-					if (craftPricePer < craftCost) {
-						fromRecipe = true;
-						craftCost = craftPricePer;
-					}
-				}
-		visited.remove(internalName);
-		if (Double.isInfinite(craftCost)) {
-			return null;
-		}
-		CraftInfo craftInfo = new CraftInfo();
-		craftInfo.vanillaItem = vanillaItem;
-		craftInfo.craftCost = craftCost;
-		craftInfo.fromRecipe = fromRecipe;
-		this.craftCost.put(internalName, craftInfo);
-		return craftInfo;
-	}
+//	private CraftInfo getCraftCost(String internalName, Set<String> visited) {
+//		if (craftCost.containsKey(internalName)) return craftCost.get(internalName);
+//		if (visited.contains(internalName)) return null;
+//		visited.add(internalName);
+//
+//		boolean vanillaItem = isVanillaItem(internalName);
+//		double craftCost = Double.POSITIVE_INFINITY;
+//
+//		JsonObject auctionInfo = getItemAuctionInfo(internalName);
+//		double lowestBin = getLowestBin(internalName);
+//		JsonObject bazaarInfo = getBazaarInfo(internalName);
+//
+//		if (bazaarInfo != null && bazaarInfo.get("curr_buy") != null) {
+//			craftCost = bazaarInfo.get("curr_buy").getAsFloat();
+//		}
+//		//Don't use auction prices for vanilla items cuz people like to transfer money, messing up the cost of vanilla items.
+//		if (!vanillaItem) {
+//			if (lowestBin > 0) {
+//				craftCost = Math.min(lowestBin, craftCost);
+//			} else if (auctionInfo != null) {
+//				float auctionPrice = auctionInfo.get("price").getAsFloat() / auctionInfo.get("count").getAsInt();
+//				craftCost = Math.min(auctionPrice, craftCost);
+//			}
+//		}
+//
+////		Set<NeuRecipe> recipes = manager.getRecipesFor(internalName);
+////		boolean fromRecipe = false;
+////		if (recipes != null)
+////			RECIPE_ITER:
+////				for (NeuRecipe recipe : recipes) {
+////					if (recipe instanceof ItemShopRecipe) {
+////						if (vanillaItem) {
+////							continue;
+////						}
+////					}
+////					if (recipe.hasVariableCost() || !recipe.shouldUseForCraftCost()) continue;
+////					float craftPrice = 0;
+////					for (Ingredient i : recipe.getIngredients()) {
+////						if (i.isCoins()) {
+////							craftPrice += i.getCount();
+////							continue;
+////						}
+////						CraftInfo ingredientCraftCost = getCraftCost(i.getInternalItemId(), visited);
+////						if (ingredientCraftCost == null)
+////							continue RECIPE_ITER; // Skip recipes with items further up the chain
+////						craftPrice += ingredientCraftCost.craftCost * i.getCount();
+////					}
+////					int resultCount = 0;
+////					for (Ingredient item : recipe.getOutputs())
+////						if (item.getInternalItemId().equals(internalName))
+////							resultCount += item.getCount();
+////
+////					if (resultCount == 0)
+////						continue;
+////					float craftPricePer = craftPrice / resultCount;
+////					if (craftPricePer < craftCost) {
+////						fromRecipe = true;
+////						craftCost = craftPricePer;
+////					}
+////				}
+////		visited.remove(internalName);
+////		if (Double.isInfinite(craftCost)) {
+////			return null;
+////		}
+////		CraftInfo craftInfo = new CraftInfo();
+////		craftInfo.vanillaItem = vanillaItem;
+////		craftInfo.craftCost = craftCost;
+////		craftInfo.fromRecipe = fromRecipe;
+////		this.craftCost.put(internalName, craftInfo);
+////		return craftInfo;
+////	}
 }

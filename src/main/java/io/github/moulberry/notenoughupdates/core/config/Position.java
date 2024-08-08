@@ -147,8 +147,8 @@ public class Position {
 			}
 		} else {
 			if (this.x + 1 > -EDGE_OFFSET) {
-				deltaX += -EDGE_OFFSET - 1 - this.x;
-				this.x = -EDGE_OFFSET - 1;
+				deltaX += -1 - this.x;
+				this.x = -1;
 			}
 			if (this.x + screenWidth < EDGE_OFFSET) {
 				deltaX += EDGE_OFFSET - screenWidth - this.x;
@@ -196,8 +196,8 @@ public class Position {
 			}
 		} else {
 			if (this.y + 1 > -EDGE_OFFSET) {
-				deltaY += -EDGE_OFFSET - 1 - this.y;
-				this.y = -EDGE_OFFSET - 1;
+				deltaY += -1 - this.y;
+				this.y = -1;
 			}
 			if (this.y + screenHeight < EDGE_OFFSET) {
 				deltaY += EDGE_OFFSET - screenHeight - this.y;

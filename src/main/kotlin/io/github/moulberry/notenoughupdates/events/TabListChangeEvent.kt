@@ -22,5 +22,4 @@ package io.github.moulberry.notenoughupdates.events
 class TabListChangeEvent(
     val lastLines: List<String>,
     val newLines: List<String>,
-) : NEUEvent() {
-}
+) : NEUEvent()

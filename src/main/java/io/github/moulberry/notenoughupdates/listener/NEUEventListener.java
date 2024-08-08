@@ -19,41 +19,18 @@
 
 package io.github.moulberry.notenoughupdates.listener;
 
-import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
-import io.github.moulberry.notenoughupdates.core.BackgroundBlur;
 import io.github.moulberry.notenoughupdates.cosmetics.CapeManager;
-import io.github.moulberry.notenoughupdates.dungeons.DungeonBlocks;
-import io.github.moulberry.notenoughupdates.dungeons.DungeonWin;
-import io.github.moulberry.notenoughupdates.miscfeatures.CookieWarning;
-import io.github.moulberry.notenoughupdates.miscfeatures.CrystalMetalDetectorSolver;
-import io.github.moulberry.notenoughupdates.miscfeatures.CrystalOverlay;
-import io.github.moulberry.notenoughupdates.miscfeatures.FairySouls;
-import io.github.moulberry.notenoughupdates.miscfeatures.NPCRetexturing;
-import io.github.moulberry.notenoughupdates.miscgui.AccessoryBagOverlay;
-import io.github.moulberry.notenoughupdates.miscgui.GuiCustomEnchant;
-import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
-import io.github.moulberry.notenoughupdates.miscgui.StorageOverlay;
-import io.github.moulberry.notenoughupdates.miscgui.hex.GuiCustomHex;
-import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
-import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
-import io.github.moulberry.notenoughupdates.overlays.TextOverlay;
-import io.github.moulberry.notenoughupdates.overlays.TextTabOverlay;
-import io.github.moulberry.notenoughupdates.recipes.RecipeHistory;
 import io.github.moulberry.notenoughupdates.util.Constants;
-import io.github.moulberry.notenoughupdates.util.NotificationHandler;
 import io.github.moulberry.notenoughupdates.util.SBInfo;
-import io.github.moulberry.notenoughupdates.util.TabSkillInfoParser;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -89,7 +66,7 @@ public class NEUEventListener {
 	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Unload event) {
 		NotEnoughUpdates.INSTANCE.saveConfig();
-		CrystalMetalDetectorSolver.initWorld();
+//		CrystalMetalDetectorSolver.initWorld();
 	}
 
 	@SubscribeEvent
@@ -149,9 +126,9 @@ public class NEUEventListener {
 				itemPreloader.shutdown();
 			}
 
-			for (TextOverlay overlay : OverlayManager.textOverlays) {
-				overlay.shouldUpdateFrequent = true;
-			}
+//			for (TextOverlay overlay : OverlayManager.textOverlays) {
+//				overlay.shouldUpdateFrequent = true;
+//			}
 		}
 
 		boolean longUpdate = false;
@@ -160,67 +137,67 @@ public class NEUEventListener {
 			longUpdate = true;
 			lastLongUpdate = currentTime;
 		}
-		if (!NotEnoughUpdates.INSTANCE.config.dungeons.slowDungeonBlocks) {
-			DungeonBlocks.tick();
-		}
-		DungeonWin.tick();
+//		if (!NotEnoughUpdates.INSTANCE.config.dungeons.slowDungeonBlocks) {
+//			DungeonBlocks.tick();
+//		}
+//		DungeonWin.tick();
 
-		String containerName = null;
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
-
-			if (GuiCustomEnchant.getInstance().shouldOverride(containerName)) {
-				GuiCustomEnchant.getInstance().tick();
-			}
-			if (GuiCustomHex.getInstance().shouldOverride(containerName)) {
-				GuiCustomHex.getInstance().tick(containerName);
-			}
-		}
+//		String containerName = null;
+//		if (Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
+//			GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+//			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
+//			containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+//
+////			if (GuiCustomEnchant.getInstance().shouldOverride(containerName)) {
+////				GuiCustomEnchant.getInstance().tick();
+////			}
+////			if (GuiCustomHex.getInstance().shouldOverride(containerName)) {
+////				GuiCustomHex.getInstance().tick(containerName);
+////			}
+//		}
 
 		//MiningOverlay and TimersOverlay need real tick speed
-		if (neu.hasSkyblockScoreboard()) {
-			for (TextOverlay overlay : OverlayManager.textOverlays) {
-				if (overlay instanceof TextTabOverlay) {
-					TextTabOverlay skillOverlay = (TextTabOverlay) overlay;
-					skillOverlay.realTick();
-				}
-			}
-		}
+//		if (neu.hasSkyblockScoreboard()) {
+//			for (TextOverlay overlay : OverlayManager.textOverlays) {
+//				if (overlay instanceof TextTabOverlay) {
+//					TextTabOverlay skillOverlay = (TextTabOverlay) overlay;
+//					skillOverlay.realTick();
+//				}
+//			}
+//		}
 
 
 		if (longUpdate) {
 
-			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiItemRecipe)) {
-				RecipeHistory.clear();
-			}
+//			if (!(Minecraft.getMinecraft().currentScreen instanceof GuiItemRecipe)) {
+//				RecipeHistory.clear();
+//			}
+//
+//			CrystalOverlay.tick();
+//			FairySouls.getInstance().tick();
+//			TabSkillInfoParser.parseSkillInfo();
+//			ItemCustomizeManager.tick();
+//			BackgroundBlur.markDirty();
+//			NPCRetexturing.getInstance().tick();
+//			StorageOverlay.getInstance().markDirty();
+//			CookieWarning.checkCookie();
 
-			CrystalOverlay.tick();
-			FairySouls.getInstance().tick();
-			TabSkillInfoParser.parseSkillInfo();
-			ItemCustomizeManager.tick();
-			BackgroundBlur.markDirty();
-			NPCRetexturing.getInstance().tick();
-			StorageOverlay.getInstance().markDirty();
-			CookieWarning.checkCookie();
+//			if (neu.hasSkyblockScoreboard()) {
+//				for (TextOverlay overlay : OverlayManager.textOverlays) {
+//					overlay.tick();
+//				}
+//			}
 
-			if (neu.hasSkyblockScoreboard()) {
-				for (TextOverlay overlay : OverlayManager.textOverlays) {
-					overlay.tick();
-				}
-			}
-
-			NotEnoughUpdates.INSTANCE.overlay.redrawItems();
+//			NotEnoughUpdates.INSTANCE.overlay.redrawItems();
 
 			NotEnoughUpdates.profileViewer.putNameUuid(
 				Minecraft.getMinecraft().thePlayer.getName(),
 				Minecraft.getMinecraft().thePlayer.getUniqueID().toString().replace("-", "")
 			);
 
-			if (NotEnoughUpdates.INSTANCE.config.dungeons.slowDungeonBlocks) {
-				DungeonBlocks.tick();
-			}
+//			if (NotEnoughUpdates.INSTANCE.config.dungeons.slowDungeonBlocks) {
+//				DungeonBlocks.tick();
+//			}
 
 			if (System.currentTimeMillis() - SBInfo.getInstance().joinedWorld > 500 &&
 				System.currentTimeMillis() - SBInfo.getInstance().unloadedWorld > 500) {
@@ -228,13 +205,13 @@ public class NEUEventListener {
 			}
 			CapeManager.getInstance().tick();
 
-			if (containerName != null) {
-				if (!containerName.trim().startsWith("Accessory Bag")) {
-					AccessoryBagOverlay.resetCache();
-				}
-			} else {
-				AccessoryBagOverlay.resetCache();
-			}
+//			if (containerName != null) {
+//				if (!containerName.trim().startsWith("Accessory Bag")) {
+//					AccessoryBagOverlay.resetCache();
+//				}
+//			} else {
+//				AccessoryBagOverlay.resetCache();
+//			}
 
 			if (neu.hasSkyblockScoreboard()) {
 				SBInfo.getInstance().tick();
@@ -242,30 +219,30 @@ public class NEUEventListener {
 				if (!joinedSB) {
 					joinedSB = true;
 
-					if (NotEnoughUpdates.INSTANCE.config.notifications.doRamNotif) {
-						long maxMemoryMB = Runtime.getRuntime().maxMemory() / 1024L / 1024L;
-						if (maxMemoryMB > 4100) {
-							NotificationHandler.displayNotification(Lists.newArrayList(
-								EnumChatFormatting.GRAY + "Too much memory allocated!",
-								String.format(
-									EnumChatFormatting.DARK_GRAY + "NEU has detected %03dMB of memory allocated to Minecraft!",
-									maxMemoryMB
-								),
-								EnumChatFormatting.GRAY + "It is recommended to allocated between 2-4GB of memory",
-								EnumChatFormatting.GRAY + "More than 4GB MAY cause FPS issues, EVEN if you have 16GB+ available",
-								EnumChatFormatting.GRAY + "For more information, visit #ram-info in discord.gg/moulberry",
-								"",
-								EnumChatFormatting.GRAY + "Press X on your keyboard to close this notification"
-							), false);
-						}
-					}
+//					if (NotEnoughUpdates.INSTANCE.config.notifications.doRamNotif) {
+//						long maxMemoryMB = Runtime.getRuntime().maxMemory() / 1024L / 1024L;
+//						if (maxMemoryMB > 4100) {
+//							NotificationHandler.displayNotification(Lists.newArrayList(
+//								EnumChatFormatting.GRAY + "Too much memory allocated!",
+//								String.format(
+//									EnumChatFormatting.DARK_GRAY + "NEU has detected %03dMB of memory allocated to Minecraft!",
+//									maxMemoryMB
+//								),
+//								EnumChatFormatting.GRAY + "It is recommended to allocated between 2-4GB of memory",
+//								EnumChatFormatting.GRAY + "More than 4GB MAY cause FPS issues, EVEN if you have 16GB+ available",
+//								EnumChatFormatting.GRAY + "For more information, visit #ram-info in discord.gg/moulberry",
+//								"",
+//								EnumChatFormatting.GRAY + "Press X on your keyboard to close this notification"
+//							), false);
+//						}
+//					}
 
 					if (!NotEnoughUpdates.INSTANCE.config.hidden.loadedModBefore) {
 						NotEnoughUpdates.INSTANCE.config.hidden.loadedModBefore = true;
 						if (Constants.MISC == null || !Constants.MISC.has("featureslist")) {
 							Utils.showOutdatedRepoNotification("misc.json");
 							Utils.addChatMessage(
-								"" + EnumChatFormatting.GOLD + "To view the feature list after restarting type /neufeatures");
+								EnumChatFormatting.GOLD + "To view the feature list after restarting type /neufeatures");
 						} else {
 							String url = Constants.MISC.get("featureslist").getAsString();
 							Utils.addChatMessage("");

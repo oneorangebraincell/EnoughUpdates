@@ -64,7 +64,7 @@ public abstract class JARLoadingTweaker implements ITweaker {
 		}
 	}
 
-	private List<FileSystem> toClose = new ArrayList<>();
+	private final List<FileSystem> toClose = new ArrayList<>();
 
 	protected void closeFileSystemLater(FileSystem fileSystem) {
 		toClose.add(fileSystem);

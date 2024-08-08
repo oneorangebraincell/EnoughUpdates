@@ -20,7 +20,7 @@
 package io.github.moulberry.notenoughupdates.util;
 
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
-import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
+//import io.github.moulberry.notenoughupdates.miscgui.GuiItemRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -107,7 +107,7 @@ public class NotificationHandler {
 	}
 
 	public static boolean shouldRenderOverlay(Gui gui) {
-		boolean validGui = gui instanceof GuiContainer || gui instanceof GuiItemRecipe;
+		boolean validGui = gui instanceof GuiContainer;
 		if (gui instanceof GuiChest) {
 			GuiChest eventGui = (GuiChest) gui;
 			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;

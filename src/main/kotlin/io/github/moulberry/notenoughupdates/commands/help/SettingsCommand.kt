@@ -31,8 +31,8 @@ import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.core.config.GuiOptionEditorBlocked
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
 import io.github.moulberry.notenoughupdates.miscfeatures.EnforcedConfigValues
-import io.github.moulberry.notenoughupdates.miscfeatures.IQTest
-import io.github.moulberry.notenoughupdates.miscfeatures.updater.ConfigVersionGuiOption
+//import io.github.moulberry.notenoughupdates.miscfeatures.IQTest
+//import io.github.moulberry.notenoughupdates.miscfeatures.updater.ConfigVersionGuiOption
 import io.github.moulberry.notenoughupdates.options.NEUConfig
 import io.github.moulberry.notenoughupdates.options.customtypes.ConfigVersionDisplay
 import io.github.moulberry.notenoughupdates.util.brigadier.*
@@ -101,18 +101,18 @@ object SettingsCommand {
             return default
         }
 
-        var iqTestCopy: LinkedHashMap<String, ProcessedCategory>? = null
-        override fun getAllCategories(): LinkedHashMap<String, ProcessedCategory> {
-            val s = super.getAllCategories()
-            if (iqTestCopy == null) {
-                iqTestCopy = s.clone() as LinkedHashMap<String, ProcessedCategory>
-            }
-            iqTestCopy!!["apiData"] = IQTest.options
-            if (NotEnoughUpdates.INSTANCE.config.apiData.apiDataUnlocked) {
-                return s
-            }
-            return iqTestCopy!!
-        }
+//        var iqTestCopy: LinkedHashMap<String, ProcessedCategory>? = null
+//        override fun getAllCategories(): LinkedHashMap<String, ProcessedCategory> {
+//            val s = super.getAllCategories()
+//            if (iqTestCopy == null) {
+//                iqTestCopy = s.clone() as LinkedHashMap<String, ProcessedCategory>
+//            }
+//            iqTestCopy!!["apiData"] = IQTest.options
+//            if (NotEnoughUpdates.INSTANCE.config.apiData.apiDataUnlocked) {
+//                return s
+//            }
+//            return iqTestCopy!!
+//        }
     }
 
     var lastEditor = null as MoulConfigEditor<NEUConfig>?
@@ -124,9 +124,9 @@ object SettingsCommand {
     fun createConfigElement(search: String): MoulConfigEditor<NEUConfig> {
         val processor = BlockingMoulConfigProcessor()
         BuiltinMoulConfigGuis.addProcessors(processor)
-        processor.registerConfigEditor(ConfigVersionDisplay::class.java) { option, annotation ->
-            ConfigVersionGuiOption(option)
-        }
+//        processor.registerConfigEditor(ConfigVersionDisplay::class.java) { option, annotation ->
+//            ConfigVersionGuiOption(option)
+//        }
         ConfigProcessorDriver.processConfig(
             NotEnoughUpdates.INSTANCE.config.javaClass,
             NotEnoughUpdates.INSTANCE.config,

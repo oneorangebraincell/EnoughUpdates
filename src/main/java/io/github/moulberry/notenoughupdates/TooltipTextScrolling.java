@@ -55,18 +55,18 @@ public class TooltipTextScrolling {
 
 	@SubscribeEvent
 	public void onMouse(GuiScreenEvent.MouseInputEvent.Pre event) {
-		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.scrollableTooltips) return;
-		if (Mouse.getEventDWheel() < 0) {
-			scrollOffset = Math.max(
-				lastRenderedTooltip == null ? 0 : -Math.max(lastRenderedTooltip.size() - 1, 0)
-				, scrollOffset - 1
-			);
-		} else if (Mouse.getEventDWheel() > 0) {
-			scrollOffset = Math.min(
-				lastRenderedTooltip == null ? 0 : Math.max(lastRenderedTooltip.size() - 1, 0),
-				scrollOffset + 1
-			);
-		}
+//		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.scrollableTooltips) return;
+		//		if (Mouse.getEventDWheel() < 0) {
+//			scrollOffset = Math.max(
+//				lastRenderedTooltip == null ? 0 : -Math.max(lastRenderedTooltip.size() - 1, 0)
+//				, scrollOffset - 1
+//			);
+//		} else if (Mouse.getEventDWheel() > 0) {
+//			scrollOffset = Math.min(
+//				lastRenderedTooltip == null ? 0 : Math.max(lastRenderedTooltip.size() - 1, 0),
+//				scrollOffset + 1
+//			);
+//		}
 	}
 
 	@SubscribeEvent

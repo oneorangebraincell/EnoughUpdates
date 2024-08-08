@@ -19,24 +19,24 @@
 
 package io.github.moulberry.notenoughupdates.mixins;
 
-import io.github.moulberry.notenoughupdates.NEUOverlay;
+//import io.github.moulberry.notenoughupdates.NEUOverlay;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.events.DrawSlotReturnEvent;
 import io.github.moulberry.notenoughupdates.events.GuiContainerBackgroundDrawnEvent;
 import io.github.moulberry.notenoughupdates.events.IsSlotBeingHoveredEvent;
 import io.github.moulberry.notenoughupdates.events.SlotClickEvent;
 import io.github.moulberry.notenoughupdates.listener.RenderListener;
-import io.github.moulberry.notenoughupdates.miscfeatures.AbiphoneFavourites;
-import io.github.moulberry.notenoughupdates.miscfeatures.AuctionBINWarning;
-import io.github.moulberry.notenoughupdates.miscfeatures.AuctionSortModeWarning;
-import io.github.moulberry.notenoughupdates.miscfeatures.BetterContainers;
-import io.github.moulberry.notenoughupdates.miscfeatures.EnchantingSolvers;
-import io.github.moulberry.notenoughupdates.miscfeatures.PresetWarning;
-import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
-import io.github.moulberry.notenoughupdates.miscgui.GuiCustomEnchant;
-import io.github.moulberry.notenoughupdates.miscgui.StorageOverlay;
-import io.github.moulberry.notenoughupdates.miscgui.hex.GuiCustomHex;
-import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
+//import io.github.moulberry.notenoughupdates.miscfeatures.AbiphoneFavourites;
+//import io.github.moulberry.notenoughupdates.miscfeatures.AuctionBINWarning;
+//import io.github.moulberry.notenoughupdates.miscfeatures.AuctionSortModeWarning;
+//import io.github.moulberry.notenoughupdates.miscfeatures.BetterContainers;
+//import io.github.moulberry.notenoughupdates.miscfeatures.EnchantingSolvers;
+//import io.github.moulberry.notenoughupdates.miscfeatures.PresetWarning;
+//import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
+//import io.github.moulberry.notenoughupdates.miscgui.GuiCustomEnchant;
+//import io.github.moulberry.notenoughupdates.miscgui.StorageOverlay;
+//import io.github.moulberry.notenoughupdates.miscgui.hex.GuiCustomHex;
+//import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import lombok.var;
 import net.minecraft.client.Minecraft;
@@ -69,8 +69,8 @@ import java.util.Set;
 
 @Mixin(value = GuiContainer.class, priority = 500)
 public abstract class MixinGuiContainer extends GuiScreen {
-	private static boolean hasProfileViewerStack = false;
-	private static boolean hasRecipeSearchStack = false;
+	private static final boolean hasProfileViewerStack = false;
+	private static final boolean hasRecipeSearchStack = false;
 	private static final ItemStack profileViewerStack = Utils.createItemStack(
 		Item.getItemFromBlock(Blocks.command_block),
 		EnumChatFormatting.GREEN + "Profile Viewer",
@@ -82,11 +82,11 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		EnumChatFormatting.YELLOW + "Click to open Recipe Search!"
 	);
 
-	@Inject(method = "drawSlot", at = @At("RETURN"))
-	public void drawSlotRet(Slot slotIn, CallbackInfo ci) {
-		SlotLocking.getInstance().drawSlot(slotIn);
-		new DrawSlotReturnEvent(slotIn).post();
-	}
+//	@Inject(method = "drawSlot", at = @At("RETURN"))
+//	public void drawSlotRet(Slot slotIn, CallbackInfo ci) {
+//		SlotLocking.getInstance().drawSlot(slotIn);
+//		new DrawSlotReturnEvent(slotIn).post();
+//	}
 
 	@Inject(method = "drawSlot", at = @At("HEAD"), cancellable = true)
 	public void drawSlot(Slot slot, CallbackInfo ci) {
@@ -94,255 +94,255 @@ public abstract class MixinGuiContainer extends GuiScreen {
 
 		GuiContainer $this = (GuiContainer) (Object) this;
 
-		if (!hasProfileViewerStack && $this instanceof GuiChest && slot.getSlotIndex() > 9 &&
-			(slot.getSlotIndex() % 9 == 6 || slot.getSlotIndex() % 9 == 7) &&
-			BetterContainers.isBlankStack(-1, slot.getStack())) {
-			BetterContainers.profileViewerStackIndex = -1;
-			hasProfileViewerStack = true;
+//		if (!hasProfileViewerStack && $this instanceof GuiChest && slot.getSlotIndex() > 9 &&
+//			(slot.getSlotIndex() % 9 == 6 || slot.getSlotIndex() % 9 == 7) &&
+//			BetterContainers.isBlankStack(-1, slot.getStack())) {
+//			BetterContainers.profileViewerStackIndex = -1;
+//			hasProfileViewerStack = true;
+//
+//			GuiChest eventGui = (GuiChest) $this;
+//			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
+//			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+//			if (containerName.contains(" Profile") && cc.inventorySlots.size() >= 54) {
+//				if (cc.inventorySlots.get(22).getStack() != null &&
+//					cc.inventorySlots.get(22).getStack().getTagCompound() != null) {
+//					NBTTagCompound tag = eventGui.inventorySlots.inventorySlots.get(22).getStack().getTagCompound();
+//					if (tag.hasKey("SkullOwner") && tag.getCompoundTag("SkullOwner").hasKey("Name")) {
+//						String tagName = tag.getCompoundTag("SkullOwner").getString("Name");
+//						String displayName = Utils.cleanColour(cc.inventorySlots.get(22).getStack().getDisplayName());
+//						if (displayName.length() - tagName.length() >= 0 && tagName.equals(displayName.substring(
+//							displayName.length() - tagName.length()))) {
+//							ci.cancel();
+//
+//							this.zLevel = 100.0F;
+//							this.itemRender.zLevel = 100.0F;
+//
+//							GlStateManager.enableDepth();
+//							this.itemRender.renderItemAndEffectIntoGUI(
+//								profileViewerStack,
+//								slot.xDisplayPosition,
+//								slot.yDisplayPosition
+//							);
+//							this.itemRender.renderItemOverlayIntoGUI(this.fontRendererObj, profileViewerStack,
+//								slot.xDisplayPosition, slot.yDisplayPosition, ""
+//							);
+//
+//							this.itemRender.zLevel = 0.0F;
+//							this.zLevel = 0.0F;
+//
+//							BetterContainers.profileViewerStackIndex = slot.getSlotIndex();
+//						}
+//					}
+//				}
+//			}
+//		} else if (!hasRecipeSearchStack && $this instanceof GuiChest && slot.getSlotIndex() == 32 &&
+//			BetterContainers.isBlankStack(-1, slot.getStack())) {
+//			BetterContainers.recipeSearchStackIndex = -1;
+//			hasRecipeSearchStack = true;
+//
+//			GuiChest eventGui = (GuiChest) $this;
+//			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
+//			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
+//			if (containerName.equals("Craft Item") && cc.inventorySlots.size() >= 54) {
+//				ci.cancel();
+//
+//				this.zLevel = 100.0F;
+//				this.itemRender.zLevel = 100.0F;
+//
+//				GlStateManager.enableDepth();
+//				this.itemRender.renderItemAndEffectIntoGUI(
+//					recipeSearchStack,
+//					slot.xDisplayPosition,
+//					slot.yDisplayPosition
+//				);
+//				this.itemRender.renderItemOverlayIntoGUI(this.fontRendererObj, recipeSearchStack,
+//					slot.xDisplayPosition, slot.yDisplayPosition, ""
+//				);
+//
+//				this.itemRender.zLevel = 0.0F;
+//				this.zLevel = 0.0F;
+//				BetterContainers.recipeSearchStackIndex = slot.getSlotIndex();
+//			} else {
+//				BetterContainers.recipeSearchStackIndex = -1;
+//			}
+//		} else if (slot.getSlotIndex() == 0) {
+//			hasProfileViewerStack = false;
+//			hasRecipeSearchStack = false;
+//		} else if (!($this instanceof GuiChest)) {
+//			BetterContainers.recipeSearchStackIndex = -1;
+//			BetterContainers.profileViewerStackIndex = -1;
+//		}
 
-			GuiChest eventGui = (GuiChest) $this;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
-			if (containerName.contains(" Profile") && cc.inventorySlots.size() >= 54) {
-				if (cc.inventorySlots.get(22).getStack() != null &&
-					cc.inventorySlots.get(22).getStack().getTagCompound() != null) {
-					NBTTagCompound tag = eventGui.inventorySlots.inventorySlots.get(22).getStack().getTagCompound();
-					if (tag.hasKey("SkullOwner") && tag.getCompoundTag("SkullOwner").hasKey("Name")) {
-						String tagName = tag.getCompoundTag("SkullOwner").getString("Name");
-						String displayName = Utils.cleanColour(cc.inventorySlots.get(22).getStack().getDisplayName());
-						if (displayName.length() - tagName.length() >= 0 && tagName.equals(displayName.substring(
-							displayName.length() - tagName.length()))) {
-							ci.cancel();
-
-							this.zLevel = 100.0F;
-							this.itemRender.zLevel = 100.0F;
-
-							GlStateManager.enableDepth();
-							this.itemRender.renderItemAndEffectIntoGUI(
-								profileViewerStack,
-								slot.xDisplayPosition,
-								slot.yDisplayPosition
-							);
-							this.itemRender.renderItemOverlayIntoGUI(this.fontRendererObj, profileViewerStack,
-								slot.xDisplayPosition, slot.yDisplayPosition, ""
-							);
-
-							this.itemRender.zLevel = 0.0F;
-							this.zLevel = 0.0F;
-
-							BetterContainers.profileViewerStackIndex = slot.getSlotIndex();
-						}
-					}
-				}
-			}
-		} else if (!hasRecipeSearchStack && $this instanceof GuiChest && slot.getSlotIndex() == 32 &&
-			BetterContainers.isBlankStack(-1, slot.getStack())) {
-			BetterContainers.recipeSearchStackIndex = -1;
-			hasRecipeSearchStack = true;
-
-			GuiChest eventGui = (GuiChest) $this;
-			ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-			String containerName = cc.getLowerChestInventory().getDisplayName().getUnformattedText();
-			if (containerName.equals("Craft Item") && cc.inventorySlots.size() >= 54) {
-				ci.cancel();
-
-				this.zLevel = 100.0F;
-				this.itemRender.zLevel = 100.0F;
-
-				GlStateManager.enableDepth();
-				this.itemRender.renderItemAndEffectIntoGUI(
-					recipeSearchStack,
-					slot.xDisplayPosition,
-					slot.yDisplayPosition
-				);
-				this.itemRender.renderItemOverlayIntoGUI(this.fontRendererObj, recipeSearchStack,
-					slot.xDisplayPosition, slot.yDisplayPosition, ""
-				);
-
-				this.itemRender.zLevel = 0.0F;
-				this.zLevel = 0.0F;
-				BetterContainers.recipeSearchStackIndex = slot.getSlotIndex();
-			} else {
-				BetterContainers.recipeSearchStackIndex = -1;
-			}
-		} else if (slot.getSlotIndex() == 0) {
-			hasProfileViewerStack = false;
-			hasRecipeSearchStack = false;
-		} else if (!($this instanceof GuiChest)) {
-			BetterContainers.recipeSearchStackIndex = -1;
-			BetterContainers.profileViewerStackIndex = -1;
-		}
-
-		if (slot.getStack() == null && NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen &&
-			NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(0, 0, 100 + Minecraft.getMinecraft().getRenderItem().zLevel);
-			GlStateManager.depthMask(false);
-			Gui.drawRect(slot.xDisplayPosition, slot.yDisplayPosition,
-				slot.xDisplayPosition + 16, slot.yDisplayPosition + 16, NEUOverlay.overlayColourDark
-			);
-			GlStateManager.depthMask(true);
-			GlStateManager.popMatrix();
-		}
+//		if (slot.getStack() == null && NotEnoughUpdates.INSTANCE.overlay.searchMode && RenderListener.drawingGuiScreen &&
+//			NotEnoughUpdates.INSTANCE.isOnSkyblock()) {
+//			GlStateManager.pushMatrix();
+//			GlStateManager.translate(0, 0, 100 + Minecraft.getMinecraft().getRenderItem().zLevel);
+//			GlStateManager.depthMask(false);
+//			Gui.drawRect(slot.xDisplayPosition, slot.yDisplayPosition,
+//				slot.xDisplayPosition + 16, slot.yDisplayPosition + 16, NEUOverlay.overlayColourDark
+//			);
+//			GlStateManager.depthMask(true);
+//			GlStateManager.popMatrix();
+//		}
 
 		ItemStack stack = slot.getStack();
 
-		if (stack != null) {
-			if (EnchantingSolvers.onStackRender(
-				stack,
-				slot.inventory,
-				slot.getSlotIndex(),
-				slot.xDisplayPosition,
-				slot.yDisplayPosition
-			)) {
-				ci.cancel();
-				return;
-			}
-			if (AbiphoneFavourites.getInstance().onRenderStack(stack)) {
-				ci.cancel();
-				return;
-			}
-		}
+//		if (stack != null) {
+//			if (EnchantingSolvers.onStackRender(
+//				stack,
+//				slot.inventory,
+//				slot.getSlotIndex(),
+//				slot.xDisplayPosition,
+//				slot.yDisplayPosition
+//			)) {
+//				ci.cancel();
+//				return;
+//			}
+//			if (AbiphoneFavourites.getInstance().onRenderStack(stack)) {
+//				ci.cancel();
+//				return;
+//			}
+//		}
 
 		RenderHelper.enableGUIStandardItemLighting();
 
-		if (BetterContainers.isOverriding() && !BetterContainers.shouldRenderStack(slot.slotNumber, stack)) {
-			ci.cancel();
-		}
+//		if (BetterContainers.isOverriding() && !BetterContainers.shouldRenderStack(slot.slotNumber, stack)) {
+//			ci.cancel();
+//		}
 	}
 
-	@ModifyArg(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;renderToolTip(Lnet/minecraft/item/ItemStack;II)V"), index = 0)
-	public ItemStack adjustItemStack(ItemStack itemStack) {
-		if (theSlot.slotNumber == BetterContainers.profileViewerStackIndex) {
-			return profileViewerStack;
-		} else if (theSlot.slotNumber == BetterContainers.recipeSearchStackIndex) {
-			return recipeSearchStack;
-		} else {
-			return itemStack;
-		}
-	}
+//	@ModifyArg(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;renderToolTip(Lnet/minecraft/item/ItemStack;II)V"), index = 0)
+//	public ItemStack adjustItemStack(ItemStack itemStack) {
+//		if (theSlot.slotNumber == BetterContainers.profileViewerStackIndex) {
+//			return profileViewerStack;
+//		} else if (theSlot.slotNumber == BetterContainers.recipeSearchStackIndex) {
+//			return recipeSearchStack;
+//		} else {
+//			return itemStack;
+//		}
+//	}
 
-	@Inject(method = "drawScreen",
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/entity/player/InventoryPlayer;getItemStack()Lnet/minecraft/item/ItemStack;",
-			shift = At.Shift.BEFORE,
-			ordinal = 1
-		)
-	)
-	public void drawScreen_after(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
-		AuctionSortModeWarning.getInstance().onPostGuiRender();
-	}
+//	@Inject(method = "drawScreen",
+//		at = @At(
+//			value = "INVOKE",
+//			target = "Lnet/minecraft/entity/player/InventoryPlayer;getItemStack()Lnet/minecraft/item/ItemStack;",
+//			shift = At.Shift.BEFORE,
+//			ordinal = 1
+//		)
+//	)
+//	public void drawScreen_after(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+//		AuctionSortModeWarning.getInstance().onPostGuiRender();
+//	}
 
 	@Redirect(method = "mouseReleased", at = @At(value = "INVOKE", target = "Ljava/util/Set;isEmpty()Z"))
 	public boolean mouseReleased_isEmpty(Set<?> set) {
 		return set.size() <= 1;
 	}
 
-	@Inject(method = "isMouseOverSlot", at = @At("HEAD"), cancellable = true)
-	public void isMouseOverSlot(Slot slotIn, int mouseX, int mouseY, CallbackInfoReturnable<Boolean> cir) {
-		StorageOverlay.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
-		GuiCustomEnchant.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
-		GuiCustomHex.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
-		AuctionBINWarning.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
-		PresetWarning.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
-		var event = new IsSlotBeingHoveredEvent();
-		MinecraftForge.EVENT_BUS.post(event);
-		switch (event.getOverride()) {
-			case DEFER_TO_DEFAULT:
-				break;
-			case IS_HOVERED:
-				cir.setReturnValue(true);
-				break;
-			case IS_NOT_HOVERED:
-				cir.setReturnValue(false);
-				break;
-		}
-	}
+//	@Inject(method = "isMouseOverSlot", at = @At("HEAD"), cancellable = true)
+//	public void isMouseOverSlot(Slot slotIn, int mouseX, int mouseY, CallbackInfoReturnable<Boolean> cir) {
+//		StorageOverlay.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
+//		GuiCustomEnchant.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
+//		GuiCustomHex.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
+//		AuctionBINWarning.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
+//		PresetWarning.getInstance().overrideIsMouseOverSlot(slotIn, mouseX, mouseY, cir);
+//		var event = new IsSlotBeingHoveredEvent();
+//		MinecraftForge.EVENT_BUS.post(event);
+//		switch (event.getOverride()) {
+//			case DEFER_TO_DEFAULT:
+//				break;
+//			case IS_HOVERED:
+//				cir.setReturnValue(true);
+//				break;
+//			case IS_NOT_HOVERED:
+//				cir.setReturnValue(false);
+//				break;
+//		}
+//	}
 
-	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;drawGradientRect(IIIIII)V"))
-	public void drawScreen_drawGradientRect(
-		GuiContainer container,
-		int left,
-		int top,
-		int right,
-		int bottom,
-		int startColor,
-		int endColor
-	) {
-		if (startColor == 0x80ffffff && endColor == 0x80ffffff &&
-			theSlot != null && SlotLocking.getInstance().isSlotLocked(theSlot)) {
-			int col = 0x80ff8080;
-			drawGradientRect(left, top, right, bottom, col, col);
-		} else {
-			drawGradientRect(left, top, right, bottom, startColor, endColor);
-		}
-	}
+//	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;drawGradientRect(IIIIII)V"))
+//	public void drawScreen_drawGradientRect(
+//		GuiContainer container,
+//		int left,
+//		int top,
+//		int right,
+//		int bottom,
+//		int startColor,
+//		int endColor
+//	) {
+//		if (startColor == 0x80ffffff && endColor == 0x80ffffff &&
+//			theSlot != null && SlotLocking.getInstance().isSlotLocked(theSlot)) {
+//			int col = 0x80ff8080;
+//			drawGradientRect(left, top, right, bottom, col, col);
+//		} else {
+//			drawGradientRect(left, top, right, bottom, startColor, endColor);
+//		}
+//	}
 
-	@Shadow
-	private Slot theSlot;
+//	@Shadow
+//	private Slot theSlot;
 
-	@Inject(method = "drawScreen", at = @At("RETURN"))
-	public void drawScreen(CallbackInfo ci) {
-		if (theSlot != null && SlotLocking.getInstance().isSlotLocked(theSlot)) {
-			SlotLocking.getInstance().setRealSlot(theSlot);
-			theSlot = null;
-		} else if (theSlot == null) {
-			SlotLocking.getInstance().setRealSlot(null);
-		}
-	}
+//	@Inject(method = "drawScreen", at = @At("RETURN"))
+//	public void drawScreen(CallbackInfo ci) {
+//		if (theSlot != null && SlotLocking.getInstance().isSlotLocked(theSlot)) {
+//			SlotLocking.getInstance().setRealSlot(theSlot);
+//			theSlot = null;
+//		} else if (theSlot == null) {
+//			SlotLocking.getInstance().setRealSlot(null);
+//		}
+//	}
 
 	private static final String TARGET_GETSTACK =
 		"Lnet/minecraft/inventory/Slot;getStack()Lnet/minecraft/item/ItemStack;";
 
-	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = TARGET_GETSTACK))
-	public ItemStack drawScreen_getStack(Slot slot) {
-		if (theSlot != null && theSlot == slot && theSlot.getStack() != null) {
-			ItemStack newStack = EnchantingSolvers.overrideStack(
-				theSlot.inventory,
-				theSlot.getSlotIndex(),
-				theSlot.getStack()
-			);
-			if (newStack != null) {
-				return newStack;
-			}
-		}
-		return slot.getStack();
-	}
+//	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = TARGET_GETSTACK))
+//	public ItemStack drawScreen_getStack(Slot slot) {
+//		if (theSlot != null && theSlot == slot && theSlot.getStack() != null) {
+//			ItemStack newStack = EnchantingSolvers.overrideStack(
+//				theSlot.inventory,
+//				theSlot.getSlotIndex(),
+//				theSlot.getStack()
+//			);
+//			if (newStack != null) {
+//				return newStack;
+//			}
+//		}
+//		return slot.getStack();
+//	}
 
-	@Redirect(method = "drawSlot", at = @At(value = "INVOKE", target = TARGET_GETSTACK))
-	public ItemStack drawSlot_getStack(Slot slot) {
-
-		ItemStack stack = slot.getStack();
-
-		if (stack != null) {
-			ItemStack newStack = EnchantingSolvers.overrideStack(slot.inventory, slot.getSlotIndex(), stack);
-			if (newStack != null) {
-				stack = newStack;
-			}
-		}
-		return stack;
-	}
+//	@Redirect(method = "drawSlot", at = @At(value = "INVOKE", target = TARGET_GETSTACK))
+//	public ItemStack drawSlot_getStack(Slot slot) {
+//
+//		ItemStack stack = slot.getStack();
+//
+//		if (stack != null) {
+//			ItemStack newStack = EnchantingSolvers.overrideStack(slot.inventory, slot.getSlotIndex(), stack);
+//			if (newStack != null) {
+//				stack = newStack;
+//			}
+//		}
+//		return stack;
+//	}
 
 	private static final String TARGET_CANBEHOVERED = "Lnet/minecraft/inventory/Slot;canBeHovered()Z";
 
-	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = TARGET_CANBEHOVERED))
-	public boolean drawScreen_canBeHovered(Slot slot) {
-		if ((NotEnoughUpdates.INSTANCE.config.improvedSBMenu.hideEmptyPanes &&
-			BetterContainers.isOverriding() && BetterContainers.isBlankStack(slot.slotNumber, slot.getStack())) ||
-			slot.getStack() != null &&
-				slot.getStack().hasTagCompound() && slot.getStack().getTagCompound().getBoolean("NEUHIDETOOLIP")) {
-			return false;
-		}
-		return slot.canBeHovered();
-	}
+//	@Redirect(method = "drawScreen", at = @At(value = "INVOKE", target = TARGET_CANBEHOVERED))
+//	public boolean drawScreen_canBeHovered(Slot slot) {
+//		if ((NotEnoughUpdates.INSTANCE.config.improvedSBMenu.hideEmptyPanes &&
+//			BetterContainers.isOverriding() && BetterContainers.isBlankStack(slot.slotNumber, slot.getStack())) ||
+//			slot.getStack() != null &&
+//				slot.getStack().hasTagCompound() && slot.getStack().getTagCompound().getBoolean("NEUHIDETOOLIP")) {
+//			return false;
+//		}
+//		return slot.canBeHovered();
+//	}
 
-	@Inject(method = "checkHotbarKeys", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;handleMouseClick(Lnet/minecraft/inventory/Slot;III)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-	public void checkHotbarKeys_Slotlock(int keyCode, CallbackInfoReturnable<Boolean> cir, int i) {
-		if (SlotLocking.getInstance().isSlotIndexLocked(i)) {
-			cir.setReturnValue(false);
-		}
-	}
+//	@Inject(method = "checkHotbarKeys", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;handleMouseClick(Lnet/minecraft/inventory/Slot;III)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+//	public void checkHotbarKeys_Slotlock(int keyCode, CallbackInfoReturnable<Boolean> cir, int i) {
+//		if (SlotLocking.getInstance().isSlotIndexLocked(i)) {
+//			cir.setReturnValue(false);
+//		}
+//	}
 
 	@Inject(method = "handleMouseClick", at = @At(value = "HEAD"), cancellable = true)
 	public void handleMouseClick(Slot slotIn, int slotId, int clickedButton, int clickType, CallbackInfo ci) {
@@ -368,13 +368,13 @@ public abstract class MixinGuiContainer extends GuiScreen {
 		new GuiContainerBackgroundDrawnEvent(((GuiContainer) (Object) this), partialTicks).post();
 	}
 
-	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemAndEffectIntoGUI(Lnet/minecraft/item/ItemStack;II)V", ordinal = 0))
-	public ItemStack drawSlot_renderItemAndEffectIntoGUI(ItemStack stack) {
-		return ItemCustomizeManager.useCustomItem(stack);
-	}
+//	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemAndEffectIntoGUI(Lnet/minecraft/item/ItemStack;II)V", ordinal = 0))
+//	public ItemStack drawSlot_renderItemAndEffectIntoGUI(ItemStack stack) {
+//		return ItemCustomizeManager.useCustomItem(stack);
+//	}
 
-	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemOverlayIntoGUI(Lnet/minecraft/client/gui/FontRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V"))
-	public ItemStack drawSlot_renderItemOverlays(ItemStack stack) {
-		return ItemCustomizeManager.useCustomItem(stack);
-	}
+//	@ModifyArg(method = "drawSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/RenderItem;renderItemOverlayIntoGUI(Lnet/minecraft/client/gui/FontRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V"))
+//	public ItemStack drawSlot_renderItemOverlays(ItemStack stack) {
+//		return ItemCustomizeManager.useCustomItem(stack);
+//	}
 }

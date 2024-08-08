@@ -26,7 +26,7 @@ import com.mojang.authlib.GameProfile;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.core.util.render.RenderUtils;
-import io.github.moulberry.notenoughupdates.profileviewer.level.LevelPage;
+//import io.github.moulberry.notenoughupdates.profileviewer.level.LevelPage;
 import io.github.moulberry.notenoughupdates.profileviewer.weight.lily.LilyWeight;
 import io.github.moulberry.notenoughupdates.profileviewer.weight.senither.SenitherWeight;
 import io.github.moulberry.notenoughupdates.profileviewer.weight.weight.Weight;
@@ -95,14 +95,6 @@ public class BasicPage extends GuiProfileViewerPage {
 					true
 				)
 			);
-			put(
-				"second_page",
-				Utils.editItemStackInfo(
-					skull,
-					EnumChatFormatting.GRAY + "Level",
-					true
-				)
-			);
 		}
 	};
 
@@ -124,13 +116,13 @@ public class BasicPage extends GuiProfileViewerPage {
 
 	private boolean onSecondPage;
 
-	private final LevelPage levelPage;
+//	private final LevelPage levelPage;
 	private boolean clickedLoadStatusButton = false;
 
 	public BasicPage(GuiProfileViewer instance) {
 		super(instance);
 		this.guiProfileViewer = instance;
-		this.levelPage = new LevelPage(guiProfileViewer, this);
+//		this.levelPage = new LevelPage(guiProfileViewer, this);
 	}
 
 	@Override
@@ -140,10 +132,10 @@ public class BasicPage extends GuiProfileViewerPage {
 		int guiLeft = GuiProfileViewer.getGuiLeft();
 		int guiTop = GuiProfileViewer.getGuiTop();
 
-		if (onSecondPage) {
-			levelPage.drawPage(mouseX, mouseY, partialTicks);
-			return;
-		}
+//		if (onSecondPage) {
+//			levelPage.drawPage(mouseX, mouseY, partialTicks);
+//			return;
+//		}
 
 		String location = null;
 		JsonObject status = clickedLoadStatusButton ? profile.getPlayerStatus() : null;
@@ -437,7 +429,7 @@ public class BasicPage extends GuiProfileViewerPage {
 					guiTop + 160
 				);
 			} else if (online) {
-				locationStr = NotEnoughUpdates.INSTANCE.navigation.getNameForAreaModeOrUnknown(location);
+				locationStr = "nonono you don't need this";
 			}
 			if (locationStr != null) {
 				statusStr += EnumChatFormatting.GRAY + " - " + EnumChatFormatting.GREEN + locationStr;
@@ -674,11 +666,11 @@ public class BasicPage extends GuiProfileViewerPage {
 			sbLevelX - 30, sbLevelY + 20, true, 0, 0.9f
 		);
 
-		if (mouseX >= guiLeft + 128 && mouseX <= guiLeft + 216) {
-			if (mouseY >= guiTop + 49 && mouseY <= guiTop + 113) {
-				if (Mouse.isButtonDown(0)) onSecondPage = true;
-			}
-		}
+//		if (mouseX >= guiLeft + 128 && mouseX <= guiLeft + 216) {
+//			if (mouseY >= guiTop + 49 && mouseY <= guiTop + 113) {
+////				if (Mouse.isButtonDown(0)) onSecondPage = true;
+//			}
+//		}
 
 		if (skyblockInfo != null && selectedProfile.skillsApiEnabled()) {
 			int position = 0;
@@ -1055,10 +1047,6 @@ public class BasicPage extends GuiProfileViewerPage {
 			case 1:
 				onSecondPage = false;
 				break;
-			case 2:
-				onSecondPage = true;
-				break;
-
 			default:
 				break;
 		}
@@ -1069,19 +1057,10 @@ public class BasicPage extends GuiProfileViewerPage {
 	public void drawSideButtons(int mouseX, int mouseY) {
 		GlStateManager.enableDepth();
 		GlStateManager.translate(0, 0, 5);
-		if (onSecondPage) {
-			Utils.drawPvSideButton(1, pageModeIcon.get("second_page"), true, guiProfileViewer, mouseX, mouseY);
-		} else {
-			Utils.drawPvSideButton(0, pageModeIcon.get("first_page"), true, guiProfileViewer, mouseX, mouseY);
-		}
+//		Utils.drawPvSideButton(0, pageModeIcon.get("first_page"), true, guiProfileViewer, mouseX, mouseY);
 		GlStateManager.translate(0, 0, -3);
 
 		GlStateManager.translate(0, 0, -2);
-		if (!onSecondPage) {
-			Utils.drawPvSideButton(1, pageModeIcon.get("second_page"), false, guiProfileViewer, mouseX, mouseY);
-		} else {
-			Utils.drawPvSideButton(0, pageModeIcon.get("first_page"), false, guiProfileViewer, mouseX, mouseY);
-		}
 		GlStateManager.disableDepth();
 	}
 }

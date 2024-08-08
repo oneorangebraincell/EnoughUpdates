@@ -26,33 +26,33 @@ import com.google.gson.JsonObject;
 import io.github.moulberry.moulconfig.observer.PropertyTypeAdapterFactory;
 import io.github.moulberry.notenoughupdates.autosubscribe.AutoLoad;
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe;
-import io.github.moulberry.notenoughupdates.core.BackgroundBlur;
+//import io.github.moulberry.notenoughupdates.core.BackgroundBlur;
 import io.github.moulberry.notenoughupdates.core.config.ConfigUtil;
 import io.github.moulberry.notenoughupdates.cosmetics.ShaderManager;
 import io.github.moulberry.notenoughupdates.listener.ChatListener;
 import io.github.moulberry.notenoughupdates.listener.ItemTooltipEssenceShopListener;
 import io.github.moulberry.notenoughupdates.listener.ItemTooltipListener;
-import io.github.moulberry.notenoughupdates.listener.ItemTooltipRngListener;
+//import io.github.moulberry.notenoughupdates.listener.ItemTooltipRngListener;
 import io.github.moulberry.notenoughupdates.listener.NEUEventListener;
 import io.github.moulberry.notenoughupdates.listener.RenderListener;
 import io.github.moulberry.notenoughupdates.listener.WorldListener;
-import io.github.moulberry.notenoughupdates.miscfeatures.CustomSkulls;
-import io.github.moulberry.notenoughupdates.miscfeatures.FairySouls;
-import io.github.moulberry.notenoughupdates.miscfeatures.NPCRetexturing;
-import io.github.moulberry.notenoughupdates.miscfeatures.Navigation;
-import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay;
-import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
+//import io.github.moulberry.notenoughupdates.miscfeatures.CustomSkulls;
+//import io.github.moulberry.notenoughupdates.miscfeatures.FairySouls;
+//import io.github.moulberry.notenoughupdates.miscfeatures.NPCRetexturing;
+//import io.github.moulberry.notenoughupdates.miscfeatures.Navigation;
+//import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay;
+//import io.github.moulberry.notenoughupdates.miscfeatures.SlotLocking;
 import io.github.moulberry.notenoughupdates.miscfeatures.StorageManager;
-import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.CustomBlockSounds;
-import io.github.moulberry.notenoughupdates.miscfeatures.inventory.MuseumCheapestItemOverlay;
-import io.github.moulberry.notenoughupdates.miscfeatures.inventory.MuseumItemHighlighter;
-import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
+//import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.CustomBlockSounds;
+//import io.github.moulberry.notenoughupdates.miscfeatures.inventory.MuseumCheapestItemOverlay;
+//import io.github.moulberry.notenoughupdates.miscfeatures.inventory.MuseumItemHighlighter;
+//import io.github.moulberry.notenoughupdates.miscgui.itemcustomization.ItemCustomizeManager;
 import io.github.moulberry.notenoughupdates.mixins.AccessorMinecraft;
 import io.github.moulberry.notenoughupdates.oneconfig.IOneConfigCompat;
 import io.github.moulberry.notenoughupdates.options.NEUConfig;
-import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
+//import io.github.moulberry.notenoughupdates.overlays.OverlayManager;
 import io.github.moulberry.notenoughupdates.profileviewer.ProfileViewer;
-import io.github.moulberry.notenoughupdates.recipes.RecipeGenerator;
+//import io.github.moulberry.notenoughupdates.recipes.RecipeGenerator;
 import io.github.moulberry.notenoughupdates.util.Utils;
 import io.github.moulberry.notenoughupdates.util.brigadier.BrigadierRoot;
 import io.github.moulberry.notenoughupdates.util.hypixelapi.HypixelItemAPI;
@@ -189,9 +189,9 @@ public class NotEnoughUpdates {
 																						 .registerTypeAdapterFactory(new PropertyTypeAdapterFactory())
 																						 .registerTypeAdapterFactory(KotlinTypeAdapterFactory.INSTANCE).create();
 	public NEUManager manager;
-	public NEUOverlay overlay;
+//	public NEUOverlay overlay;
 	public NEUConfig config;
-	public Navigation navigation = new Navigation(this);
+//	public Navigation navigation = new Navigation(this);
 	public GuiScreen openGui = null;
 	public long lastOpenedGui = 0;
 	public boolean packDevEnabled = false;
@@ -238,11 +238,11 @@ public class NotEnoughUpdates {
 			config = ConfigUtil.loadConfig(NEUConfig.class, configFile, gson);
 		}
 
-		ItemCustomizeManager.loadCustomization(new File(neuDir, "itemCustomization.json"));
-		StorageManager.getInstance().loadConfig(new File(neuDir, "storageItems.json"));
-		FairySouls.getInstance().loadFoundSoulsForAllProfiles(new File(neuDir, "collected_fairy_souls.json"), gson);
-		PetInfoOverlay.loadConfig(new File(neuDir, "petCache.json"));
-		SlotLocking.getInstance().loadConfig(new File(neuDir, "slotLocking.json"));
+//		ItemCustomizeManager.loadCustomization(new File(neuDir, "itemCustomization.json"));
+//		StorageManager.getInstance().loadConfig(new File(neuDir, "storageItems.json"));
+//		FairySouls.getInstance().loadFoundSoulsForAllProfiles(new File(neuDir, "collected_fairy_souls.json"), gson);
+//		PetInfoOverlay.loadConfig(new File(neuDir, "petCache.json"));
+//		SlotLocking.getInstance().loadConfig(new File(neuDir, "slotLocking.json"));
 		ItemPriceInformation.init(new File(neuDir, "auctionable_items.json"), gson);
 
 		if (config == null) {
@@ -283,56 +283,56 @@ public class NotEnoughUpdates {
 			if (config.apiData.moulberryCodesApi.isEmpty()) {
 				config.apiData.moulberryCodesApi = "moulberry.codes";
 			}
-			if (config.ahGraph.serverUrl.trim().isEmpty()) {
-				config.ahGraph.serverUrl = "pricehistory.notenoughupdates.org";
-			}
+//			if (config.ahGraph.serverUrl.trim().isEmpty()) {
+//				config.ahGraph.serverUrl = "pricehistory.notenoughupdates.org";
+//			}
 
 			saveConfig();
 		}
 
 		if (config != null)
-			if (config.mining.powderGrindingTrackerResetMode == 2)
-				OverlayManager.powderGrindingOverlay.load();
+//			if (config.mining.powderGrindingTrackerResetMode == 2)
+//				OverlayManager.powderGrindingOverlay.load();
 
 		IOneConfigCompat.getInstance().ifPresent(it -> it.initConfig(config));
 
 		MinecraftForge.EVENT_BUS.register(new NEUEventListener(this));
-		MinecraftForge.EVENT_BUS.register(new RecipeGenerator(this));
-		MinecraftForge.EVENT_BUS.register(OverlayManager.petInfoOverlay);
-		MinecraftForge.EVENT_BUS.register(OverlayManager.timersOverlay);
+//		MinecraftForge.EVENT_BUS.register(new RecipeGenerator(this));
+//		MinecraftForge.EVENT_BUS.register(OverlayManager.petInfoOverlay);
+//		MinecraftForge.EVENT_BUS.register(OverlayManager.timersOverlay);
 		MinecraftForge.EVENT_BUS.register(new ChatListener(this));
 		MinecraftForge.EVENT_BUS.register(new ItemTooltipListener(this));
-		MinecraftForge.EVENT_BUS.register(new ItemTooltipRngListener(this));
+//		MinecraftForge.EVENT_BUS.register(new ItemTooltipRngListener(this));
 		MinecraftForge.EVENT_BUS.register(new ItemTooltipEssenceShopListener(this));
 		MinecraftForge.EVENT_BUS.register(new RenderListener(this));
-		MinecraftForge.EVENT_BUS.register(navigation);
+//		MinecraftForge.EVENT_BUS.register(navigation);
 		MinecraftForge.EVENT_BUS.register(new WorldListener(this));
 		AutoLoad.INSTANCE.provide(supplier -> MinecraftForge.EVENT_BUS.register(supplier.get()));
-		MinecraftForge.EVENT_BUS.register(MuseumItemHighlighter.INSTANCE);
-		MinecraftForge.EVENT_BUS.register(MuseumCheapestItemOverlay.INSTANCE);
+//		MinecraftForge.EVENT_BUS.register(MuseumItemHighlighter.INSTANCE);
+//		MinecraftForge.EVENT_BUS.register(MuseumCheapestItemOverlay.INSTANCE);
 
 		if (Minecraft.getMinecraft().getResourceManager() instanceof IReloadableResourceManager) {
 			IReloadableResourceManager manager = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
-			manager.registerReloadListener(CustomSkulls.getInstance());
-			manager.registerReloadListener(NPCRetexturing.getInstance());
+//			manager.registerReloadListener(CustomSkulls.getInstance());
+//			manager.registerReloadListener(NPCRetexturing.getInstance());
 			manager.registerReloadListener(ShaderManager.getInstance());
-			manager.registerReloadListener(new ItemCustomizeManager.ReloadListener());
-			manager.registerReloadListener(new CustomBlockSounds.ReloaderListener());
+//			manager.registerReloadListener(new ItemCustomizeManager.ReloadListener());
+//			manager.registerReloadListener(new CustomBlockSounds.ReloaderListener());
 		}
 
 		BrigadierRoot.INSTANCE.updateHooks();
 
-		BackgroundBlur.registerListener();
+//		BackgroundBlur.registerListener();
 
 		manager = new NEUManager(this, neuDir);
 		manager.loadItemInformation();
-		overlay = new NEUOverlay(manager);
+//		overlay = new NEUOverlay(manager);
 		profileViewer = new ProfileViewer(manager);
 		HypixelItemAPI.INSTANCE.loadItemData();
 
-		for (KeyBinding kb : manager.keybinds) {
-			ClientRegistry.registerKeyBinding(kb);
-		}
+//		for (KeyBinding kb : manager.keybinds) {
+//			ClientRegistry.registerKeyBinding(kb);
+//		}
 
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			File tmp = new File(neuDir, "tmp");
@@ -346,18 +346,18 @@ public class NotEnoughUpdates {
 	}
 
 	public void saveConfig() {
-		try {
-			OverlayManager.powderGrindingOverlay.save();
-		} catch (Exception ignored) {
-		}
+//		try {
+//			OverlayManager.powderGrindingOverlay.save();
+//		} catch (Exception ignored) {
+//		}
 
 		ConfigUtil.saveConfig(config, configFile, gson);
 
-		ItemCustomizeManager.saveCustomization(new File(neuDir, "itemCustomization.json"));
-		StorageManager.getInstance().saveConfig(new File(neuDir, "storageItems.json"));
-		FairySouls.getInstance().saveFoundSoulsForAllProfiles(new File(neuDir, "collected_fairy_souls.json"), gson);
-		PetInfoOverlay.saveConfig(new File(neuDir, "petCache.json"));
-		SlotLocking.getInstance().saveConfig(new File(neuDir, "slotLocking.json"));
+//		ItemCustomizeManager.saveCustomization(new File(neuDir, "itemCustomization.json"));
+//		StorageManager.getInstance().saveConfig(new File(neuDir, "storageItems.json"));
+//		FairySouls.getInstance().saveFoundSoulsForAllProfiles(new File(neuDir, "collected_fairy_souls.json"), gson);
+//		PetInfoOverlay.saveConfig(new File(neuDir, "petCache.json"));
+//		SlotLocking.getInstance().saveConfig(new File(neuDir, "slotLocking.json"));
 	}
 
 	/**

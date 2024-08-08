@@ -156,8 +156,8 @@ public class PetInfoOverlay extends TextOverlay {
 		return config;
 	}
 
-	private static long lastUpdate = 0;
-	private static float levelXpLast = 0;
+	private static final long lastUpdate = 0;
+	private static final float levelXpLast = 0;
 
 	private static float xpGainHourLast = -1;
 	private static float xpGainHour = -1;
@@ -194,7 +194,7 @@ public class PetInfoOverlay extends TextOverlay {
 	}
 
 	public static Pet getCurrentPet2() {
-		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.dualPets) return null;
+//		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.dualPets) return null;
 		if (config.selectedPet == config.selectedPet2) return null;
 		return config.petMap.get(config.selectedPet2);
 	}
@@ -329,7 +329,7 @@ public class PetInfoOverlay extends TextOverlay {
 	@Override
 	public void updateFrequent() {
 		Pet currentPet = getCurrentPet();
-		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.enablePetInfo || currentPet == null ||
+		if (currentPet == null ||
 			Objects.equals(SBInfo.getInstance().getLocation(), "rift")) {
 			overlayStrings = null;
 		} else {
@@ -381,12 +381,12 @@ public class PetInfoOverlay extends TextOverlay {
 		String lvlStringShort = null;
 		String lvlString = null;
 
-		if (levelPercent != 100 || !NotEnoughUpdates.INSTANCE.config.petOverlay.hidePetLevelProgress) {
-			lvlStringShort = EnumChatFormatting.AQUA + "" + roundFloat(levelXp) + "/" +
+		if (levelPercent != 100) {
+			lvlStringShort = EnumChatFormatting.AQUA + roundFloat(levelXp) + "/" +
 				roundFloat(currentPet.petLevel.getExpRequiredForNextLevel())
 				+ EnumChatFormatting.YELLOW + " (" + levelPercent + "%)";
 
-			lvlString = EnumChatFormatting.AQUA + "" +
+			lvlString = EnumChatFormatting.AQUA +
 				Utils.shortNumberFormat(Math.min(levelXp, currentPet.petLevel.getExpRequiredForNextLevel()), 0) + "/" +
 				Utils.shortNumberFormat(currentPet.petLevel.getExpRequiredForNextLevel(), 0)
 				+ EnumChatFormatting.YELLOW + " (" + levelPercent + "%)";
@@ -420,7 +420,7 @@ public class PetInfoOverlay extends TextOverlay {
 			JsonObject json = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(currentPet.petItem);
 			if (json != null) {
 				String name;
-				if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petItemIcon) name = NotEnoughUpdates.INSTANCE.manager.jsonToStack(json).getDisplayName();
+				if (1 == 1) name = NotEnoughUpdates.INSTANCE.manager.jsonToStack(json).getDisplayName(); // nigga I hate this neu
 				else name = "";
 				petItemStr = EnumChatFormatting.AQUA + "Held Item: " + name;
 			}
@@ -440,8 +440,7 @@ public class PetInfoOverlay extends TextOverlay {
 				}
 			}
 
-			if (currentPet.petLevel.getCurrentLevel() < (currentPet.petLevel.getMaxLevel() - 1) ||
-				!NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayText.contains(6)) {
+			if (currentPet.petLevel.getCurrentLevel() < (currentPet.petLevel.getMaxLevel() - 1)) {
 				float remainingMax = currentPet.petLevel.getExpRequiredForMaxLevel() - currentPet.petLevel.getExpTotal();
 				if (remaining > 0) {
 					if (xpGain < 1000) {
@@ -461,68 +460,69 @@ public class PetInfoOverlay extends TextOverlay {
 		String finalPetItemStr = petItemStr;
 		String finalLvlString = lvlString;
 		String finalLvlStringShort = lvlStringShort;
-		return new ArrayList<String>() {{
-			for (int index : NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayText) {
-				switch (index) {
-					case 0:
-						add(petName);
-						break;
-					case 1:
-						if (finalLvlStringShort != null) add(finalLvlStringShort);
-						break;
-					case 2:
-						if (finalLvlString != null) add(finalLvlString);
-						break;
-					case 3:
-						add(finalXpGainString);
-						break;
-					case 4:
-						add(totalXpString);
-						break;
-					case 5:
-						add(finalPetItemStr);
-						break;
-					case 6:
-						if (finalEtaStr != null) add(finalEtaStr);
-						break;
-					case 7:
-						if (finalEtaMaxStr != null) add(finalEtaMaxStr);
-						break;
-				}
-			}
-		}};
+//		return new ArrayList<String>() {{
+//			for (int index : NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayText) {
+//				switch (index) {
+//					case 0:
+//						add(petName);
+//						break;
+//					case 1:
+//						if (finalLvlStringShort != null) add(finalLvlStringShort);
+//						break;
+//					case 2:
+//						if (finalLvlString != null) add(finalLvlString);
+//						break;
+//					case 3:
+//						add(finalXpGainString);
+//						break;
+//					case 4:
+//						add(totalXpString);
+//						break;
+//					case 5:
+//						add(finalPetItemStr);
+//						break;
+//					case 6:
+//						if (finalEtaStr != null) add(finalEtaStr);
+//						break;
+//					case 7:
+//						if (finalEtaMaxStr != null) add(finalEtaMaxStr);
+//						break;
+//				}
+//			}
+//		}};
+		return null;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return NotEnoughUpdates.INSTANCE.config.petOverlay.enablePetInfo;
+		return false;// NotEnoughUpdates.INSTANCE.config.petOverlay.enablePetInfo;
 	}
 
 	public void update() {
-		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.enablePetInfo) {
-			overlayStrings = null;
-			return;
-		}
+		//		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.enablePetInfo) {
+//			overlayStrings = null;
+//			return;
+//		}
 
-		Pet currentPet = getCurrentPet();
-		if (currentPet == null) {
-			overlayStrings = null;
-		} else {
-			lastUpdate = System.currentTimeMillis();
-			levelXpLast = currentPet.petLevel.getExpInCurrentLevel();
-			updatePetLevels();
-		}
+//		Pet currentPet = getCurrentPet();
+//		if (currentPet == null) {
+//			overlayStrings = null;
+//		} else {
+//			lastUpdate = System.currentTimeMillis();
+//			levelXpLast = currentPet.petLevel.getExpInCurrentLevel();
+//			updatePetLevels();
+//		}
 	}
 
 	@Override
 	protected Vector2f getSize(List<String> strings) {
-		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon) return super.getSize(strings);
+//		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon) return super.getSize(strings);
 		return super.getSize(strings).translate(25, 0);
 	}
 
 	@Override
 	protected Vector2f getTextOffset() {
-		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon) return super.getTextOffset();
+//		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon) return super.getTextOffset();
 		if (this.styleSupplier.get() != TextOverlayStyle.BACKGROUND) return super.getTextOffset().translate(30, 0);
 		return super.getTextOffset().translate(25, 0);
 	}
@@ -531,22 +531,20 @@ public class PetInfoOverlay extends TextOverlay {
 	public void renderDummy() {
 		super.renderDummy();
 
-		if (!NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon) return;
-
-		JsonObject petItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("ROCK;0");
-		if (petItem != null) {
-			Vector2f position = getPosition(overlayWidth, overlayHeight, false);
-			int x = (int) position.x;
-			int y = (int) position.y;
-
-			ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem);
-			GlStateManager.enableDepth();
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(x - 2, y - 2, 0);
-			GlStateManager.scale(2, 2, 1);
-			Utils.drawItemStack(stack, 0, 0);
-			GlStateManager.popMatrix();
-		}
+		//		JsonObject petItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get("ROCK;0");
+//		if (petItem != null) {
+//			Vector2f position = getPosition(overlayWidth, overlayHeight, false);
+//			int x = (int) position.x;
+//			int y = (int) position.y;
+//
+//			ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem);
+//			GlStateManager.enableDepth();
+//			GlStateManager.pushMatrix();
+//			GlStateManager.translate(x - 2, y - 2, 0);
+//			GlStateManager.scale(2, 2, 1);
+//			Utils.drawItemStack(stack, 0, 0);
+//			GlStateManager.popMatrix();
+//		}
 	}
 
 	@Override
@@ -560,131 +558,130 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 
 		if (overlayStrings == null) {
-			return;
 		}
 
-		if (NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon) {
-			int mythicRarity = currentPet.rarity.petId;
-			JsonObject petItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(
-				currentPet.skin != null ? currentPet.skin : (currentPet.petType + ";" + mythicRarity));
+//		if (NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon) {
+//			int mythicRarity = currentPet.rarity.petId;
+//			JsonObject petItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(
+//				currentPet.skin != null ? currentPet.skin : (currentPet.petType + ";" + mythicRarity));
+//
+//			if (petItem == null && currentPet.rarity.petId == 5) {
+//				petItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(
+//					currentPet.skin != null ? currentPet.skin : (currentPet.petType + ";" + 4));
+//			}
+//
+//			if (petItem != null) {
+//				Vector2f position = getPosition(overlayWidth, overlayHeight, true);
+//				int x = (int) position.x;
+//				int y = (int) position.y;
+//
+//				ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem);
+//				GlStateManager.enableDepth();
+//				GlStateManager.pushMatrix();
+//				Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
+//
+//				if (firstPetLines == 1) y -= 9;
+//				if (firstPetLines == 2) y -= 3;
+//
+//				GlStateManager.translate(x - 2, y - 2, 0);
+//				GlStateManager.scale(2, 2, 1);
+//				Utils.drawItemStack(stack, 0, 0);
+//				Utils.pushGuiScale(0);
+//				GlStateManager.popMatrix();
+//			}
+//
+//			Pet currentPet2 = getCurrentPet2();
+//			if (currentPet2 != null) {
+//				JsonObject petItem2 = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(
+//					currentPet2.skin != null ? currentPet2.skin : (currentPet2.petType + ";" + currentPet2.rarity.petId));
+//				if (petItem2 != null) {
+//					Vector2f position = getPosition(overlayWidth, overlayHeight, true);
+//					int x = (int) position.x;
+//					int y = (int) position.y + (overlayStrings.size() - secondPetLines) * 10;
+//
+//					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem2);
+//					GlStateManager.enableDepth();
+//					GlStateManager.pushMatrix();
+//					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
+//
+//					if (secondPetLines == 1) y -= 9;
+//					if (secondPetLines == 2) y -= 3;
+//
+//					GlStateManager.translate(x - 2, y - 2, 0);
+//					GlStateManager.scale(2, 2, 1);
+//					Utils.drawItemStack(stack, 0, 0);
+//					Utils.pushGuiScale(0);
+//					GlStateManager.popMatrix();
+//				}
+//			}
+//		}
 
-			if (petItem == null && currentPet.rarity.petId == 5) {
-				petItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(
-					currentPet.skin != null ? currentPet.skin : (currentPet.petType + ";" + 4));
-			}
-
-			if (petItem != null) {
-				Vector2f position = getPosition(overlayWidth, overlayHeight, true);
-				int x = (int) position.x;
-				int y = (int) position.y;
-
-				ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem);
-				GlStateManager.enableDepth();
-				GlStateManager.pushMatrix();
-				Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
-
-				if (firstPetLines == 1) y -= 9;
-				if (firstPetLines == 2) y -= 3;
-
-				GlStateManager.translate(x - 2, y - 2, 0);
-				GlStateManager.scale(2, 2, 1);
-				Utils.drawItemStack(stack, 0, 0);
-				Utils.pushGuiScale(0);
-				GlStateManager.popMatrix();
-			}
-
-			Pet currentPet2 = getCurrentPet2();
-			if (currentPet2 != null) {
-				JsonObject petItem2 = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(
-					currentPet2.skin != null ? currentPet2.skin : (currentPet2.petType + ";" + currentPet2.rarity.petId));
-				if (petItem2 != null) {
-					Vector2f position = getPosition(overlayWidth, overlayHeight, true);
-					int x = (int) position.x;
-					int y = (int) position.y + (overlayStrings.size() - secondPetLines) * 10;
-
-					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petItem2);
-					GlStateManager.enableDepth();
-					GlStateManager.pushMatrix();
-					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
-
-					if (secondPetLines == 1) y -= 9;
-					if (secondPetLines == 2) y -= 3;
-
-					GlStateManager.translate(x - 2, y - 2, 0);
-					GlStateManager.scale(2, 2, 1);
-					Utils.drawItemStack(stack, 0, 0);
-					Utils.pushGuiScale(0);
-					GlStateManager.popMatrix();
-				}
-			}
-		}
-
-		if (NotEnoughUpdates.INSTANCE.config.petOverlay.petItemIcon) {
-			int backgroundOffset = (NotEnoughUpdates.INSTANCE.config.petOverlay.petInfoOverlayStyle == 0) ? 0 : 5;
-			if (currentPet.petItem != null) {
-				JsonObject petHeldItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(currentPet.petItem);
-
-				if (petHeldItem != null) {
-					Vector2f position = getPosition(overlayWidth, overlayHeight, true);
-					int xOffset = NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon ? 0 : 25;
-					int x = (int) position.x - xOffset;
-					int y = (int) position.y;
-
-					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petHeldItem);
-
-					int counter = 0;
-					for (String line : overlayStrings) {
-						if (line.contains("Held Item:")) {
-							break;
-						}
-						counter++;
-					}
-					if (counter >= overlayStrings.size()) {
-						return;
-					}
-
-					GlStateManager.enableDepth();
-					GlStateManager.pushMatrix();
-					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
-					GlStateManager.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
-					Utils.drawItemStack(stack, 0, 0);
-					Utils.pushGuiScale(0);
-					GlStateManager.popMatrix();
-				}
-			}
-
-			Pet currentPet2 = getCurrentPet2();
-			if (currentPet2 != null && currentPet2.petItem != null) {
-				JsonObject petHeldItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(currentPet2.petItem);
-
-				if (petHeldItem != null) {
-					Vector2f position = getPosition(overlayWidth, overlayHeight, true);
-					int x = (int) position.x;
-					int y = (int) position.y + (overlayStrings.size() - secondPetLines) * 10;
-
-					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petHeldItem);
-
-					int counter = 0;
-					for (String line : overlayStrings) {
-						if (line.contains("Held Item:")) {
-							break;
-						}
-						counter++;
-					}
-					if (counter >= overlayStrings.size()) {
-						return;
-					}
-
-					GlStateManager.enableDepth();
-					GlStateManager.pushMatrix();
-					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
-					GlStateManager.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
-					Utils.drawItemStack(stack, 0, 0);
-					Utils.pushGuiScale(0);
-					GlStateManager.popMatrix();
-				}
-			}
-		}
+//		if (NotEnoughUpdates.INSTANCE.config.petOverlay.petItemIcon) {
+//			int backgroundOffset = (NotEnoughUpdates.INSTANCE.config.petOverlay.petInfoOverlayStyle == 0) ? 0 : 5;
+//			if (currentPet.petItem != null) {
+//				JsonObject petHeldItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(currentPet.petItem);
+//
+//				if (petHeldItem != null) {
+//					Vector2f position = getPosition(overlayWidth, overlayHeight, true);
+//					int xOffset = NotEnoughUpdates.INSTANCE.config.petOverlay.petOverlayIcon ? 0 : 25;
+//					int x = (int) position.x - xOffset;
+//					int y = (int) position.y;
+//
+//					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petHeldItem);
+//
+//					int counter = 0;
+//					for (String line : overlayStrings) {
+//						if (line.contains("Held Item:")) {
+//							break;
+//						}
+//						counter++;
+//					}
+//					if (counter >= overlayStrings.size()) {
+//						return;
+//					}
+//
+//					GlStateManager.enableDepth();
+//					GlStateManager.pushMatrix();
+//					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
+//					GlStateManager.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
+//					Utils.drawItemStack(stack, 0, 0);
+//					Utils.pushGuiScale(0);
+//					GlStateManager.popMatrix();
+//				}
+//			}
+//
+//			Pet currentPet2 = getCurrentPet2();
+//			if (currentPet2 != null && currentPet2.petItem != null) {
+//				JsonObject petHeldItem = NotEnoughUpdates.INSTANCE.manager.getItemInformation().get(currentPet2.petItem);
+//
+//				if (petHeldItem != null) {
+//					Vector2f position = getPosition(overlayWidth, overlayHeight, true);
+//					int x = (int) position.x;
+//					int y = (int) position.y + (overlayStrings.size() - secondPetLines) * 10;
+//
+//					ItemStack stack = NotEnoughUpdates.INSTANCE.manager.jsonToStack(petHeldItem);
+//
+//					int counter = 0;
+//					for (String line : overlayStrings) {
+//						if (line.contains("Held Item:")) {
+//							break;
+//						}
+//						counter++;
+//					}
+//					if (counter >= overlayStrings.size()) {
+//						return;
+//					}
+//
+//					GlStateManager.enableDepth();
+//					GlStateManager.pushMatrix();
+//					Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.locationedit.guiScale);
+//					GlStateManager.translate(x + 77, y + (10 * counter) + 2 - backgroundOffset, 0);
+//					Utils.drawItemStack(stack, 0, 0);
+//					Utils.pushGuiScale(0);
+//					GlStateManager.popMatrix();
+//				}
+//			}
+//		}
 	}
 
 	public static float getBoostMultiplier(String boostName) {
@@ -707,7 +704,7 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 	}
 
-	private static List<String> validXpTypes = Lists.newArrayList(
+	private static final List<String> validXpTypes = Lists.newArrayList(
 		"mining",
 		"foraging",
 		"enchanting",
@@ -919,7 +916,7 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 	}
 
-	private static HashMap<Long, Float> xpHourMap = new HashMap<>();
+	private static final HashMap<Long, Float> xpHourMap = new HashMap<>();
 	private long lastXpUpdate = -1;
 	private long lastXpUpdateNonZero = -1;
 	private long lastPaused = -1;
@@ -1052,7 +1049,7 @@ public class PetInfoOverlay extends TextOverlay {
 		}
 	}
 
-	private int lastLevelHovered = 0;
+	private final int lastLevelHovered = 0;
 
 	private static final Pattern AUTOPET_EQUIP = Pattern.compile(
 		"§cAutopet §eequipped your §7\\[Lvl (?<level>\\d+)](?: §8\\[§6\\d+§8§.✦§8])? §(?<rarityColor>.)(?<name>.*)§e! §a§lVIEW RULE§r");
@@ -1060,42 +1057,42 @@ public class PetInfoOverlay extends TextOverlay {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onChatReceived(ClientChatReceivedEvent event) {
 		NEUConfig config = NotEnoughUpdates.INSTANCE.config;
-		if (config.petOverlay.enablePetInfo || config.itemOverlays.enableMonkeyCheck || config.petOverlay.petInvDisplay) {
-			if (event.type == 0) {
-				String chatMessage = Utils.cleanColour(event.message.getUnformattedText());
-
-				Matcher autopetMatcher = AUTOPET_EQUIP.matcher(event.message.getFormattedText());
-				if (autopetMatcher.matches()) {
-					try {
-						lastLevelHovered = Integer.parseInt(autopetMatcher.group("level"));
-					} catch (NumberFormatException ignored) {
-					}
-
-					String petName = autopetMatcher.group("name");
-					Rarity rarity = getRarityByColor(autopetMatcher.group("rarityColor"));
-
-					String pet = Utils.cleanColour(petName)
-														.replaceAll("[^\\w ]", "").trim()
-														.replace(" ", "_").toUpperCase(Locale.ROOT);
-
-					setCurrentPet(getClosestPetIndex(pet, rarity.petId, "", lastLevelHovered));
-					if (PetInfoOverlay.config.selectedPet == -1) {
-						setCurrentPet(getClosestPetIndex(pet, rarity.petId - 1, "", lastLevelHovered));
-						if (getCurrentPet() != null && !"PET_ITEM_TIER_BOOST".equals(getCurrentPet().petItem)) {
-							PetInfoOverlay.config.selectedPet = -1;
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-								EnumChatFormatting.RED + "[NEU] Can't find pet \u00a7" + petName +
-									EnumChatFormatting.RED + " try revisiting all pages of /pets."));
-						}
-					}
-				} else if ((chatMessage.toLowerCase(Locale.ROOT).startsWith("you despawned your")) || (chatMessage.toLowerCase(
-					Locale.ROOT).contains(
-					"switching to profile"))
-					|| (chatMessage.toLowerCase(Locale.ROOT).contains("transferring you to a new island..."))) {
-					clearPet();
-				}
-			}
-		}
+//		if (config.petOverlay.enablePetInfo || config.itemOverlays.enableMonkeyCheck || config.petOverlay.petInvDisplay) {
+//			if (event.type == 0) {
+//				String chatMessage = Utils.cleanColour(event.message.getUnformattedText());
+//
+//				Matcher autopetMatcher = AUTOPET_EQUIP.matcher(event.message.getFormattedText());
+//				if (autopetMatcher.matches()) {
+//					try {
+//						lastLevelHovered = Integer.parseInt(autopetMatcher.group("level"));
+//					} catch (NumberFormatException ignored) {
+//					}
+//
+//					String petName = autopetMatcher.group("name");
+//					Rarity rarity = getRarityByColor(autopetMatcher.group("rarityColor"));
+//
+//					String pet = Utils.cleanColour(petName)
+//														.replaceAll("[^\\w ]", "").trim()
+//														.replace(" ", "_").toUpperCase(Locale.ROOT);
+//
+//					setCurrentPet(getClosestPetIndex(pet, rarity.petId, "", lastLevelHovered));
+//					if (PetInfoOverlay.config.selectedPet == -1) {
+//						setCurrentPet(getClosestPetIndex(pet, rarity.petId - 1, "", lastLevelHovered));
+//						if (getCurrentPet() != null && !"PET_ITEM_TIER_BOOST".equals(getCurrentPet().petItem)) {
+//							PetInfoOverlay.config.selectedPet = -1;
+//							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+//								EnumChatFormatting.RED + "[NEU] Can't find pet \u00a7" + petName +
+//									EnumChatFormatting.RED + " try revisiting all pages of /pets."));
+//						}
+//					}
+//				} else if ((chatMessage.toLowerCase(Locale.ROOT).startsWith("you despawned your")) || (chatMessage.toLowerCase(
+//					Locale.ROOT).contains(
+//					"switching to profile"))
+//					|| (chatMessage.toLowerCase(Locale.ROOT).contains("transferring you to a new island..."))) {
+//					clearPet();
+//				}
+//			}
+//		}
 	}
 
 	private static Rarity getRarityByColor(String colChar) {

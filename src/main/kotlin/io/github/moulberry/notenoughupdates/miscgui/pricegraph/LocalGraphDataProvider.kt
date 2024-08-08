@@ -97,10 +97,9 @@ object LocalGraphDataProvider : GraphDataProvider {
             if (!priceDir.exists() && !priceDir.mkdir()) return
             val files = priceDir.listFiles()
             val dataRetentionTime =
-                System.currentTimeMillis() - config.ahGraph.dataRetention * 86400000L
+                System.currentTimeMillis() - 7 * 86400000L
             files?.filter { it.extension == "gz" && it.lastModified() < dataRetentionTime }?.forEach { it.delete() }
 
-            if (!config.ahGraph.graphEnabled || config.ahGraph.dataSource != 1) return
             if (fileLocked.get()) while (fileLocked.get()) { // Wait for file to become unlocked
                 Thread.sleep(100)
             }

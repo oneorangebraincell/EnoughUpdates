@@ -246,7 +246,7 @@ public class CapeNode {
 			NEUCape.Offset offset = new NEUCape.Offset(cardinal, 2);
 			CapeNode other = neighbors.get(offset);
 			if (other != null) {
-				resolve(other, 2f * NEUCape.targetDist * (cardinal.yOff == 0 ? horzDistMult : 1), 1f * 7.5f, opt);
+				resolve(other, 2f * NEUCape.targetDist * (cardinal.yOff == 0 ? horzDistMult : 1), 7.5f, opt);
 			}
 		}
 	}

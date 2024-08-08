@@ -25,7 +25,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import io.github.moulberry.notenoughupdates.ItemPriceInformation;
+//import io.github.moulberry.notenoughupdates.ItemPriceInformation;
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates;
 import io.github.moulberry.notenoughupdates.core.util.StringUtils;
 import io.github.moulberry.notenoughupdates.miscfeatures.PetInfoOverlay;
@@ -70,13 +70,13 @@ public class ItemTooltipListener {
 	private final Pattern xpLevelPattern = Pattern.compile("(.*) (\\xA7e(.*)\\xA76/\\xA7e(.*))");
 	private final HashSet<String> percentStats = new HashSet<>();
 	DecimalFormat myFormatter = new DecimalFormat("#,###,###.###");
-	private String currentRarity = "COMMON";
-	private String currentGemstoneRarity = "COMMON";
+	private final String currentRarity = "COMMON";
+	private final String currentGemstoneRarity = "COMMON";
 	private boolean copied = false;
-	private boolean showReforgeStoneStats = true;
-	private boolean showGemstoneStats = true;
-	private boolean pressedArrowLast = false;
-	private boolean pressedShiftLast = false;
+	private final boolean showReforgeStoneStats = true;
+	private final boolean showGemstoneStats = true;
+	private final boolean pressedArrowLast = false;
+	private final boolean pressedShiftLast = false;
 
 	public ItemTooltipListener(NotEnoughUpdates neu) {
 		this.neu = neu;
@@ -100,7 +100,7 @@ public class ItemTooltipListener {
 		if (internalName == null) {
 			return;
 		}
-		petToolTipXPExtendPetMenu(event);
+//		petToolTipXPExtendPetMenu(event);
 
 		boolean hasEnchantments = event.itemStack.getTagCompound().getCompoundTag("ExtraAttributes").hasKey(
 			"enchantments",
@@ -113,49 +113,49 @@ public class ItemTooltipListener {
 		JsonObject enchantsConst = Constants.ENCHANTS;
 		JsonArray allItemEnchs = null;
 		Set<String> ignoreFromPool = new HashSet<>();
-		if (enchantsConst != null && hasEnchantments && NotEnoughUpdates.INSTANCE.config.tooltipTweaks.missingEnchantList) {
-			try {
-				JsonArray enchantPools = enchantsConst.get("enchant_pools").getAsJsonArray();
-				for (JsonElement element : enchantPools) {
-					Set<String> currentPool = new HashSet<>();
-					for (JsonElement poolElement : element.getAsJsonArray()) {
-						String poolS = poolElement.getAsString();
-						currentPool.add(poolS);
-					}
-					for (JsonElement poolElement : element.getAsJsonArray()) {
-						String poolS = poolElement.getAsString();
-						if (enchantIds.contains(poolS)) {
-							ignoreFromPool.addAll(currentPool);
-							break;
-						}
-					}
-				}
-
-				JsonObject enchantsObj = enchantsConst.get("enchants").getAsJsonObject();
-				NBTTagCompound tag = event.itemStack.getTagCompound();
-				if (tag != null) {
-					NBTTagCompound display = tag.getCompoundTag("display");
-					if (display.hasKey("Lore", 9)) {
-						NBTTagList list = display.getTagList("Lore", 8);
-						out:
-						for (int i = list.tagCount(); i >= 0; i--) {
-							String line = list.getStringTagAt(i);
-							for (int j = 0; j < Utils.rarityArrC.length; j++) {
-								for (Map.Entry<String, JsonElement> entry : enchantsObj.entrySet()) {
-									if (line.contains(Utils.rarityArrC[j] + " " + entry.getKey()) || line.contains(
-										Utils.rarityArrC[j] + " DUNGEON " + entry.getKey()) || line.contains(
-										"SHINY " + Utils.rarityArrC[j].replaceAll("§.§.", "") + " DUNGEON " + entry.getKey())) {
-										allItemEnchs = entry.getValue().getAsJsonArray();
-										break out;
-									}
-								}
-							}
-						}
-					}
-				}
-			} catch (Exception ignored) {
-			}
-		}
+//		if (enchantsConst != null && hasEnchantments && NotEnoughUpdates.INSTANCE.config.tooltipTweaks.missingEnchantList) {
+//			try {
+//				JsonArray enchantPools = enchantsConst.get("enchant_pools").getAsJsonArray();
+//				for (JsonElement element : enchantPools) {
+//					Set<String> currentPool = new HashSet<>();
+//					for (JsonElement poolElement : element.getAsJsonArray()) {
+//						String poolS = poolElement.getAsString();
+//						currentPool.add(poolS);
+//					}
+//					for (JsonElement poolElement : element.getAsJsonArray()) {
+//						String poolS = poolElement.getAsString();
+//						if (enchantIds.contains(poolS)) {
+//							ignoreFromPool.addAll(currentPool);
+//							break;
+//						}
+//					}
+//				}
+//
+//				JsonObject enchantsObj = enchantsConst.get("enchants").getAsJsonObject();
+//				NBTTagCompound tag = event.itemStack.getTagCompound();
+//				if (tag != null) {
+//					NBTTagCompound display = tag.getCompoundTag("display");
+//					if (display.hasKey("Lore", 9)) {
+//						NBTTagList list = display.getTagList("Lore", 8);
+//						out:
+//						for (int i = list.tagCount(); i >= 0; i--) {
+//							String line = list.getStringTagAt(i);
+//							for (int j = 0; j < Utils.rarityArrC.length; j++) {
+//								for (Map.Entry<String, JsonElement> entry : enchantsObj.entrySet()) {
+//									if (line.contains(Utils.rarityArrC[j] + " " + entry.getKey()) || line.contains(
+//										Utils.rarityArrC[j] + " DUNGEON " + entry.getKey()) || line.contains(
+//										"SHINY " + Utils.rarityArrC[j].replaceAll("§.§.", "") + " DUNGEON " + entry.getKey())) {
+//										allItemEnchs = entry.getValue().getAsJsonArray();
+//										break out;
+//									}
+//								}
+//							}
+//						}
+//					}
+//				}
+//			} catch (Exception ignored) {
+//			}
+//		}
 
 		boolean gotToEnchants = false;
 		boolean passedEnchants = false;
@@ -163,523 +163,523 @@ public class ItemTooltipListener {
 		boolean dungeonProfit = false;
 		List<String> newTooltip = new ArrayList<>();
 
-		for (int k = 0; k < event.toolTip.size(); k++) {
-			String line = event.toolTip.get(k);
+//		for (int k = 0; k < event.toolTip.size(); k++) {
+//			String line = event.toolTip.get(k);
+//
+//			if (line.endsWith(EnumChatFormatting.DARK_GRAY + "Reforge Stone") &&
+//				NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showReforgeStats) {
+//				JsonObject reforgeStones = Constants.REFORGESTONES;
+//
+//				if (reforgeStones != null && reforgeStones.has(internalName)) {
+//					boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+//					if (!pressedShiftLast && shift) {
+//						showReforgeStoneStats = !showReforgeStoneStats;
+//					}
+//					pressedShiftLast = shift;
+//
+//					newTooltip.add(line);
+//					newTooltip.add("");
+//					if (!showReforgeStoneStats) {
+//						newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
+//					} else {
+//						newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
+//					}
+//
+//					JsonObject reforgeInfo = reforgeStones.get(internalName).getAsJsonObject();
+//					JsonArray requiredRaritiesArray = reforgeInfo.get("requiredRarities").getAsJsonArray();
+//
+//					if (showReforgeStoneStats && requiredRaritiesArray.size() > 0) {
+//						String reforgeName = Utils.getElementAsString(reforgeInfo.get("reforgeName"), "");
+//
+//						String[] requiredRarities = new String[requiredRaritiesArray.size()];
+//						for (int i = 0; i < requiredRaritiesArray.size(); i++) {
+//							requiredRarities[i] = requiredRaritiesArray.get(i).getAsString();
+//						}
+//
+//						int rarityIndex = requiredRarities.length - 1;
+//						String rarity = requiredRarities[rarityIndex];
+//						for (int i = 0; i < requiredRarities.length; i++) {
+//							String rar = requiredRarities[i];
+//							if (rar.equalsIgnoreCase(currentRarity)) {
+//								rarity = rar;
+//								rarityIndex = i;
+//								break;
+//							}
+//						}
+//
+//						boolean left = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
+//						boolean right = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+//						if (!pressedArrowLast && (left || right)) {
+//							if (left) {
+//								rarityIndex--;
+//							} else {
+//								rarityIndex++;
+//							}
+//							if (rarityIndex < 0) rarityIndex = 0;
+//							if (rarityIndex >= requiredRarities.length) rarityIndex = requiredRarities.length - 1;
+//							currentRarity = requiredRarities[rarityIndex];
+//							rarity = currentRarity;
+//						}
+//						pressedArrowLast = left || right;
+//
+//						JsonElement statsE = reforgeInfo.get("reforgeStats");
+//
+//						String rarityFormatted = Utils.rarityArrMap.getOrDefault(rarity, rarity);
+//
+//						JsonElement reforgeAbilityE = reforgeInfo.get("reforgeAbility");
+//						String reforgeAbility = null;
+//						if (reforgeAbilityE != null) {
+//							if (reforgeAbilityE.isJsonPrimitive() && reforgeAbilityE.getAsJsonPrimitive().isString()) {
+//								reforgeAbility = Utils.getElementAsString(reforgeInfo.get("reforgeAbility"), "");
+//
+//							} else if (reforgeAbilityE.isJsonObject()) {
+//								if (reforgeAbilityE.getAsJsonObject().has(rarity)) {
+//									reforgeAbility = reforgeAbilityE.getAsJsonObject().get(rarity).getAsString();
+//								}
+//							}
+//						}
+//
+//						if (reforgeAbility != null && !reforgeAbility.isEmpty()) {
+//							String text = EnumChatFormatting.BLUE + (reforgeName.isEmpty() ? "Bonus: " : reforgeName + " Bonus: ") +
+//								EnumChatFormatting.GRAY + reforgeAbility;
+//							boolean first = true;
+//							for (String s : Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, 150)) {
+//								newTooltip.add((first ? "" : "  ") + s);
+//								first = false;
+//							}
+//							newTooltip.add("");
+//						}
+//
+//						newTooltip.add(EnumChatFormatting.BLUE + "Stats for " + rarityFormatted + "§9: [§l§m< §9Switch§l§m >§9]");
+//
+//						if (statsE != null && statsE.isJsonObject()) {
+//							JsonObject stats = statsE.getAsJsonObject();
+//
+//							JsonElement statsRarE = stats.get(rarity);
+//							if (statsRarE != null && statsRarE.isJsonObject()) {
+//
+//								JsonObject statsRar = statsRarE.getAsJsonObject();
+//
+//								TreeSet<Map.Entry<String, JsonElement>> sorted = new TreeSet<>(Map.Entry.comparingByKey());
+//								sorted.addAll(statsRar.entrySet());
+//
+//								for (Map.Entry<String, JsonElement> entry : sorted) {
+//									if (entry.getValue().isJsonPrimitive() && ((JsonPrimitive) entry.getValue()).isNumber()) {
+//										float statNumF = entry.getValue().getAsFloat();
+//										String statNumS;
+//										if (statNumF % 1 == 0) {
+//											statNumS = String.valueOf(Math.round(statNumF));
+//										} else {
+//											statNumS = Utils.floatToString(statNumF, 1);
+//										}
+//										String reforgeNamePretty = WordUtils.capitalizeFully(entry.getKey().replace("_", " "));
+//										String text =
+//											EnumChatFormatting.GRAY + reforgeNamePretty + ": " + EnumChatFormatting.GREEN + "+" + statNumS;
+//										if (percentStats.contains(entry.getKey())) {
+//											text += "%";
+//										}
+//										newTooltip.add("  " + text);
+//									}
+//								}
+//							}
+//						}
+//
+//						JsonElement reforgeCostsE = reforgeInfo.get("reforgeCosts");
+//						int reforgeCost = -1;
+//						if (reforgeCostsE != null) {
+//							if (reforgeCostsE.isJsonPrimitive() && reforgeCostsE.getAsJsonPrimitive().isNumber()) {
+//								reforgeCost = (int) Utils.getElementAsFloat(reforgeInfo.get("reforgeAbility"), -1);
+//
+//							} else if (reforgeCostsE.isJsonObject()) {
+//								if (reforgeCostsE.getAsJsonObject().has(rarity)) {
+//									reforgeCost = (int) Utils.getElementAsFloat(reforgeCostsE.getAsJsonObject().get(rarity), -1);
+//								}
+//							}
+//						}
+//
+//						if (reforgeCost >= 0) {
+//							String text = EnumChatFormatting.BLUE + "Apply Cost: " + EnumChatFormatting.GOLD +
+//								StringUtils.formatNumber(reforgeCost) + " coins";
+//							newTooltip.add("");
+//							newTooltip.add(text);
+//						}
+//
+//					}
+//
+//					continue;
+//				}
+//			} else if (gemstoneRegex.matcher(internalName).matches() &&
+//				NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showGemstoneStats) {
+//				String[] splitInternal = internalName.split("_");
+//				String gemstoneTier = splitInternal[0];
+//				String gemstoneType = splitInternal[1];
+//
+//				JsonObject gemstones = Constants.GEMSTONES;
+//				if (gemstones != null && gemstones.getAsJsonObject("gemstoneTypes").has(gemstoneType) &&
+//					gemstones.getAsJsonObject("gemstoneTypes").getAsJsonObject(gemstoneType).getAsJsonObject("stats").has(
+//						gemstoneTier)) {
+//					int lineToInject = event.toolTip.get(1).contains("Collection Item") ? 3 : 1;
+//
+//					if (k == lineToInject) {
+//						boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+//						if (!pressedShiftLast && shift) {
+//							showGemstoneStats = !showGemstoneStats;
+//						}
+//						pressedShiftLast = shift;
+//
+//						if (!showGemstoneStats) {
+//							newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
+//						} else {
+//							newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
+//						}
+//
+//						JsonObject gemstoneInfo = gemstones.getAsJsonObject("gemstoneTypes").getAsJsonObject(gemstoneType);
+//						JsonObject statNums = gemstoneInfo.getAsJsonObject("stats").getAsJsonObject(gemstoneTier);
+//
+//						List<Map.Entry<String, JsonElement>> validRarities = new ArrayList<>(statNums.entrySet());
+//						int rarityIndex = validRarities.size() - 1;
+//						String rarity = validRarities.get(rarityIndex).getKey();
+//						for (int i = 0; i < validRarities.size(); i++) {
+//							String rar = validRarities.get(i).getKey();
+//							if (rar.equalsIgnoreCase(currentGemstoneRarity)) {
+//								rarity = rar;
+//								rarityIndex = i;
+//								break;
+//							}
+//						}
+//
+//						if (showGemstoneStats) {
+//							boolean left = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
+//							boolean right = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+//							if (!pressedArrowLast && (left || right)) {
+//								if (left) {
+//									rarityIndex--;
+//								} else {
+//									rarityIndex++;
+//								}
+//								if (rarityIndex < 0) rarityIndex = 0;
+//								if (rarityIndex >= validRarities.size()) rarityIndex = validRarities.size() - 1;
+//								currentGemstoneRarity = validRarities.get(rarityIndex).getKey();
+//								rarity = currentGemstoneRarity;
+//							}
+//							pressedArrowLast = left || right;
+//
+//							String rarityFormatted = Utils.rarityArrMap.getOrDefault(rarity, rarity);
+//							String statName = gemstoneInfo.get("statName").getAsString();
+//							double statNum = validRarities.get(rarityIndex).getValue().getAsDouble();
+//							int removalCost = gemstones.getAsJsonObject("removalCosts").get(gemstoneTier).getAsInt();
+//
+//							String formattedStatNum = "";
+//							if (statNum == 0) formattedStatNum = "???";
+//							else if (statNum % 1 == 0) formattedStatNum += Math.round(statNum);
+//							else formattedStatNum += statNum;
+//
+//							if (gemstoneInfo.has("chiselBonus")) {
+//								String chiselBonus = gemstoneInfo.get("chiselBonus").getAsString();
+//								String formattedChiselBonus = chiselBonus.replace(
+//									"{}",
+//									gemstones.getAsJsonObject("chiselPercentages").get(gemstoneTier).getAsString()
+//								);
+//
+//								newTooltip.add("");
+//								String text = EnumChatFormatting.BLUE + "Chisel bonus: " + formattedChiselBonus;
+//								boolean first = true;
+//								for (String s : Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, 150)) {
+//									newTooltip.add((first ? "" : "  ") + s);
+//									first = false;
+//								}
+//								newTooltip.add("");
+//							}
+//							newTooltip.add("§9Stats for " + rarityFormatted + "§9: [§l§m< §9Switch§l§m >§9]");
+//							newTooltip.add("  §7" + statName + ": §a+" + formattedStatNum);
+//							newTooltip.add("");
+//							newTooltip.add(
+//								"§9Removal Cost: §6" + StringUtils.formatNumber(removalCost) + (removalCost == 1 ? " coin" : " coins"));
+//							newTooltip.add("§8Combinable in Gemstone Grinder or The Hex");
+//							newTooltip.add("");
+//						}
+//					}
+//				}
+//			} else if (line.contains("\u00A7cR\u00A76a\u00A7ei\u00A7an\u00A7bb\u00A79o\u00A7dw\u00A79 Rune")) {
+//				line = line.replace(
+//					"\u00A7cR\u00A76a\u00A7ei\u00A7an\u00A7bb\u00A79o\u00A7dw\u00A79 Rune",
+//					Utils.chromaString("Rainbow Rune", k, false) + EnumChatFormatting.BLUE
+//				);
+//			} else if (hasEnchantments) {
+//				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) &&
+//					NotEnoughUpdates.INSTANCE.config.tooltipTweaks.missingEnchantList) {
+//					boolean lineHasEnch = false;
+//					for (String s : enchantIds) {
+//						String enchantName = WordUtils.capitalizeFully(s.replace("_", " "));
+//						if (line.contains(enchantName)) {
+//							lineHasEnch = true;
+//							break;
+//						}
+//					}
+//					if (lineHasEnch) {
+//						gotToEnchants = true;
+//					} else {
+//						if (gotToEnchants && !passedEnchants && Utils.cleanColour(line).trim().length() == 0) {
+//							if (enchantsConst != null && allItemEnchs != null) {
+//								List<String> missing = new ArrayList<>();
+//								for (JsonElement enchIdElement : allItemEnchs) {
+//									String enchId = enchIdElement.getAsString();
+//									if (!enchId.startsWith("ultimate_") && !ignoreFromPool.contains(enchId) &&
+//										!enchantIds.contains(enchId)) {
+//										missing.add(enchId);
+//									}
+//								}
+//								if (!missing.isEmpty()) {
+//									newTooltip.add("");
+//									StringBuilder currentLine = new StringBuilder(
+//										EnumChatFormatting.RED + "Missing: " + EnumChatFormatting.GRAY);
+//									for (int i = 0; i < missing.size(); i++) {
+//										String enchName = WordUtils.capitalizeFully(missing.get(i).replace("_", " "));
+//										if (currentLine.length() != 0 &&
+//											(Utils.cleanColour(currentLine.toString()).length() + enchName.length()) > 40) {
+//											newTooltip.add(currentLine.toString());
+//											currentLine = new StringBuilder();
+//										}
+//										if (currentLine.length() != 0 && i != 0) {
+//											currentLine.append(", ").append(enchName);
+//										} else {
+//											currentLine.append(EnumChatFormatting.GRAY).append(enchName);
+//										}
+//									}
+//									if (currentLine.length() != 0) {
+//										newTooltip.add(currentLine.toString());
+//									}
+//								}
+//							}
+//							passedEnchants = true;
+//						}
+//					}
+//				}
+//			}
+//
+//			newTooltip.add(line);
+//
+//			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showPriceInfoAucItem) {
+//				if (line.contains(EnumChatFormatting.GRAY + "Buy it now: ") || line.contains(
+//					EnumChatFormatting.GRAY + "Bidder: ") || line.contains(EnumChatFormatting.GRAY + "Starting bid: ")) {
+//
+//					if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+//						newTooltip.add("");
+//						newTooltip.add(EnumChatFormatting.GRAY + "[SHIFT for Price Info]");
+//					} else {
+//						ItemPriceInformation.addToTooltip(newTooltip, internalName, event.itemStack);
+//					}
+//				}
+//			}
+//
+//			if (NotEnoughUpdates.INSTANCE.config.dungeons.profitDisplayLoc == 2 &&
+//				Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
+//				if (line.contains(EnumChatFormatting.GREEN + "Open Reward Chest")) {
+//					dungeonProfit = true;
+//				} else if (k == 7 && dungeonProfit) {
+//					GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
+//					ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
+//					IInventory lower = cc.getLowerChestInventory();
+//
+//					int chestCost = 0;
+//					try {
+//						String line6 = Utils.cleanColour(line);
+//						StringBuilder cost = new StringBuilder();
+//						for (int i = 0; i < line6.length(); i++) {
+//							char c = line6.charAt(i);
+//							if ("0123456789".indexOf(c) >= 0) {
+//								cost.append(c);
+//							}
+//						}
+//						if (cost.length() > 0) {
+//							chestCost = Integer.parseInt(cost.toString());
+//						}
+//					} catch (Exception ignored) {
+//					}
+//
+//					String missingItem = null;
+//					int totalValue = 0;
+//					HashMap<String, Double> itemValues = new HashMap<>();
+//					for (int i = 0; i < 5; i++) {
+//						ItemStack item = lower.getStackInSlot(11 + i);
+//						String internal = neu.manager.getInternalNameForItem(item);
+//						if (internal != null) {
+//							internal = internal.replace("\u00CD", "I").replace("\u0130", "I");
+//							float bazaarPrice = -1;
+//							JsonObject bazaarInfo = neu.manager.auctionManager.getBazaarInfo(internal);
+//							if (bazaarInfo != null && bazaarInfo.has("curr_sell")) {
+//								bazaarPrice = bazaarInfo.get("curr_sell").getAsFloat();
+//							}
+//							if (bazaarPrice < 5000000 && internal.equals("RECOMBOBULATOR_3000")) bazaarPrice = 5000000;
+//
+//							double worth = -1;
+//							if (bazaarPrice > 0) {
+//								worth = bazaarPrice;
+//							} else {
+//								switch (NotEnoughUpdates.INSTANCE.config.dungeons.profitType) {
+//									case 1:
+//										worth = neu.manager.auctionManager.getItemAvgBin(internal);
+//										break;
+//									case 2:
+//										JsonObject auctionInfo = neu.manager.auctionManager.getItemAuctionInfo(internal);
+//										if (auctionInfo != null) {
+//											if (auctionInfo.has("clean_price")) {
+//												worth = (long) auctionInfo.get("clean_price").getAsDouble();
+//											} else {
+//												worth =
+//													(long) (auctionInfo.get("price").getAsDouble() / auctionInfo.get("count").getAsDouble());
+//											}
+//										}
+//										break;
+//									default:
+//										worth = neu.manager.auctionManager.getLowestBin(internal);
+//								}
+//								if (worth <= 0) {
+//									worth = neu.manager.auctionManager.getLowestBin(internal);
+//									if (worth <= 0) {
+//										worth = neu.manager.auctionManager.getItemAvgBin(internal);
+//										if (worth <= 0) {
+//											JsonObject auctionInfo = neu.manager.auctionManager.getItemAuctionInfo(internal);
+//											if (auctionInfo != null) {
+//												if (auctionInfo.has("clean_price")) {
+//													worth = (int) auctionInfo.get("clean_price").getAsFloat();
+//												} else {
+//													worth = (int) (auctionInfo.get("price").getAsFloat() / auctionInfo.get("count").getAsFloat());
+//												}
+//											}
+//										}
+//									}
+//								}
+//							}
+//
+//							if (worth > 0 && totalValue >= 0) {
+//								totalValue += worth;
+//
+//								String display = item.getDisplayName();
+//
+//								if (display.contains("Enchanted Book")) {
+//									NBTTagCompound tag = item.getTagCompound();
+//									if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
+//										NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+//										NBTTagCompound enchants = ea.getCompoundTag("enchantments");
+//
+//										int highestLevel = -1;
+//										for (String enchname : enchants.getKeySet()) {
+//											int level = enchants.getInteger(enchname);
+//											if (level > highestLevel) {
+//												display = EnumChatFormatting.BLUE + WordUtils.capitalizeFully(enchname
+//													.replace("_", " ")
+//													.replace("Ultimate", "")
+//													.trim()) + " " + level;
+//											}
+//										}
+//									}
+//								}
+//
+//								itemValues.put(display, worth);
+//							} else {
+//								if (totalValue != -1) {
+//									missingItem = internal;
+//								}
+//								totalValue = -1;
+//							}
+//						}
+//					}
+//
+//					String valueStringBIN1;
+//					String valueStringBIN2;
+//					if (totalValue >= 0) {
+//						valueStringBIN1 = EnumChatFormatting.YELLOW + "Value (BIN): ";
+//						valueStringBIN2 = EnumChatFormatting.GOLD + StringUtils.formatNumber(totalValue) + " coins";
+//					} else {
+//						valueStringBIN1 = EnumChatFormatting.YELLOW + "Can't find BIN: ";
+//						valueStringBIN2 = missingItem;
+//					}
+//
+//					int profitLossBIN = totalValue - chestCost;
+//					String profitPrefix = EnumChatFormatting.DARK_GREEN.toString();
+//					String lossPrefix = EnumChatFormatting.RED.toString();
+//					String prefix = profitLossBIN >= 0 ? profitPrefix : lossPrefix;
+//
+//					String plStringBIN;
+//					if (profitLossBIN >= 0) {
+//						plStringBIN = prefix + "+" + StringUtils.formatNumber(profitLossBIN) + " coins";
+//					} else {
+//						plStringBIN = prefix + "-" + StringUtils.formatNumber(-profitLossBIN) + " coins";
+//					}
+//
+//					String neu = EnumChatFormatting.YELLOW + "[NEU] ";
+//
+//					newTooltip.add(neu + valueStringBIN1 + " " + valueStringBIN2);
+//					if (totalValue >= 0) {
+//						newTooltip.add(neu + EnumChatFormatting.YELLOW + "Profit/Loss: " + plStringBIN);
+//					}
+//
+//					for (Map.Entry<String, Double> entry : itemValues.entrySet()) {
+//						newTooltip.add(neu + entry.getKey() + prefix + "+" + StringUtils.formatNumber(entry.getValue().intValue()));
+//					}
+//				}
+//			}
+//		}
+//
+//		pressedShiftLast = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+//		pressedArrowLast = Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
+//
+//		event.toolTip.clear();
+//		event.toolTip.addAll(newTooltip);
 
-			if (line.endsWith(EnumChatFormatting.DARK_GRAY + "Reforge Stone") &&
-				NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showReforgeStats) {
-				JsonObject reforgeStones = Constants.REFORGESTONES;
+//		if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showPriceInfoInvItem) {
+//			ItemPriceInformation.addToTooltip(event.toolTip, internalName, event.itemStack);
+//		}
 
-				if (reforgeStones != null && reforgeStones.has(internalName)) {
-					boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-					if (!pressedShiftLast && shift) {
-						showReforgeStoneStats = !showReforgeStoneStats;
-					}
-					pressedShiftLast = shift;
-
-					newTooltip.add(line);
-					newTooltip.add("");
-					if (!showReforgeStoneStats) {
-						newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
-					} else {
-						newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
-					}
-
-					JsonObject reforgeInfo = reforgeStones.get(internalName).getAsJsonObject();
-					JsonArray requiredRaritiesArray = reforgeInfo.get("requiredRarities").getAsJsonArray();
-
-					if (showReforgeStoneStats && requiredRaritiesArray.size() > 0) {
-						String reforgeName = Utils.getElementAsString(reforgeInfo.get("reforgeName"), "");
-
-						String[] requiredRarities = new String[requiredRaritiesArray.size()];
-						for (int i = 0; i < requiredRaritiesArray.size(); i++) {
-							requiredRarities[i] = requiredRaritiesArray.get(i).getAsString();
-						}
-
-						int rarityIndex = requiredRarities.length - 1;
-						String rarity = requiredRarities[rarityIndex];
-						for (int i = 0; i < requiredRarities.length; i++) {
-							String rar = requiredRarities[i];
-							if (rar.equalsIgnoreCase(currentRarity)) {
-								rarity = rar;
-								rarityIndex = i;
-								break;
-							}
-						}
-
-						boolean left = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
-						boolean right = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
-						if (!pressedArrowLast && (left || right)) {
-							if (left) {
-								rarityIndex--;
-							} else {
-								rarityIndex++;
-							}
-							if (rarityIndex < 0) rarityIndex = 0;
-							if (rarityIndex >= requiredRarities.length) rarityIndex = requiredRarities.length - 1;
-							currentRarity = requiredRarities[rarityIndex];
-							rarity = currentRarity;
-						}
-						pressedArrowLast = left || right;
-
-						JsonElement statsE = reforgeInfo.get("reforgeStats");
-
-						String rarityFormatted = Utils.rarityArrMap.getOrDefault(rarity, rarity);
-
-						JsonElement reforgeAbilityE = reforgeInfo.get("reforgeAbility");
-						String reforgeAbility = null;
-						if (reforgeAbilityE != null) {
-							if (reforgeAbilityE.isJsonPrimitive() && reforgeAbilityE.getAsJsonPrimitive().isString()) {
-								reforgeAbility = Utils.getElementAsString(reforgeInfo.get("reforgeAbility"), "");
-
-							} else if (reforgeAbilityE.isJsonObject()) {
-								if (reforgeAbilityE.getAsJsonObject().has(rarity)) {
-									reforgeAbility = reforgeAbilityE.getAsJsonObject().get(rarity).getAsString();
-								}
-							}
-						}
-
-						if (reforgeAbility != null && !reforgeAbility.isEmpty()) {
-							String text = EnumChatFormatting.BLUE + (reforgeName.isEmpty() ? "Bonus: " : reforgeName + " Bonus: ") +
-								EnumChatFormatting.GRAY + reforgeAbility;
-							boolean first = true;
-							for (String s : Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, 150)) {
-								newTooltip.add((first ? "" : "  ") + s);
-								first = false;
-							}
-							newTooltip.add("");
-						}
-
-						newTooltip.add(EnumChatFormatting.BLUE + "Stats for " + rarityFormatted + "§9: [§l§m< §9Switch§l§m >§9]");
-
-						if (statsE != null && statsE.isJsonObject()) {
-							JsonObject stats = statsE.getAsJsonObject();
-
-							JsonElement statsRarE = stats.get(rarity);
-							if (statsRarE != null && statsRarE.isJsonObject()) {
-
-								JsonObject statsRar = statsRarE.getAsJsonObject();
-
-								TreeSet<Map.Entry<String, JsonElement>> sorted = new TreeSet<>(Map.Entry.comparingByKey());
-								sorted.addAll(statsRar.entrySet());
-
-								for (Map.Entry<String, JsonElement> entry : sorted) {
-									if (entry.getValue().isJsonPrimitive() && ((JsonPrimitive) entry.getValue()).isNumber()) {
-										float statNumF = entry.getValue().getAsFloat();
-										String statNumS;
-										if (statNumF % 1 == 0) {
-											statNumS = String.valueOf(Math.round(statNumF));
-										} else {
-											statNumS = Utils.floatToString(statNumF, 1);
-										}
-										String reforgeNamePretty = WordUtils.capitalizeFully(entry.getKey().replace("_", " "));
-										String text =
-											EnumChatFormatting.GRAY + reforgeNamePretty + ": " + EnumChatFormatting.GREEN + "+" + statNumS;
-										if (percentStats.contains(entry.getKey())) {
-											text += "%";
-										}
-										newTooltip.add("  " + text);
-									}
-								}
-							}
-						}
-
-						JsonElement reforgeCostsE = reforgeInfo.get("reforgeCosts");
-						int reforgeCost = -1;
-						if (reforgeCostsE != null) {
-							if (reforgeCostsE.isJsonPrimitive() && reforgeCostsE.getAsJsonPrimitive().isNumber()) {
-								reforgeCost = (int) Utils.getElementAsFloat(reforgeInfo.get("reforgeAbility"), -1);
-
-							} else if (reforgeCostsE.isJsonObject()) {
-								if (reforgeCostsE.getAsJsonObject().has(rarity)) {
-									reforgeCost = (int) Utils.getElementAsFloat(reforgeCostsE.getAsJsonObject().get(rarity), -1);
-								}
-							}
-						}
-
-						if (reforgeCost >= 0) {
-							String text = EnumChatFormatting.BLUE + "Apply Cost: " + EnumChatFormatting.GOLD +
-								StringUtils.formatNumber(reforgeCost) + " coins";
-							newTooltip.add("");
-							newTooltip.add(text);
-						}
-
-					}
-
-					continue;
-				}
-			} else if (gemstoneRegex.matcher(internalName).matches() &&
-				NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showGemstoneStats) {
-				String[] splitInternal = internalName.split("_");
-				String gemstoneTier = splitInternal[0];
-				String gemstoneType = splitInternal[1];
-
-				JsonObject gemstones = Constants.GEMSTONES;
-				if (gemstones != null && gemstones.getAsJsonObject("gemstoneTypes").has(gemstoneType) &&
-					gemstones.getAsJsonObject("gemstoneTypes").getAsJsonObject(gemstoneType).getAsJsonObject("stats").has(
-						gemstoneTier)) {
-					int lineToInject = event.toolTip.get(1).contains("Collection Item") ? 3 : 1;
-
-					if (k == lineToInject) {
-						boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-						if (!pressedShiftLast && shift) {
-							showGemstoneStats = !showGemstoneStats;
-						}
-						pressedShiftLast = shift;
-
-						if (!showGemstoneStats) {
-							newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to show extra info]");
-						} else {
-							newTooltip.add(EnumChatFormatting.DARK_GRAY + "[Press SHIFT to hide extra info]");
-						}
-
-						JsonObject gemstoneInfo = gemstones.getAsJsonObject("gemstoneTypes").getAsJsonObject(gemstoneType);
-						JsonObject statNums = gemstoneInfo.getAsJsonObject("stats").getAsJsonObject(gemstoneTier);
-
-						List<Map.Entry<String, JsonElement>> validRarities = new ArrayList<>(statNums.entrySet());
-						int rarityIndex = validRarities.size() - 1;
-						String rarity = validRarities.get(rarityIndex).getKey();
-						for (int i = 0; i < validRarities.size(); i++) {
-							String rar = validRarities.get(i).getKey();
-							if (rar.equalsIgnoreCase(currentGemstoneRarity)) {
-								rarity = rar;
-								rarityIndex = i;
-								break;
-							}
-						}
-
-						if (showGemstoneStats) {
-							boolean left = Keyboard.isKeyDown(Keyboard.KEY_LEFT);
-							boolean right = Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
-							if (!pressedArrowLast && (left || right)) {
-								if (left) {
-									rarityIndex--;
-								} else {
-									rarityIndex++;
-								}
-								if (rarityIndex < 0) rarityIndex = 0;
-								if (rarityIndex >= validRarities.size()) rarityIndex = validRarities.size() - 1;
-								currentGemstoneRarity = validRarities.get(rarityIndex).getKey();
-								rarity = currentGemstoneRarity;
-							}
-							pressedArrowLast = left || right;
-
-							String rarityFormatted = Utils.rarityArrMap.getOrDefault(rarity, rarity);
-							String statName = gemstoneInfo.get("statName").getAsString();
-							double statNum = validRarities.get(rarityIndex).getValue().getAsDouble();
-							int removalCost = gemstones.getAsJsonObject("removalCosts").get(gemstoneTier).getAsInt();
-
-							String formattedStatNum = "";
-							if (statNum == 0) formattedStatNum = "???";
-							else if (statNum % 1 == 0) formattedStatNum += Math.round(statNum);
-							else formattedStatNum += statNum;
-
-							if (gemstoneInfo.has("chiselBonus")) {
-								String chiselBonus = gemstoneInfo.get("chiselBonus").getAsString();
-								String formattedChiselBonus = chiselBonus.replace(
-									"{}",
-									gemstones.getAsJsonObject("chiselPercentages").get(gemstoneTier).getAsString()
-								);
-
-								newTooltip.add("");
-								String text = EnumChatFormatting.BLUE + "Chisel bonus: " + formattedChiselBonus;
-								boolean first = true;
-								for (String s : Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(text, 150)) {
-									newTooltip.add((first ? "" : "  ") + s);
-									first = false;
-								}
-								newTooltip.add("");
-							}
-							newTooltip.add("§9Stats for " + rarityFormatted + "§9: [§l§m< §9Switch§l§m >§9]");
-							newTooltip.add("  §7" + statName + ": §a+" + formattedStatNum);
-							newTooltip.add("");
-							newTooltip.add(
-								"§9Removal Cost: §6" + StringUtils.formatNumber(removalCost) + (removalCost == 1 ? " coin" : " coins"));
-							newTooltip.add("§8Combinable in Gemstone Grinder or The Hex");
-							newTooltip.add("");
-						}
-					}
-				}
-			} else if (line.contains("\u00A7cR\u00A76a\u00A7ei\u00A7an\u00A7bb\u00A79o\u00A7dw\u00A79 Rune")) {
-				line = line.replace(
-					"\u00A7cR\u00A76a\u00A7ei\u00A7an\u00A7bb\u00A79o\u00A7dw\u00A79 Rune",
-					Utils.chromaString("Rainbow Rune", k, false) + EnumChatFormatting.BLUE
-				);
-			} else if (hasEnchantments) {
-				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) &&
-					NotEnoughUpdates.INSTANCE.config.tooltipTweaks.missingEnchantList) {
-					boolean lineHasEnch = false;
-					for (String s : enchantIds) {
-						String enchantName = WordUtils.capitalizeFully(s.replace("_", " "));
-						if (line.contains(enchantName)) {
-							lineHasEnch = true;
-							break;
-						}
-					}
-					if (lineHasEnch) {
-						gotToEnchants = true;
-					} else {
-						if (gotToEnchants && !passedEnchants && Utils.cleanColour(line).trim().length() == 0) {
-							if (enchantsConst != null && allItemEnchs != null) {
-								List<String> missing = new ArrayList<>();
-								for (JsonElement enchIdElement : allItemEnchs) {
-									String enchId = enchIdElement.getAsString();
-									if (!enchId.startsWith("ultimate_") && !ignoreFromPool.contains(enchId) &&
-										!enchantIds.contains(enchId)) {
-										missing.add(enchId);
-									}
-								}
-								if (!missing.isEmpty()) {
-									newTooltip.add("");
-									StringBuilder currentLine = new StringBuilder(
-										EnumChatFormatting.RED + "Missing: " + EnumChatFormatting.GRAY);
-									for (int i = 0; i < missing.size(); i++) {
-										String enchName = WordUtils.capitalizeFully(missing.get(i).replace("_", " "));
-										if (currentLine.length() != 0 &&
-											(Utils.cleanColour(currentLine.toString()).length() + enchName.length()) > 40) {
-											newTooltip.add(currentLine.toString());
-											currentLine = new StringBuilder();
-										}
-										if (currentLine.length() != 0 && i != 0) {
-											currentLine.append(", ").append(enchName);
-										} else {
-											currentLine.append(EnumChatFormatting.GRAY).append(enchName);
-										}
-									}
-									if (currentLine.length() != 0) {
-										newTooltip.add(currentLine.toString());
-									}
-								}
-							}
-							passedEnchants = true;
-						}
-					}
-				}
-			}
-
-			newTooltip.add(line);
-
-			if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showPriceInfoAucItem) {
-				if (line.contains(EnumChatFormatting.GRAY + "Buy it now: ") || line.contains(
-					EnumChatFormatting.GRAY + "Bidder: ") || line.contains(EnumChatFormatting.GRAY + "Starting bid: ")) {
-
-					if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-						newTooltip.add("");
-						newTooltip.add(EnumChatFormatting.GRAY + "[SHIFT for Price Info]");
-					} else {
-						ItemPriceInformation.addToTooltip(newTooltip, internalName, event.itemStack);
-					}
-				}
-			}
-
-			if (NotEnoughUpdates.INSTANCE.config.dungeons.profitDisplayLoc == 2 &&
-				Minecraft.getMinecraft().currentScreen instanceof GuiChest) {
-				if (line.contains(EnumChatFormatting.GREEN + "Open Reward Chest")) {
-					dungeonProfit = true;
-				} else if (k == 7 && dungeonProfit) {
-					GuiChest eventGui = (GuiChest) Minecraft.getMinecraft().currentScreen;
-					ContainerChest cc = (ContainerChest) eventGui.inventorySlots;
-					IInventory lower = cc.getLowerChestInventory();
-
-					int chestCost = 0;
-					try {
-						String line6 = Utils.cleanColour(line);
-						StringBuilder cost = new StringBuilder();
-						for (int i = 0; i < line6.length(); i++) {
-							char c = line6.charAt(i);
-							if ("0123456789".indexOf(c) >= 0) {
-								cost.append(c);
-							}
-						}
-						if (cost.length() > 0) {
-							chestCost = Integer.parseInt(cost.toString());
-						}
-					} catch (Exception ignored) {
-					}
-
-					String missingItem = null;
-					int totalValue = 0;
-					HashMap<String, Double> itemValues = new HashMap<>();
-					for (int i = 0; i < 5; i++) {
-						ItemStack item = lower.getStackInSlot(11 + i);
-						String internal = neu.manager.getInternalNameForItem(item);
-						if (internal != null) {
-							internal = internal.replace("\u00CD", "I").replace("\u0130", "I");
-							float bazaarPrice = -1;
-							JsonObject bazaarInfo = neu.manager.auctionManager.getBazaarInfo(internal);
-							if (bazaarInfo != null && bazaarInfo.has("curr_sell")) {
-								bazaarPrice = bazaarInfo.get("curr_sell").getAsFloat();
-							}
-							if (bazaarPrice < 5000000 && internal.equals("RECOMBOBULATOR_3000")) bazaarPrice = 5000000;
-
-							double worth = -1;
-							if (bazaarPrice > 0) {
-								worth = bazaarPrice;
-							} else {
-								switch (NotEnoughUpdates.INSTANCE.config.dungeons.profitType) {
-									case 1:
-										worth = neu.manager.auctionManager.getItemAvgBin(internal);
-										break;
-									case 2:
-										JsonObject auctionInfo = neu.manager.auctionManager.getItemAuctionInfo(internal);
-										if (auctionInfo != null) {
-											if (auctionInfo.has("clean_price")) {
-												worth = (long) auctionInfo.get("clean_price").getAsDouble();
-											} else {
-												worth =
-													(long) (auctionInfo.get("price").getAsDouble() / auctionInfo.get("count").getAsDouble());
-											}
-										}
-										break;
-									default:
-										worth = neu.manager.auctionManager.getLowestBin(internal);
-								}
-								if (worth <= 0) {
-									worth = neu.manager.auctionManager.getLowestBin(internal);
-									if (worth <= 0) {
-										worth = neu.manager.auctionManager.getItemAvgBin(internal);
-										if (worth <= 0) {
-											JsonObject auctionInfo = neu.manager.auctionManager.getItemAuctionInfo(internal);
-											if (auctionInfo != null) {
-												if (auctionInfo.has("clean_price")) {
-													worth = (int) auctionInfo.get("clean_price").getAsFloat();
-												} else {
-													worth = (int) (auctionInfo.get("price").getAsFloat() / auctionInfo.get("count").getAsFloat());
-												}
-											}
-										}
-									}
-								}
-							}
-
-							if (worth > 0 && totalValue >= 0) {
-								totalValue += worth;
-
-								String display = item.getDisplayName();
-
-								if (display.contains("Enchanted Book")) {
-									NBTTagCompound tag = item.getTagCompound();
-									if (tag != null && tag.hasKey("ExtraAttributes", 10)) {
-										NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
-										NBTTagCompound enchants = ea.getCompoundTag("enchantments");
-
-										int highestLevel = -1;
-										for (String enchname : enchants.getKeySet()) {
-											int level = enchants.getInteger(enchname);
-											if (level > highestLevel) {
-												display = EnumChatFormatting.BLUE + WordUtils.capitalizeFully(enchname
-													.replace("_", " ")
-													.replace("Ultimate", "")
-													.trim()) + " " + level;
-											}
-										}
-									}
-								}
-
-								itemValues.put(display, worth);
-							} else {
-								if (totalValue != -1) {
-									missingItem = internal;
-								}
-								totalValue = -1;
-							}
-						}
-					}
-
-					String valueStringBIN1;
-					String valueStringBIN2;
-					if (totalValue >= 0) {
-						valueStringBIN1 = EnumChatFormatting.YELLOW + "Value (BIN): ";
-						valueStringBIN2 = EnumChatFormatting.GOLD + StringUtils.formatNumber(totalValue) + " coins";
-					} else {
-						valueStringBIN1 = EnumChatFormatting.YELLOW + "Can't find BIN: ";
-						valueStringBIN2 = missingItem;
-					}
-
-					int profitLossBIN = totalValue - chestCost;
-					String profitPrefix = EnumChatFormatting.DARK_GREEN.toString();
-					String lossPrefix = EnumChatFormatting.RED.toString();
-					String prefix = profitLossBIN >= 0 ? profitPrefix : lossPrefix;
-
-					String plStringBIN;
-					if (profitLossBIN >= 0) {
-						plStringBIN = prefix + "+" + StringUtils.formatNumber(profitLossBIN) + " coins";
-					} else {
-						plStringBIN = prefix + "-" + StringUtils.formatNumber(-profitLossBIN) + " coins";
-					}
-
-					String neu = EnumChatFormatting.YELLOW + "[NEU] ";
-
-					newTooltip.add(neu + valueStringBIN1 + " " + valueStringBIN2);
-					if (totalValue >= 0) {
-						newTooltip.add(neu + EnumChatFormatting.YELLOW + "Profit/Loss: " + plStringBIN);
-					}
-
-					for (Map.Entry<String, Double> entry : itemValues.entrySet()) {
-						newTooltip.add(neu + entry.getKey() + prefix + "+" + StringUtils.formatNumber(entry.getValue().intValue()));
-					}
-				}
-			}
-		}
-
-		pressedShiftLast = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-		pressedArrowLast = Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT);
-
-		event.toolTip.clear();
-		event.toolTip.addAll(newTooltip);
-
-		if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.showPriceInfoInvItem) {
-			ItemPriceInformation.addToTooltip(event.toolTip, internalName, event.itemStack);
-		}
-
-		if (event.itemStack.getTagCompound() != null && event.itemStack.getTagCompound().getBoolean("NEUHIDEPETTOOLTIP") &&
-			NotEnoughUpdates.INSTANCE.config.petOverlay.hidePetTooltip) {
-			event.toolTip.clear();
-		}
+//		if (event.itemStack.getTagCompound() != null && event.itemStack.getTagCompound().getBoolean("NEUHIDEPETTOOLTIP") &&
+//			NotEnoughUpdates.INSTANCE.config.petOverlay.hidePetTooltip) {
+//			event.toolTip.clear();
+//		}
 	}
 
-	private void petToolTipXPExtendPetMenu(ItemTooltipEvent event) {
-		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.petExtendExp) return;
-		//7 is just a random number i chose, prob no pets with less lines than 7
-		if (event.toolTip.size() < 7) return;
-		if (event.itemStack.getTagCompound().hasKey("NEUHIDEPETTOOLTIP")) return;
-		if (petToolTipRegex.matcher(Utils.cleanColour(event.toolTip.get(1))).matches()) {
-			PetLeveling.PetLevel petLevel;
-
-			int xpLine = -1;
-			for (int i = event.toolTip.size() - 1; i >= 0; i--) {
-				Matcher matcher = xpLevelPattern.matcher(event.toolTip.get(i));
-				if (matcher.matches()) {
-					xpLine = i;
-					event.toolTip.set(xpLine, matcher.group(1));
-					break;
-				} else if (event.toolTip.get(i).matches("MAX LEVEL")) {
-					return;
-				}
-			}
-
-			PetInfoOverlay.Pet pet = PetInfoOverlay.getPetFromStack(
-				event.itemStack.getTagCompound()
-			);
-			if (pet == null) {
-				return;
-			}
-			petLevel = pet.petLevel;
-
-			if (petLevel == null || xpLine == -1) {
-				return;
-			}
-
-			event.toolTip.add(
-				xpLine + 1,
-				EnumChatFormatting.GRAY + "EXP: " + EnumChatFormatting.YELLOW +
-					myFormatter.format(petLevel.getExpInCurrentLevel()) +
-					EnumChatFormatting.GOLD + "/" + EnumChatFormatting.YELLOW +
-					myFormatter.format(petLevel.getExpRequiredForNextLevel())
-			);
-
-		}
-	}
+//	private void petToolTipXPExtendPetMenu(ItemTooltipEvent event) {
+//		if (!NotEnoughUpdates.INSTANCE.config.tooltipTweaks.petExtendExp) return;
+//		//7 is just a random number i chose, prob no pets with less lines than 7
+//		if (event.toolTip.size() < 7) return;
+//		if (event.itemStack.getTagCompound().hasKey("NEUHIDEPETTOOLTIP")) return;
+//		if (petToolTipRegex.matcher(Utils.cleanColour(event.toolTip.get(1))).matches()) {
+//			PetLeveling.PetLevel petLevel;
+//
+//			int xpLine = -1;
+//			for (int i = event.toolTip.size() - 1; i >= 0; i--) {
+//				Matcher matcher = xpLevelPattern.matcher(event.toolTip.get(i));
+//				if (matcher.matches()) {
+//					xpLine = i;
+//					event.toolTip.set(xpLine, matcher.group(1));
+//					break;
+//				} else if (event.toolTip.get(i).matches("MAX LEVEL")) {
+//					return;
+//				}
+//			}
+//
+//			PetInfoOverlay.Pet pet = PetInfoOverlay.getPetFromStack(
+//				event.itemStack.getTagCompound()
+//			);
+//			if (pet == null) {
+//				return;
+//			}
+//			petLevel = pet.petLevel;
+//
+//			if (petLevel == null || xpLine == -1) {
+//				return;
+//			}
+//
+//			event.toolTip.add(
+//				xpLine + 1,
+//				EnumChatFormatting.GRAY + "EXP: " + EnumChatFormatting.YELLOW +
+//					myFormatter.format(petLevel.getExpInCurrentLevel()) +
+//					EnumChatFormatting.GOLD + "/" + EnumChatFormatting.YELLOW +
+//					myFormatter.format(petLevel.getExpRequiredForNextLevel())
+//			);
+//
+//		}
+//	}
 
 	/**
 	 * This method does the following:
@@ -691,30 +691,30 @@ public class ItemTooltipListener {
 		if (!neu.isOnSkyblock()) return;
 		if (event.toolTip == null) return;
 
-		if (event.toolTip.size() > 2 && NotEnoughUpdates.INSTANCE.config.tooltipTweaks.hideDefaultReforgeStats) {
-			String secondLine = StringUtils.cleanColour(event.toolTip.get(1));
-			if (secondLine.equals("Reforge Stone")) {
-				Integer startIndex = null;
-				Integer cutoffIndex = null;
-				//loop from the back of the List to find the wanted index sooner
-				for (int i = event.toolTip.size() - 1; i >= 0; i--) {
-					//rarity or mining level requirement
-					String line = StringUtils.cleanColour(event.toolTip.get(i));
-					if (line.contains("REFORGE STONE") || line.contains("Requires Mining Skill Level")) {
-						cutoffIndex = i;
-					}
-
-					//The line where the Hypixel stats start
-					if (line.contains("(Legendary):")) {
-						startIndex = i;
-						break;
-					}
-				}
-				if (startIndex != null && cutoffIndex != null && startIndex < cutoffIndex) {
-					event.toolTip.subList(startIndex, cutoffIndex).clear();
-				}
-			}
-		}
+//		if (event.toolTip.size() > 2 && NotEnoughUpdates.INSTANCE.config.tooltipTweaks.hideDefaultReforgeStats) {
+//			String secondLine = StringUtils.cleanColour(event.toolTip.get(1));
+//			if (secondLine.equals("Reforge Stone")) {
+//				Integer startIndex = null;
+//				Integer cutoffIndex = null;
+//				//loop from the back of the List to find the wanted index sooner
+//				for (int i = event.toolTip.size() - 1; i >= 0; i--) {
+//					//rarity or mining level requirement
+//					String line = StringUtils.cleanColour(event.toolTip.get(i));
+//					if (line.contains("REFORGE STONE") || line.contains("Requires Mining Skill Level")) {
+//						cutoffIndex = i;
+//					}
+//
+//					//The line where the Hypixel stats start
+//					if (line.contains("(Legendary):")) {
+//						startIndex = i;
+//						break;
+//					}
+//				}
+//				if (startIndex != null && cutoffIndex != null && startIndex < cutoffIndex) {
+//					event.toolTip.subList(startIndex, cutoffIndex).clear();
+//				}
+//			}
+//		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && NotEnoughUpdates.INSTANCE.config.hidden.dev &&
 			event.toolTip.size() > 0 && event.toolTip.get(event.toolTip.size() - 1).startsWith(

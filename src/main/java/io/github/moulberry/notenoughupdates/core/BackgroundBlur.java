@@ -115,7 +115,7 @@ public class BackgroundBlur {
 					remove.add(entry.getKey());
 				}
 			}
-			remove.remove((float) NotEnoughUpdates.INSTANCE.config.itemlist.bgBlurFactor);
+//			remove.remove((float) NotEnoughUpdates.INSTANCE.config.itemlist.bgBlurFactor);
 
 			for (Map.Entry<Float, OutputStuff> entry : blurOutput.entrySet()) {
 				if (remove.contains(entry.getKey())) {

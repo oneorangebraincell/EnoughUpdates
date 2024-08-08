@@ -37,7 +37,7 @@ public class NetUtils {
 			try {
 				try (
 					InputStream from = httpURL.openStream();
-					OutputStream to = Files.newOutputStream(outputFile.toPath());
+					OutputStream to = Files.newOutputStream(outputFile.toPath())
 				) {
 					IOUtils.copyLarge(from, to);
 				}

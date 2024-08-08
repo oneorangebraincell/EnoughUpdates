@@ -24,11 +24,11 @@ import io.github.moulberry.notenoughupdates.BuildFlags
 import io.github.moulberry.notenoughupdates.NotEnoughUpdates
 import io.github.moulberry.notenoughupdates.autosubscribe.NEUAutoSubscribe
 import io.github.moulberry.notenoughupdates.events.RegisterBrigadierCommandEvent
-import io.github.moulberry.notenoughupdates.miscfeatures.FishingHelper
-import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.CustomBiomes
-import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.LocationChangeEvent
-import io.github.moulberry.notenoughupdates.miscgui.minionhelper.MinionHelperManager
-import io.github.moulberry.notenoughupdates.miscgui.pricegraph.GuiPriceGraph
+//import io.github.moulberry.notenoughupdates.miscfeatures.FishingHelper
+//import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.CustomBiomes
+//import io.github.moulberry.notenoughupdates.miscfeatures.customblockzones.LocationChangeEvent
+//import io.github.moulberry.notenoughupdates.miscgui.minionhelper.MinionHelperManager
+//import io.github.moulberry.notenoughupdates.miscgui.pricegraph.GuiPriceGraph
 import io.github.moulberry.notenoughupdates.util.*
 import io.github.moulberry.notenoughupdates.util.brigadier.*
 import net.minecraft.client.Minecraft
@@ -134,8 +134,8 @@ class DevTestCommand {
                 val player = Minecraft.getMinecraft().thePlayer
                 reply("Is in Garden: ${SBInfo.getInstance().getLocation() == "garden"}")
                 val pp = player.position
-                reply("Plot X: ${floor((pp.getX() + 48) / 96F)}")
-                reply("Plot Z: ${floor((pp.getZ() + 48) / 96F)}")
+                reply("Plot X: ${floor((pp.x + 48) / 96F)}")
+                reply("Plot Z: ${floor((pp.z + 48) / 96F)}")
             }.withHelp("Show diagnostics information about the garden")
             thenLiteralExecute("profileinfo") {
                 val currentProfile = SBInfo.getInstance().currentProfile
@@ -158,45 +158,45 @@ class DevTestCommand {
                     reply("Your external editor is: §Z${NotEnoughUpdates.INSTANCE.config.hidden.externalEditor}")
                 }
             }.withHelp("See your current external editor for repo files")
-            thenLiteral("pricetest") {
-                thenArgument("item", StringArgumentType.string()) { item ->
-                    thenExecute {
-                        NotEnoughUpdates.INSTANCE.openGui =
-                            GuiPriceGraph(this[item])
-                    }
-                }.withHelp("Display the price graph for an item by id")
-                thenExecute {
-                    NotEnoughUpdates.INSTANCE.manager.auctionManager.updateBazaar()
-                }
-            }.withHelp("Update the price data from the bazaar")
-            thenLiteralExecute("zone") {
-                val target = Minecraft.getMinecraft().objectMouseOver.blockPos
-                    ?: Minecraft.getMinecraft().thePlayer.position
-                val zone = CustomBiomes.INSTANCE.getSpecialZone(target)
-                listOf(
-                    ChatComponentText("Showing Zone Info for: $target"),
-                    ChatComponentText("Zone: " + (zone?.name ?: "null")),
-                    ChatComponentText("Location: " + SBInfo.getInstance().getLocation()),
-                    ChatComponentText("Biome: " + CustomBiomes.INSTANCE.getCustomBiome(target))
-                ).forEach { component ->
-                    reply(component)
-                }
-                MinecraftForge.EVENT_BUS.post(
-                    LocationChangeEvent(
-                        SBInfo.getInstance().getLocation(), SBInfo
-                            .getInstance()
-                            .getLocation()
-                    )
-                )
-            }.withHelp("Display information about the special block zone at your cursor (Custom Texture Regions)")
-            thenLiteral("pt") {
-                thenArgument("particle", EnumArgumentType.enum<EnumParticleTypes>()) { particle ->
-                    thenExecute {
-                        FishingHelper.type = this[particle]
-                        reply("Fishing particles set to ${FishingHelper.type}")
-                    }
-                }
-            }
+//            thenLiteral("pricetest") {
+//                thenArgument("item", StringArgumentType.string()) { item ->
+//                    thenExecute {
+//                        NotEnoughUpdates.INSTANCE.openGui =
+//                            GuiPriceGraph(this[item])
+//                    }
+//                }.withHelp("Display the price graph for an item by id")
+//                thenExecute {
+//                    NotEnoughUpdates.INSTANCE.manager.auctionManager.updateBazaar()
+//                }
+//            }.withHelp("Update the price data from the bazaar")
+//            thenLiteralExecute("zone") {
+//                val target = Minecraft.getMinecraft().objectMouseOver.blockPos
+//                    ?: Minecraft.getMinecraft().thePlayer.position
+//                val zone = CustomBiomes.INSTANCE.getSpecialZone(target)
+//                listOf(
+//                    ChatComponentText("Showing Zone Info for: $target"),
+//                    ChatComponentText("Zone: " + (zone?.name ?: "null")),
+//                    ChatComponentText("Location: " + SBInfo.getInstance().getLocation()),
+//                    ChatComponentText("Biome: " + CustomBiomes.INSTANCE.getCustomBiome(target))
+//                ).forEach { component ->
+//                    reply(component)
+//                }
+//                MinecraftForge.EVENT_BUS.post(
+//                    LocationChangeEvent(
+//                        SBInfo.getInstance().getLocation(), SBInfo
+//                            .getInstance()
+//                            .getLocation()
+//                    )
+//                )
+//            }.withHelp("Display information about the special block zone at your cursor (Custom Texture Regions)")
+//            thenLiteral("pt") {
+//                thenArgument("particle", EnumArgumentType.enum<EnumParticleTypes>()) { particle ->
+//                    thenExecute {
+//                        FishingHelper.type = this[particle]
+//                        reply("Fishing particles set to ${FishingHelper.type}")
+//                    }
+//                }
+//            }
             thenLiteral("callUrsa") {
                 thenArgument("path", RestArgumentType) { path ->
                     thenExecute {
@@ -245,11 +245,11 @@ class DevTestCommand {
                 Minecraft.getMinecraft().thePlayer.setPosition(x, Minecraft.getMinecraft().thePlayer.posY, z)
                 reply("Literal hacks")
             }.withHelp("Center yourself on the block you are currently standing (like using AOTE)")
-            thenLiteral("minion") {
-                thenArgumentExecute("args", RestArgumentType) { arg ->
-                    MinionHelperManager.getInstance().handleCommand(arrayOf("minion") + this[arg].split(" "))
-                }.withHelp("Minion related commands. Not yet integrated in brigadier")
-            }
+//            thenLiteral("minion") {
+//                thenArgumentExecute("args", RestArgumentType) { arg ->
+//                    MinionHelperManager.getInstance().handleCommand(arrayOf("minion") + this[arg].split(" "))
+//                }.withHelp("Minion related commands. Not yet integrated in brigadier")
+//            }
             thenLiteralExecute("copytablist") {
                 val tabList = TabListUtils.getTabList().joinToString("\n", postfix = "\n")
                 Utils.copyToClipboard(tabList)

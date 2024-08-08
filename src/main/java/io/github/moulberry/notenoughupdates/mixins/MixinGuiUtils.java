@@ -36,38 +36,38 @@ import java.util.List;
 
 @Mixin(value = GuiUtils.class, remap = false)
 public class MixinGuiUtils {
-	@Inject(method = "drawHoveringText", at = @At("HEAD"), cancellable = true)
-	private static void drawHoveringText_head(
-		List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font, CallbackInfo ci) {
-		if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.customTooltips) {
-			Utils.drawHoveringText(textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
-			ci.cancel();
-		} else if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale != 0) {
-			Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale);
-		}
-	}
-
-	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 0, argsOnly = true)
-	private static int drawHoveringText_modifyMouseX(int mouseX) {
-		return Mouse.getX() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledWidth() / Minecraft.getMinecraft().displayWidth;
-	}
-
-	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 1, argsOnly = true)
-	private static int drawHoveringText_modifyMouseY(int mouseY) {
-		return Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight() -
-			Mouse.getY() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight() / Minecraft.getMinecraft().displayHeight;
-	}
-
-
-	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 2, argsOnly = true)
-	private static int drawHoveringText_modifyWidth(int width) {
-		return Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledWidth();
-	}
-
-	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 3, argsOnly = true)
-	private static int drawHoveringText_modifyHeight(int height) {
-		return Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight();
-	}
+//	@Inject(method = "drawHoveringText", at = @At("HEAD"), cancellable = true)
+//	private static void drawHoveringText_head(
+//		List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font, CallbackInfo ci) {
+//		if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.customTooltips) {
+//			Utils.drawHoveringText(textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
+//			ci.cancel();
+//		} else if (NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale != 0) {
+//			Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale);
+//		}
+//	}
+//
+//	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 0, argsOnly = true)
+//	private static int drawHoveringText_modifyMouseX(int mouseX) {
+//		return Mouse.getX() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledWidth() / Minecraft.getMinecraft().displayWidth;
+//	}
+//
+//	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 1, argsOnly = true)
+//	private static int drawHoveringText_modifyMouseY(int mouseY) {
+//		return Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight() -
+//			Mouse.getY() * Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight() / Minecraft.getMinecraft().displayHeight;
+//	}
+//
+//
+//	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 2, argsOnly = true)
+//	private static int drawHoveringText_modifyWidth(int width) {
+//		return Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledWidth();
+//	}
+//
+//	@ModifyVariable(method = "drawHoveringText", at = @At(value = "HEAD"), ordinal = 3, argsOnly = true)
+//	private static int drawHoveringText_modifyHeight(int height) {
+//		return Utils.pushGuiScale(NotEnoughUpdates.INSTANCE.config.tooltipTweaks.guiScale).getScaledHeight();
+//	}
 
 	@Inject(method = "drawHoveringText", at = @At("TAIL"))
 	private static void drawHoveringText_tail(
